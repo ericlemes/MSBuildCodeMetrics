@@ -113,7 +113,7 @@ namespace MSBuildCodeMetrics.Tasks
 
 		private void ValidateMetricsList(CodeMetricsRunner runner,  MetricList ml)
 		{
-			foreach (ReportParam p in ml)
+			foreach (Metric p in ml)
 			{
 				if (String.IsNullOrEmpty(p.ProviderName))
 					throw new ArgumentNullException("ProviderName", "ProviderName must be informed in Metrics property");

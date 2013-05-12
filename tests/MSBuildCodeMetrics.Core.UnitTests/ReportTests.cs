@@ -59,7 +59,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[TestMethod]
 		public void TestSummaryReport()
 		{			
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(ReportParamList.Create().
+			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity", RangeList.Create().Add(5).Add(10)).
 				Add("Provider1", "LinesOfCode", RangeList.Create().Add(20).Add(50)), true, false);			
 
@@ -74,7 +74,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[TestMethod]
 		public void DetailedReportTest()
 		{
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(ReportParamList.Create().
+			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity", RangeList.Create().Add(5).Add(10)).
 				Add("Provider1", "LinesOfCode", RangeList.Create().Add(20).Add(50)), false, true);			
 			
@@ -89,7 +89,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[TestMethod]
 		public void TestReportWithBothReports()
 		{
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(ReportParamList.Create().
+			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity", RangeList.Create().Add(5).Add(10)).
 				Add("Provider1", "LinesOfCode", RangeList.Create().Add(20).Add(50)), true, true);						
 
@@ -101,7 +101,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void TestReportWithNullMetricList()
 		{
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(ReportParamList.Create().
+			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity").
 				Add("Provider1", "LinesOfCode"), true, false);						
 		}
@@ -110,14 +110,14 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void TestReportWithEmptyMetricList()
 		{			
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(ReportParamList.Create(), true, false);						
+			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create(), true, false);						
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void TestReportWithNoReport()
 		{
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(ReportParamList.Create().
+			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity", RangeList.Create().Add(5).Add(10)).
 				Add("Provider1", "LinesOfCode", RangeList.Create().Add(20).Add(50)), false, false);			
 		}

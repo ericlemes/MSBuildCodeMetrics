@@ -53,7 +53,7 @@
     <Compile Include="MetricList.cs" />
     <Compile Include="ProviderMeasure.cs" />
     <Compile Include="RangeList.cs" />
-    <Compile Include="ReportParam.cs" />
+    <Compile Include="Metric.cs" />
     <Compile Include="RunnerMeasure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ranges\BetweenUpperAndLowerRangeType.cs" />

@@ -83,7 +83,7 @@ namespace MSBuildCodeMetrics.Core
 				 select rm).ToList<RunnerMeasure>();
 		}
 
-		public MSBuildCodeMetricsReport GenerateReport(List<ReportParam> metricList, bool summary, bool details)
+		public MSBuildCodeMetricsReport GenerateReport(List<Metric> metricList, bool summary, bool details)
 		{
 			if (metricList == null)
 				throw new ArgumentNullException("metricList");
@@ -94,7 +94,7 @@ namespace MSBuildCodeMetrics.Core
 
 			MSBuildCodeMetricsReport result = new MSBuildCodeMetricsReport();
 
-			foreach (ReportParam p in metricList)
+			foreach (Metric p in metricList)
 			{
 				if (summary)
 					AppendSummaryReport(result, p.ProviderName, p.MetricName, GetSummaryReport(p.ProviderName, p.MetricName, p.Range));
