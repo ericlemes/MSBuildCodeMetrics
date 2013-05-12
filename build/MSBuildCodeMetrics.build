@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<MSTestPath>"$(VS100COMNTOOLS)..\IDE\MSTest.exe"</MSTestPath>
+		<BinariesOutputDir>$(MSBuildProjectDirectory)\bin</BinariesOutputDir>		
+		<MetricsPath>$(VS100COMNTOOLS)..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe</MetricsPath>
+		<OpenCoverMSBuildTasksPath>..\src\packages\OpenCover.4.5.1604\MSBuild</OpenCoverMSBuildTasksPath>
+		<OpenCoverMSBuildTasksLib>$(OpenCoverMSBuildTasksPath)\OpenCover.MSBuild.dll</OpenCoverMSBuildTasksLib>		
+	</PropertyGroup>
+	
+	<ItemGroup>	   
+		<AllFiles Include="..\src\**\*.*" />
+
+		<Metrics Include="LinesOfCode">
+			<ProviderName>VisualStudioMetrics</ProviderName>
+			<Ranges>50;10;1</Ranges>			
+		</Metrics>				
+		<Metrics Include="CyclomaticComplexity">
+			<ProviderName>VisualStudioMetrics</ProviderName>
+			<Ranges>10;5;4;3;2;1</Ranges>			
+		</Metrics>											
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Core.UnitTests\bin\Debug\MSBuildCodeMetrics.Core.UnitTests.dll" />
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Core.Providers.UnitTests\bin\Debug\MSBuildCodeMetrics.Core.Providers.dll" />
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Tasks.UnitTests\bin\Debug\MSBuildCodeMetrics.Tasks.UnitTests.dll" />
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.VisualStudioMetrics.UnitTests\bin\Debug\MSBuildCodeMetrics.VisualStudioMetrics.dll" />
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.IntegrationTests\bin\Debug\MSBuildCodeMetrics.IntegrationTests.dll" />
+		<Providers Include="MSBuildCodeMetrics.VisualStudioMetrics.VisualStudioCodeMetricsProvider, MSBuildCodeMetrics.VisualStudioMetrics">
+			<TempDir>$(MSBuildProjectDirectory)\TempDir</TempDir>
+		</Providers>
+	</ItemGroup>
+		
+	<UsingTask TaskName="CodeMetrics" AssemblyFile="$(BinariesOutputDir)\MSBuildCodeMetrics.Tasks.dll" />
+	
+	<Target Name="build">
+		<MSBuild Projects="$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln" />
+		<MakeDir Directories="$(MSBuildProjectDirectory)\bin" />
+		<CreateItem Include="$(MSBuildProjectDirectory)\..\src\**\bin\Debug\*.dll">
+			<Output TaskParameter="Include" ItemName="Binaries" />
+		</CreateItem>
+		<Copy SourceFiles="@(Binaries)" DestinationFolder="$(BinariesOutputDir)" />
+	</Target>	
+	
+	<Target Name="tests" DependsOnTargets="build">				
+		<Exec Command="$(MSTestPath) /testcontainer:%(Tests.FullPath)" WorkingDirectory="$(MSBuildProjectDirectory)\..\"  /> 		
+	</Target>	
+	
+	<Target Name="demo" DependsOnTargets="build">		
+		<MakeDir Directories="$(MSBuildProjectDirectory)\TempDir" />
+		<CodeMetrics MetricsExePath="$(MetricsPath)" InputFiles="@(Binaries)" Providers="@(Providers)" Metrics="@(Metrics)"  />
+	</Target>
+
+</Project>
+

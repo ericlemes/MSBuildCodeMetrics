@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeMetricsReport Version="10.0">
+  <Targets>
+    <Target Name="C:\SandBox\EricLemes.MSBuildTasks\src\EricLemes.MSBuildTasks.Tests.DummyAssembly\bin\Debug\EricLemes.MSBuildTasks.Tests.DummyAssembly.dll">
+      <Modules>
+        <Module Name="EricLemes.MSBuildTasks.Tests.DummyAssembly.dll" AssemblyVersion="1.0.0.0" FileVersion="1.0.0.0">
+          <Metrics>
+            <Metric Name="MaintainabilityIndex" Value="89" />
+            <Metric Name="CyclomaticComplexity" Value="7" />
+            <Metric Name="ClassCoupling" Value="1" />
+            <Metric Name="DepthOfInheritance" Value="1" />
+            <Metric Name="LinesOfCode" Value="12" />
+          </Metrics>
+          <Namespaces>
+            <Namespace Name="EricLemes.MSBuildTasks.Tests.DummyAssembly">
+              <Metrics>
+                <Metric Name="MaintainabilityIndex" Value="89" />
+                <Metric Name="CyclomaticComplexity" Value="7" />
+                <Metric Name="ClassCoupling" Value="1" />
+                <Metric Name="DepthOfInheritance" Value="1" />
+                <Metric Name="LinesOfCode" Value="12" />
+              </Metrics>
+              <Types>
+                <Type Name="DummyClass">
+                  <Metrics>
+                    <Metric Name="MaintainabilityIndex" Value="81" />
+                    <Metric Name="CyclomaticComplexity" Value="4" />
+                    <Metric Name="ClassCoupling" Value="1" />
+                    <Metric Name="DepthOfInheritance" Value="1" />
+                    <Metric Name="LinesOfCode" Value="9" />
+                  </Metrics>
+                  <Members>
+                    <Member Name="SimpleMethod() : void" File="C:\SandBox\EricLemes.MSBuildTasks\src\EricLemes.MSBuildTasks.Tests.DummyAssembly\DummyClass.cs" Line="11">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="78" />
+                        <Metric Name="CyclomaticComplexity" Value="1" />
+                        <Metric Name="ClassCoupling" Value="1" />
+                        <Metric Name="LinesOfCode" Value="5" />
+                      </Metrics>
+                    </Member>
+                    <Member Name="SimpleMethod2(bool) : void" File="C:\SandBox\EricLemes.MSBuildTasks\src\EricLemes.MSBuildTasks.Tests.DummyAssembly\DummyClass.cs" Line="20">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="81" />
+                        <Metric Name="CyclomaticComplexity" Value="2" />
+                        <Metric Name="ClassCoupling" Value="1" />
+                        <Metric Name="LinesOfCode" Value="3" />
+                      </Metrics>
+                    </Member>
+                    <Member Name="DummyClass()">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="100" />
+                        <Metric Name="CyclomaticComplexity" Value="1" />
+                        <Metric Name="ClassCoupling" Value="0" />
+                        <Metric Name="LinesOfCode" Value="1" />
+                      </Metrics>
+                    </Member>
+                  </Members>
+                </Type>
+                <Type Name="DummyClass2">
+                  <Metrics>
+                    <Metric Name="MaintainabilityIndex" Value="97" />
+                    <Metric Name="CyclomaticComplexity" Value="3" />
+                    <Metric Name="ClassCoupling" Value="1" />
+                    <Metric Name="DepthOfInheritance" Value="1" />
+                    <Metric Name="LinesOfCode" Value="3" />
+                  </Metrics>
+                  <Members>
+                    <Member Name="Test() : void" File="C:\SandBox\EricLemes.MSBuildTasks\src\EricLemes.MSBuildTasks.Tests.DummyAssembly\DummyClass2.cs" Line="11">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="100" />
+                        <Metric Name="CyclomaticComplexity" Value="1" />
+                        <Metric Name="ClassCoupling" Value="0" />
+                        <Metric Name="LinesOfCode" Value="1" />
+                      </Metrics>
+                    </Member>
+                    <Member Name="PrivateMethod() : void" File="C:\SandBox\EricLemes.MSBuildTasks\src\EricLemes.MSBuildTasks.Tests.DummyAssembly\DummyClass2.cs" Line="16">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="98" />
+                        <Metric Name="CyclomaticComplexity" Value="1" />
+                        <Metric Name="ClassCoupling" Value="1" />
+                        <Metric Name="LinesOfCode" Value="1" />
+                      </Metrics>
+                    </Member>
+                    <Member Name="DummyClass2()">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="100" />
+                        <Metric Name="CyclomaticComplexity" Value="1" />
+                        <Metric Name="ClassCoupling" Value="0" />
+                        <Metric Name="LinesOfCode" Value="1" />
+                      </Metrics>
+                    </Member>
+                  </Members>
+                </Type>
+              </Types>
+            </Namespace>
+          </Namespaces>
+        </Module>
+      </Modules>
+    </Target>
+  </Targets>
+</CodeMetricsReport>

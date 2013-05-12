@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<MSBuildCodeMetricsReport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Summary>
+		<Metrics>
+			<Metric ProviderName="VisualStudioMetrics" MetricName="CyclomaticComplexity">
+				<Ranges>
+					<Range Name="&gt; 10" Count="5" />
+					<Range Name="&lt;= 10 and &gt; 5" Count="3" />
+					<Range Name="&lt;= 5" Count="1" />
+				</Ranges>
+			</Metric>
+			<Metric ProviderName="VisualStudioMetrics" MetricName="LinesOfCode">
+				<Ranges>
+					<Range Name="&gt; 100" Count="5" />
+					<Range Name="&lt;= 100 and &gt; 50" Count="3" />
+					<Range Name="&lt;= 50" Count="1" />
+				</Ranges>			
+			</Metric>
+		</Metrics>
+	</Summary>
+	<Details>
+		<Metrics>
+			<Metric ProviderName="VisualStudioMetrics" MetricName="CyclomaticComplexity">
+				<Measures>
+					<Measure MeasureName="Method1() : void" Value="100" />
+					<Measure MeasureName="Method2() : void" Value="50" />
+				</Measures>
+			</Metric>
+			<Metric ProviderName="VisualStudioMetrics" MetricName="LinesOfCode">
+				<Measures>
+					<Measure MeasureName="Method1() : void" Value="1000" />
+					<Measure MeasureName="Method2() : void" Value="500" />
+				</Measures>
+			</Metric>			
+		</Metrics>
+	</Details>
+</MSBuildCodeMetricsReport>
