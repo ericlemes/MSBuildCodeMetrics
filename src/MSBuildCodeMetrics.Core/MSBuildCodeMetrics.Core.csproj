@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeMetricsRunner.cs" />
+    <Compile Include="ComputeMetricsParameter.cs" />
+    <Compile Include="ComputeMetricsParameterList.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="FileStreamFactory.cs" />
     <Compile Include="ICodeMetricsProvider.cs" />

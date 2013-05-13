@@ -37,8 +37,17 @@ namespace MSBuildCodeMetrics.Core.Providers
 
 		public void AddMetadata(string name, string value)
 		{
-			if (name.StartsWith("."))
-				_extensions.Add(name.ToLower(), value);
+			if (name == "FileTypes")
+			{
+				string[] items = value.Split(';');
+				foreach (string item in items)
+				{
+					string[] pair = item.Split('=');
+					if (pair.Length != 2)
+						throw new Exception("Value must be in format key=value");
+					_extensions.Add(pair[0], pair[1]);
+				}
+			}
 		}
 
 		private FileLOCCount CountFile(string fileName)
@@ -92,6 +101,9 @@ namespace MSBuildCodeMetrics.Core.Providers
 
 		public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
 		{
+			if (_extensions.Count <= 0)
+				throw new Exception("Extensions must be informed as metadata");
+
 			Dictionary<string, FileLOCCount> counter = new Dictionary<string, FileLOCCount>();
 			CountAllFiles(files, counter);
 			return GenerateMeasures(counter);
@@ -118,7 +130,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 				if (!_extensions.ContainsKey(fi.Extension.ToLower()))
 					continue;
 
-				if (!counter.ContainsKey(fi.Extension.ToLower()))
+				if (!counter.ContainsKey(_extensions[fi.Extension.ToLower()]))
 					counter.Add(_extensions[fi.Extension.ToLower()], new FileLOCCount(0, 0, 0));
 
 				counter[_extensions[fi.Extension.ToLower()]].Sum(CountFile(fileName));

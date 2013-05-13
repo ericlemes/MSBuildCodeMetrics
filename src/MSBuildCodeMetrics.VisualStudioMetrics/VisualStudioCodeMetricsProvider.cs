@@ -126,7 +126,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 						member.Type.Name + "." + member.Name, Convert.ToInt32(metric.Value)));
 				}
 			}
-			return result;
+			return result.OrderByDescending(m => m.Value).ToList<ProviderMeasure>();
 		}
 
 		private string GetTempFileFor(string fileName)

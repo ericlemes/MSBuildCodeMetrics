@@ -11,6 +11,19 @@ namespace MSBuildCodeMetrics.Core.Providers.UnitTests
 	[TestClass]
 	public class CountLOCProviderTests
 	{
+		private CountLOCProvider _provider;
+		private List<string> _files;
+
+		[TestInitialize]
+		public void Initialize()
+		{
+			_files = new List<string>().AddItem("file1.cs");
+			FileStreamFactoryMock streamFactory = new FileStreamFactoryMock();
+			streamFactory.AddFileMock("file1.cs", TestResources.SourceFile1);
+
+			_provider = new CountLOCProvider(streamFactory);
+		}
+
 		[TestMethod]
 		public void TestCountLOCProvider()
 		{
@@ -19,7 +32,7 @@ namespace MSBuildCodeMetrics.Core.Providers.UnitTests
 			streamFactory.AddFileMock("file1.cs", TestResources.SourceFile1);
 
 			CountLOCProvider provider = new CountLOCProvider(streamFactory);
-			provider.AddMetadata(".cs", "C#");
+			provider.AddMetadata("FileTypes", ".cs=C#");
 			List<ProviderMeasure> measures = provider.ComputeMetrics(new List<string>().AddItem("FileLOC").AddItem("EmptyLOC").AddItem("CommentLOC"), files).ToList<ProviderMeasure>();
 			Assert.AreEqual("TotalLOC", measures[0].MetricName);
 			Assert.AreEqual("C#", measures[0].MeasureName);
@@ -33,6 +46,13 @@ namespace MSBuildCodeMetrics.Core.Providers.UnitTests
 			Assert.AreEqual("CodeLOC", measures[1].MetricName);
 			Assert.AreEqual("C#", measures[1].MeasureName);
 			Assert.AreEqual(24, measures[1].Value);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(Exception))]
+		public void TestCountLOCProviderWithoutExtensions()
+		{
+			_provider.ComputeMetrics(new List<string>().AddItem("FileLOC").AddItem("EmptyLOC").AddItem("CommentLOC"), _files).ToList<ProviderMeasure>();			
 		}
 	}
 }

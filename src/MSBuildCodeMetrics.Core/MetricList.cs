@@ -12,7 +12,7 @@ namespace MSBuildCodeMetrics.Core
 			return new MetricList();
 		}
 
-		public MetricList Add(string providerName, string metricName, List<int> range)
+		public MetricList Add(string providerName, string metricName, IEnumerable<int> range)
 		{
 			base.Add(new Metric(providerName, metricName, range));
 			return this;

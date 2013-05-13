@@ -14,6 +14,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 	{		
 		private CodeMetricsRunner _runner;
 		private List<string> _inputFiles;
+		private IList<ComputeMetricsParameter> _parameters;
 
 		[TestInitialize]
 		public void Initialize()
@@ -53,7 +54,13 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 			_inputFiles = new List<string>();
 			_inputFiles.Add("foo");
 
-			_runner.ComputeMetrics(_inputFiles);
+			_parameters = ComputeMetricsParameterList.Create().
+				Add("Provider1", "CyclomaticComplexity", _inputFiles).
+				Add("Provider1", "LinesOfCode", _inputFiles).
+				Add("Provider2", "CyclomaticComplexity", _inputFiles).
+				Add("Provider2", "LinesOfCode", _inputFiles);
+
+			_runner.ComputeMetrics(_parameters);
 		}
 
 		[TestMethod]

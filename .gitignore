@@ -29,3 +29,5 @@
 /tests/MSBuildCodeMetrics.Core.UnitTests/*.user
 /tests/MSBuildCodeMetrics.IntegrationTests/*.user
 /tests/MSBuildCodeMetrics.VisualStudioMetrics.UnitTests/*.user
+/build/metrics.xml
+/src/MSBuildCodeMetrics.Core.Providers/*.user

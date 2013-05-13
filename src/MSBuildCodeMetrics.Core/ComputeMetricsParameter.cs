@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MSBuildCodeMetrics.Core
 {
-	public class Metric
+	public class ComputeMetricsParameter
 	{
 		private string _providerName;
 		public string ProviderName
@@ -19,17 +19,17 @@ namespace MSBuildCodeMetrics.Core
 			get { return _metricName; }
 		}
 
-		private IEnumerable<int> _range;
-		public IEnumerable<int> Range
+		private IEnumerable<string> _files;
+		public IEnumerable<string> Files
 		{
-			get { return _range; }
+			get { return _files; }
 		}
 
-		public Metric(string providerName, string metricName, IEnumerable<int> range)
+		public ComputeMetricsParameter(string providerName, string metricName, IEnumerable<string> files)
 		{
 			_providerName = providerName;
 			_metricName = metricName;
-			_range = range;			
+			_files = files;
 		}
 	}
 }

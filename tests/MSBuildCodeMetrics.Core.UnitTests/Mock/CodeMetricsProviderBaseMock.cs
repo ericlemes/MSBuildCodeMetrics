@@ -32,6 +32,8 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 				_name = value;
 			else if (name == "Data")
 				ParseData(value);
+			else if (name == "Metrics")
+				_metrics = value.Split(';').ToList<string>();
 		}
 
 		private CodeMetricsProviderBaseMock AddMetric(string metric)

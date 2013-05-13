@@ -8,6 +8,12 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 {
 	public class BuildEngineMock : IBuildEngine
 	{
+		private string _errorMessage;
+		public string ErrorMessage
+		{
+			get { return _errorMessage; }
+		}
+
 		public bool BuildProjectFile(string projectFileName, string[] targetNames, System.Collections.IDictionary globalProperties, System.Collections.IDictionary targetOutputs)
 		{
 			throw new NotImplementedException();
@@ -35,7 +41,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 
 		public void LogErrorEvent(BuildErrorEventArgs e)
 		{
-			
+			_errorMessage = e.Message;
 		}
 
 		public void LogMessageEvent(BuildMessageEventArgs e)

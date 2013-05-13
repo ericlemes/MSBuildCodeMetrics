@@ -28,6 +28,8 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 
 		public string GetMetadata(string metadataName)
 		{
+			if (!_metadatas.ContainsKey(metadataName))
+				return null;
 			return _metadatas[metadataName];
 		}
 

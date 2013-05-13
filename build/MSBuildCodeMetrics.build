@@ -9,34 +9,21 @@
 	</PropertyGroup>
 	
 	<ItemGroup>	   
-		<AllFiles Include="..\src\**\*.*" />
-
-		<Metrics Include="LinesOfCode">
-			<ProviderName>VisualStudioMetrics</ProviderName>
-			<Ranges>50;10;1</Ranges>			
-		</Metrics>				
-		<Metrics Include="CyclomaticComplexity">
-			<ProviderName>VisualStudioMetrics</ProviderName>
-			<Ranges>10;5;4;3;2;1</Ranges>			
-		</Metrics>											
 		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Core.UnitTests\bin\Debug\MSBuildCodeMetrics.Core.UnitTests.dll" />
 		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Core.Providers.UnitTests\bin\Debug\MSBuildCodeMetrics.Core.Providers.dll" />
 		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Tasks.UnitTests\bin\Debug\MSBuildCodeMetrics.Tasks.UnitTests.dll" />
 		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.VisualStudioMetrics.UnitTests\bin\Debug\MSBuildCodeMetrics.VisualStudioMetrics.dll" />
 		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.IntegrationTests\bin\Debug\MSBuildCodeMetrics.IntegrationTests.dll" />
-		<Providers Include="MSBuildCodeMetrics.VisualStudioMetrics.VisualStudioCodeMetricsProvider, MSBuildCodeMetrics.VisualStudioMetrics">
-			<TempDir>$(MSBuildProjectDirectory)\TempDir</TempDir>
-		</Providers>
 	</ItemGroup>
 		
 	<UsingTask TaskName="CodeMetrics" AssemblyFile="$(BinariesOutputDir)\MSBuildCodeMetrics.Tasks.dll" />
 	
 	<Target Name="build">
+		<ItemGroup>
+			<Binaries Include="$(MSBuildProjectDirectory)\..\src\**\bin\Debug\*.dll;$(MSBuildProjectDirectory)\..\src\**\bin\Debug\*.pdb" />					
+		</ItemGroup>
 		<MSBuild Projects="$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln" />
 		<MakeDir Directories="$(MSBuildProjectDirectory)\bin" />
-		<CreateItem Include="$(MSBuildProjectDirectory)\..\src\**\bin\Debug\*.dll">
-			<Output TaskParameter="Include" ItemName="Binaries" />
-		</CreateItem>
 		<Copy SourceFiles="@(Binaries)" DestinationFolder="$(BinariesOutputDir)" />
 	</Target>	
 	
@@ -45,8 +32,47 @@
 	</Target>	
 	
 	<Target Name="demo" DependsOnTargets="build">		
+		<ItemGroup>
+			<Providers Include="MSBuildCodeMetrics.VisualStudioMetrics.VisualStudioCodeMetricsProvider, MSBuildCodeMetrics.VisualStudioMetrics">
+				<TempDir>$(MSBuildProjectDirectory)\TempDir</TempDir>
+			</Providers>		
+			<Providers Include="MSBuildCodeMetrics.Core.Providers.CountFilesByExtensionProvider, MSBuildCodeMetrics.Core.Providers" />
+			<Providers Include="MSBuildCodeMetrics.Core.Providers.CountLOCProvider, MSBuildCodeMetrics.Core.Providers">
+				<FileTypes>.cs=C# Sources;.csproj=C# Projects</FileTypes>				
+			</Providers>
+			<Providers Include="MSBuildCodeMetrics.Core.Providers.CountProjectsByProjectTypeProvider, MSBuildCodeMetrics.Core.Providers" />
+			<AllFiles Include="..\src\**\*.*" />
+			<SourceFiles Include="..\src\**\*.cs;..\src\**\*.csproj" />
+			<ProjectFiles Include="..\src\**\*.csproj" />
+			<BinariesInOutputDir Include="$(BinariesOutputDir)\*.dll" />
+			<Metrics Include="LinesOfCode">
+				<ProviderName>VisualStudioMetrics</ProviderName>
+				<Ranges>50;10;1</Ranges>			
+				<Files>@(BinariesInOutputDir)</Files>
+			</Metrics>				
+			<Metrics Include="CyclomaticComplexity">
+				<ProviderName>VisualStudioMetrics</ProviderName>
+				<Ranges>10;5;4;3;2;1</Ranges>			
+				<Files>@(BinariesInOutputDir)</Files>
+			</Metrics>	
+			<Metrics Include="CountFilesByExtension">
+				<ProviderName>CountFilesByExtension</ProviderName>
+				<Files>@(AllFiles)</Files>
+				<Ranges>100</Ranges>
+			</Metrics>
+			<Metrics Include="CodeLOC">
+				<ProviderName>LOC</ProviderName>
+				<Files>@(SourceFiles)</Files>
+				<Ranges>500</Ranges>
+			</Metrics>			
+			<Metrics Include="ProjectTypeCount">
+				<ProviderName>CountProjectsByProjectTypeProvider</ProviderName>
+				<Files>@(ProjectFiles)</Files>
+				<Ranges>100</Ranges>
+			</Metrics>
+		</ItemGroup>
 		<MakeDir Directories="$(MSBuildProjectDirectory)\TempDir" />
-		<CodeMetrics MetricsExePath="$(MetricsPath)" InputFiles="@(Binaries)" Providers="@(Providers)" Metrics="@(Metrics)"  />
+		<CodeMetrics MetricsExePath="$(MetricsPath)" Providers="@(Providers)" Metrics="@(Metrics)" ShowDetailsReport="true" FileOutput="true" OutputFileName="metrics.xml"  />
 	</Target>
 
 </Project>

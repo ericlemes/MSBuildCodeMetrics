@@ -17,26 +17,26 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		private CodeMetrics _task;
 		private TaskItemMock[] _metrics;
 		private TaskItemMock[] _providers;
-		private TaskItemMock[] _inputFiles;
+		private BuildEngineMock _buildEngine;
 
 		[TestInitialize]
 		public void Initialize()
 		{
+			_buildEngine = new BuildEngineMock();
 			_task = new CodeMetrics();
-			_task.BuildEngine = new BuildEngineMock();
+			_task.BuildEngine = _buildEngine;
 
 			_metrics = new TaskItemMock[1];
 			_metrics[0] = new TaskItemMock("LinesOfCode").
 				AddMetadata("ProviderName", "CodeMetricsProviderMock").
-				AddMetadata("Ranges", "2;3");
+				AddMetadata("Ranges", "2;3").
+				AddMetadata("Files", "foo");
 
 			_providers = new TaskItemMock[1];
 			_providers[0] = new TaskItemMock(
 				"MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests").
-				AddMetadata("ProviderName", "Foo");
-
-			_inputFiles = new TaskItemMock[1];
-			_inputFiles[0] = new TaskItemMock("foo").AddMetadata("FullPath", "bar");
+				AddMetadata("ProviderName", "CodeMetricsProviderMock").
+				AddMetadata("Metrics", "LinesOfCode");
 		}
 
 		[TestMethod]
@@ -52,17 +52,14 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			ITaskItem[] metrics = new TaskItemMock[1];
 			metrics[0] = new TaskItemMock("LinesOfCode").
 				AddMetadata("ProviderName", "CodeMetricsProviderMock").
-				AddMetadata("Ranges", "2;3");
-
-			ITaskItem[] inputFiles = new TaskItemMock[1];
-			inputFiles[0] = new TaskItemMock("foo.txt").AddMetadata("FullPath", "c:\foo.txt");
+				AddMetadata("Ranges", "2;3").
+				AddMetadata("Files", "C:\foo.txt");			
 
 			FileStreamFactoryMock streamFactory = new FileStreamFactoryMock();			
 
 			CodeMetrics task = new CodeMetrics(streamFactory);
 			task.BuildEngine = new BuildEngineMock();
-			task.Providers = providers;
-			task.InputFiles = inputFiles;
+			task.Providers = providers;			
 			task.OutputFileName = "report.xml";
 			task.ShowDetailsReport = true;
 			task.ShowSummaryReport = true;
@@ -82,58 +79,62 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		public void TestEmptyMetrics()
 		{
 			_task.Metrics = new TaskItemMock[0];
-			_task.Providers = _providers;
-			_task.InputFiles = _inputFiles;
+			_task.Providers = _providers;			
 			
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("At least one Metrics must be informed in Metrics property", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
 		public void TestEmptyProviders()
 		{
-			_task.Metrics = _metrics;
-			_task.InputFiles = _inputFiles;			
+			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[0];
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("At least one Provider must me informed in Providers property", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
 		public void TestInvalidTypeProviders()
 		{
-			_task.Metrics = _metrics;
-			_task.InputFiles = _inputFiles;
+			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[1];
 			_task.Providers[0] = new TaskItemMock("foo");
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Invalid provider: foo. Couldn't create instance of this type", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
 		public void TestInvalidTypeProviders2()
 		{
-			_task.Metrics = _metrics;
-			_task.InputFiles = _inputFiles;
+			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[1];
 			_task.Providers[0] = new TaskItemMock("MSBuildCodeMetrics.Tasks.CodeMetrics, MSBuildCodeMetrics.Tasks");
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Type MSBuildCodeMetrics.Tasks.CodeMetrics, MSBuildCodeMetrics.Tasks doesn't implements ICodeMetricsProvider", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
 		public void TestProviderWithNoName()
 		{
-			_task.Metrics = _metrics;
-			_task.InputFiles = _inputFiles;
+			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[1];
 			_task.Providers[0] = new TaskItemMock("MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests");
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Provider MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests doesn't implement property Name correctly", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
 		public void TestEmptyInputFiles()
 		{
-			_task.Metrics = _metrics;
-			_task.InputFiles = new TaskItemMock[0];
+			_task.Metrics = _metrics;			
 			_task.Providers = _providers;
+			_task.Metrics = new TaskItemMock[1];
+			_task.Metrics[0] = new TaskItemMock("LinesOfCode").
+				AddMetadata("ProviderName", "CodeMetricsProviderMock").
+				AddMetadata("Ranges", "2;3");
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Files must be informed in Metrics property. ProviderName: CodeMetricsProviderMock, Metric: LinesOfCode", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
@@ -142,10 +143,11 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("InvalidMetric").
 				AddMetadata("ProviderName", null).
-				AddMetadata("Ranges", "2;3");
-			_task.InputFiles = _inputFiles;
+				AddMetadata("Ranges", "2;3").
+				AddMetadata("Files", "foo");
 			_task.Providers = _providers;
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("ProviderName must be informed in Metrics property", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
@@ -154,10 +156,11 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("InvalidMetric").
 				AddMetadata("ProviderName", "InvalidProvider").
-				AddMetadata("Ranges", "2;3");
-			_task.InputFiles = _inputFiles;
+				AddMetadata("Ranges", "2;3").
+				AddMetadata("Files", "foo");
 			_task.Providers = _providers;
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Invalid provider name in Metrics property: ProviderName: InvalidProvider", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
@@ -165,11 +168,12 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock(null).
-				AddMetadata("ProviderName", "Foo").
-				AddMetadata("Ranges", "2;3");
-			_task.InputFiles = _inputFiles;
+				AddMetadata("ProviderName", "CodeMetricsProviderMock").
+				AddMetadata("Ranges", "2;3").
+				AddMetadata("Files", "foo");
 			_task.Providers = _providers;
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Metric name in property Metrics can't be null (ProviderName: CodeMetricsProviderMock", _buildEngine.ErrorMessage);
 		}
 
 		[TestMethod]
@@ -177,11 +181,25 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("InvalidMetric").
-				AddMetadata("ProviderName", "Foo").
-				AddMetadata("Ranges", "2;3");
-			_task.InputFiles = _inputFiles;
+				AddMetadata("ProviderName", "CodeMetricsProviderMock").
+				AddMetadata("Ranges", "2;3").
+				AddMetadata("Files", "foo");
 			_task.Providers = _providers;
 			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Provider CodeMetricsProviderMock doesn't know how to handle metric InvalidMetric", _buildEngine.ErrorMessage);
 		}
+
+		[TestMethod]
+		public void TestMetricWithNoRanges()
+		{
+			_task.Metrics = new TaskItemMock[1];
+			_task.Metrics[0] = new TaskItemMock("LinesOfCode").
+				AddMetadata("ProviderName", "CodeMetricsProviderMock").
+				AddMetadata("Files", "foo");
+			_task.Providers = _providers;
+			Assert.AreEqual(false, _task.Execute());
+			Assert.AreEqual("Ranges can't be null if you need a summary report. ProviderName: CodeMetricsProviderMock, MetricName: LinesOfCode", _buildEngine.ErrorMessage);
+		}
+
 	}
 }

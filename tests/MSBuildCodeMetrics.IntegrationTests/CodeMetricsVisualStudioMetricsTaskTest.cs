@@ -32,24 +32,25 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
 			ITaskItem[] metrics = new TaskItemMock[2];
 			metrics[0] = new TaskItemMock("CyclomaticComplexity").
 				AddMetadata("ProviderName", "VisualStudioMetrics").
-				AddMetadata("Ranges", "5;10");
+				AddMetadata("Ranges", "5;10").
+				AddMetadata("Files", currentPath + @"\MSBuildCodeMetrics.Core.dll");
 			metrics[1] = new TaskItemMock("LinesOfCode").
 				AddMetadata("ProviderName", "VisualStudioMetrics").
-				AddMetadata("Ranges", "50;100");
+				AddMetadata("Ranges", "50;100").
+				AddMetadata("Files", currentPath + @"\MSBuildCodeMetrics.Core.dll");
 
 			ITaskItem[] inputFiles = new TaskItemMock[1];
 			inputFiles[0] = new TaskItemMock("MSBuildCodeMetrics.Core.dll").AddMetadata("FullPath", currentPath + @"\MSBuildCodeMetrics.Core.dll");
 
 			CodeMetrics task = new CodeMetrics();
 			task.BuildEngine = new BuildEngineMock();
-			task.Providers = providers;
-			task.InputFiles = inputFiles;
+			task.Providers = providers;			
 			task.OutputFileName = "report.xml";
 			task.ShowDetailsReport = true;
 			task.ShowSummaryReport = true;
 			task.Metrics = metrics;
 			task.FileOutput = true;
-			task.Execute();
+			Assert.IsTrue(task.Execute());			
 
 			FileStream fs = new FileStream("report.xml", FileMode.Open, FileAccess.Read);
 			MSBuildCodeMetricsReport report;

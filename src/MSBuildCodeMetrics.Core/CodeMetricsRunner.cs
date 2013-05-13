@@ -7,9 +7,10 @@ using MSBuildCodeMetrics.Core.Ranges;
 
 namespace MSBuildCodeMetrics.Core
 {
-	public class CodeMetricsRunner 
+	public class CodeMetricsRunner
 	{
 		private List<ICodeMetricsProvider> _providers = new List<ICodeMetricsProvider>();
+		private Dictionary<string, ICodeMetricsProvider> _providerRegistry = new Dictionary<string, ICodeMetricsProvider>();
 		private Dictionary<ICodeMetricsProvider, List<string>> _metrics = new Dictionary<ICodeMetricsProvider, List<string>>();
 		private List<RunnerMeasure> _measures = new List<RunnerMeasure>();
 		private ILogger _logger;
@@ -21,8 +22,9 @@ namespace MSBuildCodeMetrics.Core
 
 		public void RegisterProvider(ICodeMetricsProvider provider)
 		{
-			_providers.Add(provider);			
+			_providers.Add(provider);
 			_metrics.Add(provider, provider.GetMetrics().ToList<string>());
+			_providerRegistry.Add(provider.Name, provider);
 		}
 
 		public ICodeMetricsProvider GetProvider(string name)
@@ -35,36 +37,49 @@ namespace MSBuildCodeMetrics.Core
 			return _metrics[GetProvider(providerName)].IndexOf(metricName) >= 0;
 		}
 
-		public void ComputeMetrics(IEnumerable<string> inputFiles)
+		public void ComputeMetrics(IEnumerable<ComputeMetricsParameter> parameters)
 		{
-			if (inputFiles.Count() <= 0)
-				throw new ArgumentOutOfRangeException("InputFiles shouldn't be empty.");
+			foreach (ComputeMetricsParameter p in parameters)
+				if (p.Files.Count() <= 0)
+					throw new ArgumentOutOfRangeException("InputFiles shouldn't be empty.");
 
-			ComputeMetricsForSingleFileProviders(inputFiles);
-			ComputeMetricsForMultiFileProviders(inputFiles); 
-		}
+			var providers =
+				(from ComputeMetricsParameter p in parameters
+				 select p.ProviderName).Distinct();
 
-		private void ComputeMetricsForMultiFileProviders(IEnumerable<string> inputFiles)
-		{
-			foreach (KeyValuePair<ICodeMetricsProvider, List<string>> p in _metrics)
+			foreach (string providerName in providers)
 			{
-				if (p.Key is IMultiFileCodeMetricsProvider)
-					foreach (ProviderMeasure m in ((IMultiFileCodeMetricsProvider)p.Key).ComputeMetrics(p.Value, inputFiles))
-						_measures.Add(new RunnerMeasure(p.Key.Name, m));
-			}
-		}
+				if (!_providerRegistry.ContainsKey(providerName))
+					throw new ArgumentOutOfRangeException("providerName", "ProviderName informed in parameters isn't registered");
+				var metrics =
+					(from ComputeMetricsParameter p in parameters
+					 where p.ProviderName == providerName
+					 select p.MetricName).Distinct();
 
-		private void ComputeMetricsForSingleFileProviders(IEnumerable<string> inputFiles)
-		{
-			foreach (string s in inputFiles)
-				foreach (KeyValuePair<ICodeMetricsProvider, List<string>> p in _metrics)
-				{
-					List<ProviderMeasure> measures = new List<ProviderMeasure>();
-					if (p.Key is ISingleFileCodeMetricsProvider)
-						measures.AddRange(((ISingleFileCodeMetricsProvider)p.Key).ComputeMetrics(p.Value, s));
-					foreach (ProviderMeasure pm in measures)
-						_measures.Add(new RunnerMeasure(p.Key.Name, pm));
+				List<string> files = new List<string>();
+				foreach (string metricName in metrics)
+				{				
+					var fileLists =
+						(from ComputeMetricsParameter p in parameters
+						 where p.ProviderName == providerName && p.MetricName == metricName
+						 select p.Files);
+					foreach (List<string> fileList in fileLists)
+						files.AddRange(fileList);
 				}
+
+				if (_providerRegistry[providerName] is ISingleFileCodeMetricsProvider)
+				{
+					foreach (string file in files.Distinct())
+						foreach (ProviderMeasure pm in ((ISingleFileCodeMetricsProvider)_providerRegistry[providerName]).ComputeMetrics(metrics, file))
+							_measures.Add(new RunnerMeasure(providerName, pm));
+				}
+				else if (_providerRegistry[providerName] is IMultiFileCodeMetricsProvider)
+				{
+					foreach (ProviderMeasure pm in ((IMultiFileCodeMetricsProvider)_providerRegistry[providerName]).ComputeMetrics(metrics, files.Distinct()))
+						_measures.Add(new RunnerMeasure(providerName, pm));
+				}
+
+			}
 		}
 
 		public IEnumerable<RunnerMeasure> GetMeasuresByProvider(string providerName)
@@ -105,16 +120,16 @@ namespace MSBuildCodeMetrics.Core
 			return result;
 		}
 
-		private void AppendSummaryReport(MSBuildCodeMetricsReport result, string providerName, string metricName, 
+		private void AppendSummaryReport(MSBuildCodeMetricsReport result, string providerName, string metricName,
 			IList<SummaryReportRange> summaryReport)
 		{
 			if (result.Summary == null)
 				result.CreateSummary();
 
 			MetricReport metricSummaryReport = result.Summary.AddMetric(providerName, metricName).CreateRanges();
-			
-			foreach(SummaryReportRange r in summaryReport)			
-				metricSummaryReport.AddRange(r.Range.Name, r.Count);							
+
+			foreach (SummaryReportRange r in summaryReport)
+				metricSummaryReport.AddRange(r.Range.Name, r.Count);
 		}
 
 		private void AppendDetailsReport(MSBuildCodeMetricsReport result, string providerName, string metricName, IEnumerable<RunnerMeasure> detailedReport)
@@ -123,9 +138,9 @@ namespace MSBuildCodeMetrics.Core
 				result.CreateDetails();
 
 			MetricReport detailsReport = result.Details.AddMetric(providerName, metricName).CreateMeasures();
-			
-			foreach (RunnerMeasure rm in detailedReport)			
-				detailsReport.AddMeasure(rm.MeasureName, rm.Value);							
+
+			foreach (RunnerMeasure rm in detailedReport)
+				detailsReport.AddMeasure(rm.MeasureName, rm.Value);
 		}
 
 		private IList<SummaryReportRange> GetSummaryReport(string providerName, string metricName, IEnumerable<int> rangeList)
@@ -140,7 +155,7 @@ namespace MSBuildCodeMetrics.Core
 			if (rangeList.ToList<int>().Count == 1)
 				return GetReportWithTwoRanges(providerName, metricName, orderedRangeList);
 			else
-				return GetReportWithMoreThanTwoRanges(providerName, metricName, orderedRangeList);			
+				return GetReportWithMoreThanTwoRanges(providerName, metricName, orderedRangeList);
 		}
 
 		private List<SummaryReportRange> GetReportWithTwoRanges(string providerName, string metricName, IList<int> rangeList)
@@ -169,11 +184,11 @@ namespace MSBuildCodeMetrics.Core
 		}
 
 		public IEnumerable<RunnerMeasure> GetDetailedReport(string providerName, string metricName)
-		{		
+		{
 			return
 				(from RunnerMeasure rm in _measures
 				 where rm.ProviderName == providerName && rm.MetricName == metricName
-				 select rm);			
+				 select rm).OrderByDescending(m => m.Value);
 		}
 
 		private void AppendGreaterThanRange(string providerName, string metricName, List<SummaryReportRange> result, int rangeValue)
@@ -187,24 +202,24 @@ namespace MSBuildCodeMetrics.Core
 		}
 
 		private void AppendLowerOrEqualRange(string providerName, string metricName, List<SummaryReportRange> result, int rangeValue)
-		{			
+		{
 			int count =
 				(from RunnerMeasure rm in _measures
 				 where rm.Value <= rangeValue && rm.MetricName == metricName && rm.ProviderName == providerName
 				 select rm).Count();
 
-			result.Add(new SummaryReportRange(new LowerOrEqualRangeType(rangeValue), count));			 
+			result.Add(new SummaryReportRange(new LowerOrEqualRangeType(rangeValue), count));
 		}
 
-		private void AppendBetweenUpperAndLowerRange(string providerName, string metricName, 
+		private void AppendBetweenUpperAndLowerRange(string providerName, string metricName,
 			List<SummaryReportRange> result, int upperValue, int lowerValue)
-		{			
+		{
 			int count =
 				(from RunnerMeasure rm in _measures
 				 where rm.Value <= upperValue && rm.Value > lowerValue && rm.ProviderName == providerName && rm.MetricName == metricName
 				 select rm).Count();
 
-			result.Add(new SummaryReportRange(new BetweenUpperAndLowerRangeType(upperValue, lowerValue), count));			 
+			result.Add(new SummaryReportRange(new BetweenUpperAndLowerRangeType(upperValue, lowerValue), count));
 		}
 
 	}

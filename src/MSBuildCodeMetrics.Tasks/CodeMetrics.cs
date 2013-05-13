@@ -25,13 +25,6 @@ namespace MSBuildCodeMetrics.Tasks
 		}
 
 		[Required]
-		public ITaskItem[] InputFiles
-		{
-			get;
-			set;
-		}
-
-		[Required]
 		public ITaskItem[] Providers 
 		{ 
 			get; 
@@ -92,52 +85,43 @@ namespace MSBuildCodeMetrics.Tasks
 		{
 			try
 			{
-				MetricList ml = ParseMetrics();
-				List<string> files = GetInputFileList();
+				TaskMetricList ml = ParseMetrics();				
 
 				MSBuildCodeMetrics.Core.ILogger logger = new MSBuildLogger(Log);
 				CodeMetricsRunner runner = new CodeMetricsRunner(logger);
 				RegisterProviders(runner, logger);
 				ValidateMetricsList(runner, ml);
 
-				runner.ComputeMetrics(files);
+				runner.ComputeMetrics(ml.ToComputeMetricsParameterList());
 				GenerateReport(runner, ml);
 				return true;
 			}
-			catch (ArgumentException e)
+			catch (MSBuildCodeMetricsTaskException e)
 			{
 				Log.LogError(e.Message);
 				return false;
 			}			
 		}
 
-		private void ValidateMetricsList(CodeMetricsRunner runner,  MetricList ml)
+		private void ValidateMetricsList(CodeMetricsRunner runner,  TaskMetricList ml)
 		{
-			foreach (Metric p in ml)
+			foreach (TaskMetric p in ml)
 			{
 				if (String.IsNullOrEmpty(p.ProviderName))
-					throw new ArgumentNullException("ProviderName", "ProviderName must be informed in Metrics property");
+					throw new MSBuildCodeMetricsTaskException("ProviderName must be informed in Metrics property");
 				if (!_providers.ContainsKey(p.ProviderName))
-					throw new ArgumentException("Invalid provider name in Metrics property: ProviderName: " + p.ProviderName);
+					throw new MSBuildCodeMetricsTaskException("Invalid provider name in Metrics property: ProviderName: " + p.ProviderName);
 				if (String.IsNullOrEmpty(p.MetricName))
-					throw new ArgumentNullException("MetricName", "Metric name in property Metrics can't be null (ProviderName: " + p.ProviderName);
+					throw new MSBuildCodeMetricsTaskException("Metric name in property Metrics can't be null (ProviderName: " + p.ProviderName);
 				if (!runner.IsMetricRegistered(p.ProviderName, p.MetricName))
-					throw new ArgumentOutOfRangeException("MetricName", "Provider " + p.ProviderName + " doesn't know how to handle metric " + p.MetricName);
+					throw new MSBuildCodeMetricsTaskException("Provider " + p.ProviderName + " doesn't know how to handle metric " + p.MetricName);
 			}
-		}
-
-		private List<string> GetInputFileList()
-		{
-			List<string> files = new List<string>();
-			foreach (ITaskItem i in InputFiles)
-				files.Add(i.GetMetadata("FullPath"));
-			return files;
 		}
 
 		private void RegisterProviders(CodeMetricsRunner runner, MSBuildCodeMetrics.Core.ILogger logger)
 		{
 			if (Providers.Length <= 0)
-				throw new ArgumentOutOfRangeException("At least one Provider must me informed in Providers property");							
+				throw new MSBuildCodeMetricsTaskException("At least one Provider must me informed in Providers property");							
 
 			foreach (ITaskItem item in Providers)
 			{
@@ -156,10 +140,10 @@ namespace MSBuildCodeMetrics.Tasks
 			Type providerType = Type.GetType(typeName);
 
 			if (providerType == null)
-				throw new ArgumentOutOfRangeException("Invalid provider: " + typeName + ". Couldn't create instance of this type");
+				throw new MSBuildCodeMetricsTaskException("Invalid provider: " + typeName + ". Couldn't create instance of this type");
 
 			if (!(typeof(ICodeMetricsProvider).IsAssignableFrom(providerType)))
-				throw new ArgumentOutOfRangeException("Type " + typeName + " doesn't implements ICodeMetricsProvider");		
+				throw new MSBuildCodeMetricsTaskException("Type " + typeName + " doesn't implements ICodeMetricsProvider");		
 
 			ICodeMetricsProvider provider = (ICodeMetricsProvider)providerType.GetConstructor(new Type[0]).Invoke(new object[0]);
 
@@ -170,27 +154,33 @@ namespace MSBuildCodeMetrics.Tasks
 			}
 
 			if (String.IsNullOrEmpty(provider.Name))
-				throw new ArgumentNullException("Provider " + typeName + " doesn't implement property Name correctly");
+				throw new MSBuildCodeMetricsTaskException("Provider " + typeName + " doesn't implement property Name correctly");
 
 			return provider;
 		}
 
-		private MetricList ParseMetrics()
+		private TaskMetricList ParseMetrics()
 		{
 			if (Metrics == null)
 				throw new ArgumentNullException("Metrics");
 
 			if (Metrics.Length <= 0)
-				throw new ArgumentOutOfRangeException("At least one Metrics must be informed in Metrics property");			
+				throw new MSBuildCodeMetricsTaskException("At least one Metrics must be informed in Metrics property");			
 
-			MetricList ml = new MetricList();
+			TaskMetricList ml = new TaskMetricList();
 			foreach (ITaskItem i in Metrics)
 			{
 				string metricName = i.ItemSpec;
 				string providerName = i.GetMetadata("ProviderName");
 				List<int> ranges = new List<int>();
 				ParseRanges(i, ranges);
-				ml.Add(providerName, metricName, ranges);
+				if (ShowSummaryReport && (ranges == null || ranges.Count <= 0))
+					throw new MSBuildCodeMetricsTaskException("Ranges can't be null if you need a summary report. ProviderName: " + providerName + ", MetricName: " + metricName);
+				string files = i.GetMetadata("Files");
+				if (String.IsNullOrEmpty(files))
+					throw new MSBuildCodeMetricsTaskException("Files must be informed in Metrics property. ProviderName: " + providerName + ", Metric: " + metricName);
+				List<string> fileList = files.Split(';').ToList<string>();
+				ml.Add(providerName, metricName, ranges, fileList);
 			}
 			return ml;
 		}
@@ -201,8 +191,8 @@ namespace MSBuildCodeMetrics.Tasks
 			if (!hasRangesMetadata)
 				return;
 
-			if (String.IsNullOrEmpty(i.GetMetadata("Ranges")))
-				return;
+			if (String.IsNullOrEmpty(i.GetMetadata("Ranges")))		
+				return;			
 			
 			foreach (string s in i.GetMetadata("Ranges").Split(';'))			
 				ranges.Add(ParseRange(s));						
@@ -220,9 +210,9 @@ namespace MSBuildCodeMetrics.Tasks
 			}
 		}
 
-		private void GenerateReport(CodeMetricsRunner runner, MetricList ml)
-		{			
-			MSBuildCodeMetricsReport report = runner.GenerateReport(ml, ShowSummaryReport, ShowDetailsReport);
+		private void GenerateReport(CodeMetricsRunner runner, TaskMetricList ml)
+		{	
+			MSBuildCodeMetricsReport report = runner.GenerateReport(ml.ToMetricList(), ShowSummaryReport, ShowDetailsReport);
 			if (FileOutput)							
 				GenerateFileOutput(report);
 			if (ShowConsoleOutput)

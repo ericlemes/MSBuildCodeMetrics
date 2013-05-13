@@ -32,7 +32,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 			List<ProviderMeasure> result = new List<ProviderMeasure>();
 			foreach (KeyValuePair<string, int> p in counter)
 				result.Add(new ProviderMeasure("CountFilesByExtension", p.Key, p.Value));
-			return result;
+			return result.OrderByDescending(m => m.Value).ToList<ProviderMeasure>();
 		}
 
 		private Dictionary<string, int> CountFilesByExtension(IEnumerable<string> files)

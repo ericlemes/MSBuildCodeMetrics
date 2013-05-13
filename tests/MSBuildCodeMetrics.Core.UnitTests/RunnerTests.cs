@@ -11,8 +11,9 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 	[TestClass]
 	public class RunnerTests
 	{
-		CodeMetricsRunner _runner = new CodeMetricsRunner(new LoggerMock());
-		List<string> _fileList = new List<string>();
+		private CodeMetricsRunner _runner = new CodeMetricsRunner(new LoggerMock());
+		private List<string> _fileList = new List<string>();
+		private IList<ComputeMetricsParameter> _parameters;
 
 		[TestInitialize]
 		public void Initialize()
@@ -25,6 +26,13 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 				AddMeasure("Metric3", "Item1", 1));
 			_runner.RegisterProvider(CodeMetricsProviderMultiFileMock.Create("Provider3").AddMetric("Metric5").
 				AddMeasure("Metric5", "Item1", 10));
+
+			_parameters = ComputeMetricsParameterList.Create().
+				Add("Provider1", "Metric1", _fileList).
+				Add("Provider1", "Metric2", _fileList).
+				Add("Provider2", "Metric3", _fileList).
+				Add("Provider2", "Metric4", _fileList).
+				Add("Provider3", "Metric5", _fileList);
 
 			_fileList.Add("foo");
 		}
@@ -40,7 +48,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[TestMethod]
 		public void TestComputeMetrics()
 		{
-			_runner.ComputeMetrics(_fileList);
+			_runner.ComputeMetrics(_parameters);
 			Assert.AreEqual(3, _runner.GetMeasuresByProvider("Provider1").Count());
 			Assert.AreEqual(2, _runner.GetMeasuresByMetric("Provider1", "Metric1").Count());
 			Assert.AreEqual("Item1", _runner.GetMeasuresByMetric("Provider2", "Metric3")[0].MeasureName);
