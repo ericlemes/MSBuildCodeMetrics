@@ -71,8 +71,8 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			MSBuildCodeMetricsReport report = MSBuildCodeMetricsReport.Deserialize(streamFactory.OutputStream);
 			Assert.AreEqual(1, report.Details.Metrics.Count);
 			Assert.AreEqual("LinesOfCode", report.Details.Metrics[0].MetricName);
-			Assert.AreEqual("Method1", report.Details.Metrics[0].Measures[0].MeasureName);
-			Assert.AreEqual(1, report.Details.Metrics[0].Measures[0].Value);
+			Assert.AreEqual("Method3", report.Details.Metrics[0].Measures[0].MeasureName);
+			Assert.AreEqual(5, report.Details.Metrics[0].Measures[0].Value);
 		}
 
 		[TestMethod]		

@@ -89,8 +89,8 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 			Assert.AreEqual("Provider1", report.Details.Metrics[0].ProviderName);
 			Assert.AreEqual("CyclomaticComplexity", report.Details.Metrics[0].MetricName);
 			Assert.AreEqual(5, report.Details.Metrics[0].Measures.Count);
-			Assert.AreEqual("Method1", report.Details.Metrics[0].Measures[0].MeasureName);
-			Assert.AreEqual(1, report.Details.Metrics[0].Measures[0].Value);
+			Assert.AreEqual("Method5", report.Details.Metrics[0].Measures[0].MeasureName);
+			Assert.AreEqual(20, report.Details.Metrics[0].Measures[0].Value);
 		}
 
 		[TestMethod]
