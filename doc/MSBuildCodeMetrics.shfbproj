@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assembly Reference.aml" />
+    <None Include="Version History.aml" />
     <None Include="Sample.aml" />
     <None Include="Using CodeMetrics Task.aml" />
     <None Include="Extending MSBuildCodeMetrics.aml" />

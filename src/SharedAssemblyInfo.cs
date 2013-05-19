@@ -10,7 +10,9 @@
 
 [assembly: System.Reflection.AssemblyProduct("MSBuildCodeMetrics")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright © 2013 Eric Lemes de Godoy Cintra")]
-[assembly: System.Reflection.AssemblyConfiguration("Debug")]
+[assembly: System.Reflection.AssemblyVersion("0.1.0")]
+[assembly: System.Reflection.AssemblyFileVersion("0.1.0")]
+[assembly: System.Reflection.AssemblyConfiguration("Release")]
 [assembly: System.Reflection.AssemblyDescription("Unnoficial Release")]
 
 
