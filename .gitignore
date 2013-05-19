@@ -31,3 +31,6 @@
 /tests/MSBuildCodeMetrics.VisualStudioMetrics.UnitTests/*.user
 /build/metrics.xml
 /src/MSBuildCodeMetrics.Core.Providers/*.user
+/build/Pack
+/doc/Help
+/doc/*.shfbproj_Eric

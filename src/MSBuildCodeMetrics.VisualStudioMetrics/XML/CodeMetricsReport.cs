@@ -6,26 +6,40 @@ using System.Xml.Serialization;
 using System.Collections;
 using System.IO;
 
-namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
+namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
 {
+	/// <summary>
+	/// Used to parse Visual Studio Metrics XML
+	/// </summary>
 	public class CodeMetricsReport
 	{
+		/// <summary>
+		/// Version
+		/// </summary>
 		public string Version
 		{
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Targets
+		/// </summary>
 		public List<TargetReport> Targets
 		{
 			get;
 			set;
 		}
 
-		public static ModuleReport Deserialize(Stream metricsOutputStream)
+		/// <summary>
+		/// Deserialize the report
+		/// </summary>
+		/// <param name="inputStream">input stream</param>
+		/// <returns>new ModuleReport</returns>
+		public static ModuleReport Deserialize(Stream inputStream)
 		{
 			XmlSerializer s = new XmlSerializer(typeof(CodeMetricsReport));
-			object o = s.Deserialize(metricsOutputStream);
+			object o = s.Deserialize(inputStream);
 			ModuleReport result = ((CodeMetricsReport)o).Targets[0].Modules[0];
 			CreateParentRelationship(result);
 			return result;

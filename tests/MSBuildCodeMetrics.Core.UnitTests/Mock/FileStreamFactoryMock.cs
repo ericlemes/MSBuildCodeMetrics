@@ -21,7 +21,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 			return new MemoryStream();
 		}
 
-		public Stream GetStreamForOutputReport(string outputReportFileName)
+		public Stream CreateStream(string outputReportFileName)
 		{
 			_outputStream = new MemoryStream();
 			return _outputStream;

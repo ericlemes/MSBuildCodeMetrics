@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
+namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
 {
+	/// <summary>
+	/// Used to parse Visual Studio Metrics XML
+	/// </summary>
 	[XmlType("Module")]
 	public class ModuleReport
 	{
+		/// <summary>
+		/// Name
+		/// </summary>
 		[XmlAttribute]
 		public string Name
 		{
@@ -16,6 +22,9 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 			set;
 		}
 
+		/// <summary>
+		/// Assembly version
+		/// </summary>
 		[XmlAttribute]
 		public string AssemblyVersion
 		{
@@ -23,6 +32,9 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 			set;
 		}
 
+		/// <summary>
+		/// File version
+		/// </summary>
 		[XmlAttribute]
 		public string FileVersion
 		{
@@ -30,6 +42,9 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 			set;
 		}
 		
+		/// <summary>
+		/// Metrics list
+		/// </summary>
 		[XmlArray("Metrics")]
 		public List<MetricReport> MetricsList
 		{
@@ -38,6 +53,9 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 		}
 		
 		private MetricsReport _metrics;
+		/// <summary>
+		/// Metrics
+		/// </summary>
 		[XmlIgnore]
 		public MetricsReport Metrics
 		{
@@ -49,12 +67,19 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 			}
 		}
 
+		/// <summary>
+		/// Namespace
+		/// </summary>
 		public List<NamespaceReport> Namespaces
 		{
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Returns a list o all members (the lowest level of the tree)
+		/// </summary>
+		/// <returns>A list of all members</returns>
 		public List<MemberReport> GetAllMembers()
 		{
 			List<MemberReport> allMembers = new List<MemberReport>();

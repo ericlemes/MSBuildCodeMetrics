@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="00f2f10a-dc3f-4fc5-ad5e-003e47af9fb1" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction />                  
+    <section address="CodeMetricsTask">
+      <title>Code Metrics Task</title>
+      <content>
+        <para>The source code includes an example of CodeMetrics inspecting MSBuildCodeMetrics code.
+        The example uses the following structure:</para>
+        
+        <sampleCode language="XML">
+	&lt;Target Name=&quot;demo&quot; DependsOnTargets=&quot;build&quot;&gt;		
+		&lt;ItemGroup&gt;
+			&lt;Providers Include=&quot;MSBuildCodeMetrics.VisualStudioMetrics.VisualStudioCodeMetricsProvider, MSBuildCodeMetrics.VisualStudioMetrics&quot;&gt;
+				&lt;TempDir&gt;$(MSBuildProjectDirectory)\TempDir&lt;/TempDir&gt;
+			&lt;/Providers&gt;		
+			&lt;Providers Include=&quot;MSBuildCodeMetrics.Core.Providers.CountFilesByExtensionProvider, MSBuildCodeMetrics.Core.Providers&quot; /&gt;
+			&lt;Providers Include=&quot;MSBuildCodeMetrics.Core.Providers.CountLOCProvider, MSBuildCodeMetrics.Core.Providers&quot;&gt;
+				&lt;FileTypes&gt;.cs=C# Sources;.csproj=C# Projects&lt;/FileTypes&gt;				
+			&lt;/Providers&gt;
+			&lt;Providers Include=&quot;MSBuildCodeMetrics.Core.Providers.CountProjectsByProjectTypeProvider, MSBuildCodeMetrics.Core.Providers&quot; /&gt;
+			&lt;AllFiles Include=&quot;..\src\**\*.*&quot; /&gt;
+			&lt;SourceFiles Include=&quot;..\src\**\*.cs;..\src\**\*.csproj&quot; /&gt;
+			&lt;ProjectFiles Include=&quot;..\src\**\*.csproj&quot; /&gt;
+			&lt;BinariesInOutputDir Include=&quot;$(BinariesOutputDir)\*.dll&quot; /&gt;
+			&lt;Metrics Include=&quot;LinesOfCode&quot;&gt;
+				&lt;ProviderName&gt;VisualStudioMetrics&lt;/ProviderName&gt;
+				&lt;Ranges&gt;50;10;1&lt;/Ranges&gt;			
+				&lt;Files&gt;@(BinariesInOutputDir)&lt;/Files&gt;
+			&lt;/Metrics&gt;				
+			&lt;Metrics Include=&quot;CyclomaticComplexity&quot;&gt;
+				&lt;ProviderName&gt;VisualStudioMetrics&lt;/ProviderName&gt;
+				&lt;Ranges&gt;10;5;4;3;2;1&lt;/Ranges&gt;			
+				&lt;Files&gt;@(BinariesInOutputDir)&lt;/Files&gt;
+			&lt;/Metrics&gt;	
+			&lt;Metrics Include=&quot;CountFilesByExtension&quot;&gt;
+				&lt;ProviderName&gt;CountFilesByExtension&lt;/ProviderName&gt;
+				&lt;Files&gt;@(AllFiles)&lt;/Files&gt;
+				&lt;Ranges&gt;100&lt;/Ranges&gt;
+			&lt;/Metrics&gt;
+			&lt;Metrics Include=&quot;CodeLOC&quot;&gt;
+				&lt;ProviderName&gt;LOC&lt;/ProviderName&gt;
+				&lt;Files&gt;@(SourceFiles)&lt;/Files&gt;
+				&lt;Ranges&gt;500&lt;/Ranges&gt;
+			&lt;/Metrics&gt;			
+			&lt;Metrics Include=&quot;ProjectTypeCount&quot;&gt;
+				&lt;ProviderName&gt;CountProjectsByProjectTypeProvider&lt;/ProviderName&gt;
+				&lt;Files&gt;@(ProjectFiles)&lt;/Files&gt;
+				&lt;Ranges&gt;100&lt;/Ranges&gt;
+			&lt;/Metrics&gt;
+		&lt;/ItemGroup&gt;
+		&lt;MakeDir Directories=&quot;$(MSBuildProjectDirectory)\TempDir&quot; /&gt;
+		&lt;CodeMetrics Providers=&quot;@(Providers)&quot; Metrics=&quot;@(Metrics)&quot; ShowDetailsReport=&quot;true&quot; FileOutput=&quot;true&quot; OutputFileName=&quot;metrics.xml&quot;  /&gt;
+	&lt;/Target&gt;	
+        </sampleCode>
+      </content>      
+    </section>
+  </developerConceptualDocument>
+</topic>

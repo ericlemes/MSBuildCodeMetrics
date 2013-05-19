@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
+namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
 {
+	/// <summary>
+	/// Used to parse Visual Studio Metrics XML
+	/// </summary>
 	[XmlType("Type")]
 	public class TypeReport
 	{
+		/// <summary>
+		/// Name
+		/// </summary>
 		[XmlAttribute]
 		public string Name
 		{
@@ -16,6 +22,9 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 			set;
 		}
 		
+		/// <summary>
+		/// MetricsList
+		/// </summary>
 		[XmlArray("Metrics")]
 		public List<MetricReport> MetricsList
 		{
@@ -24,6 +33,9 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 		}
 		
 		private MetricsReport _metrics;
+		/// <summary>
+		/// Metrics
+		/// </summary>
 		[XmlIgnore]
 		public MetricsReport Metrics
 		{
@@ -35,12 +47,18 @@ namespace MSBuildCodeMetrics.VisualStudioCodeMetrics.XML
 			}
 		}
 
+		/// <summary>
+		/// Members
+		/// </summary>
 		public List<MemberReport> Members
 		{
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Namespace
+		/// </summary>
 		public NamespaceReport Namespace
 		{
 			get;

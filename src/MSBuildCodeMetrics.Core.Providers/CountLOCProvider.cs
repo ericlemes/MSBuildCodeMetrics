@@ -6,6 +6,12 @@ using System.IO;
 
 namespace MSBuildCodeMetrics.Core.Providers
 {
+	/// <summary>
+	/// Implements the File LOC Metric
+	/// </summary>
+	/// <remarks>
+	/// This expects a metadata named "Files" and expects a list of extension and labels in the format: .cs=C# Sources;.csproj=C# Projects
+	/// </remarks>
 	public class CountLOCProvider : IMultiFileCodeMetricsProvider, IMetadataHandler
 	{
 		private const string CommentDblSlash = "//";
@@ -15,26 +21,45 @@ namespace MSBuildCodeMetrics.Core.Providers
 		private Dictionary<string, string> _extensions = new Dictionary<string, string>();
 		private IFileStreamFactory _fileStreamFactory;
 
+		/// <summary>
+		/// Provider name (LOC)
+		/// </summary>
 		public string Name
 		{
 			get { return "LOC"; }
 		}
 
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public CountLOCProvider()
 		{
 			_fileStreamFactory = new FileStreamFactory();
 		}
 
+		/// <summary>
+		/// Constructor used to inject dependencies
+		/// </summary>
+		/// <param name="fileStreamFactory">The file stream factory used to open files</param>
 		public CountLOCProvider(IFileStreamFactory fileStreamFactory)
 		{
 			_fileStreamFactory = fileStreamFactory;
 		}
 
+		/// <summary>
+		/// Get Metrics computed by this provider: CodeLOC, EmptyLOC, CommentLOC
+		/// </summary>
+		/// <returns>A set of metrics</returns>
 		public IEnumerable<string> GetMetrics()
 		{
 			return new List<string>().AddItem("CodeLOC").AddItem("EmptyLOC").AddItem("CommentLOC");
 		}
 
+		/// <summary>
+		/// Adds metadata to the provider
+		/// </summary>
+		/// <param name="name">Metadata name</param>
+		/// <param name="value">Metadata value</param>
 		public void AddMetadata(string name, string value)
 		{
 			if (name == "FileTypes")
@@ -99,6 +124,12 @@ namespace MSBuildCodeMetrics.Core.Providers
 			return new FileLOCCount(fileCommentLineCount, fileEmptyLineCount, fileLineCount);
 		}
 
+		/// <summary>
+		/// Compute metrics
+		/// </summary>
+		/// <param name="metricsToCompute">The input metrics</param>
+		/// <param name="files">The files</param>
+		/// <returns>a set of measures</returns>
 		public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
 		{
 			if (_extensions.Count <= 0)

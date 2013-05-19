@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using MSBuildCodeMetrics.VisualStudioCodeMetrics.XML;
+using MSBuildCodeMetrics.VisualStudioMetrics.XML;
 using MSBuildCodeMetrics.VisualStudioMetrics;
 using MSBuildCodeMetrics.VisualStudioMetrics.UnitTests.Resources;
 

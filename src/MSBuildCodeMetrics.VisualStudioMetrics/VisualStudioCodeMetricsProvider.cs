@@ -6,12 +6,19 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Reflection;
-using MSBuildCodeMetrics.VisualStudioCodeMetrics.XML;
+using MSBuildCodeMetrics.VisualStudioMetrics.XML;
 using System.Diagnostics;
 using MSBuildCodeMetrics.Core;
 
 namespace MSBuildCodeMetrics.VisualStudioMetrics 
 {
+	/// <summary>
+	/// Code metrics provider to handle Visual Studio Metrics
+	/// </summary>
+	/// <remarks>
+	/// This provider expects TempDir (temporary dir to run Metrics.exe) and MetricsExePath (the Metrics.exe full path).
+	/// If MetricsExePath isn't provided, the default location is %S100COMNTOOLS")\..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe
+	/// </remarks>
 	public class VisualStudioCodeMetricsProvider : ISingleFileCodeMetricsProvider, ILoggableCodeMetricsProvider, IMetadataHandler
 	{
 		private List<ModuleReport> _reports = new List<ModuleReport>();
@@ -19,21 +26,36 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 		private string _tempDir;
 		private ILogger _logger;
 
+		/// <summary>
+		/// Name
+		/// </summary>
 		public string Name
 		{
 			get { return "VisualStudioMetrics"; }
 		}
 
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public VisualStudioCodeMetricsProvider()
 		{
 		}
 
+		/// <summary>
+		/// Constructor receiving dependencies
+		/// </summary>
+		/// <param name="metricsExePath">Metrics.exe full path</param>
+		/// <param name="tempDir">Temporary dir used in the execution of metrics.exe</param>
 		public VisualStudioCodeMetricsProvider(string metricsExePath, string tempDir)
 		{
 			_metricsExePath = metricsExePath;
 			_tempDir = tempDir;
 		}
 
+		/// <summary>
+		/// Gets metrics computed by this provider: MaintainabilityIndex, ClassCoupling, DepthOfInheritance, LinesOfCode and CyclomaticComplexity
+		/// </summary>
+		/// <returns>a set of metrics</returns>
 		public IEnumerable<string> GetMetrics()
 		{
 			List<string> l = new List<string>();
@@ -45,6 +67,12 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 			return l;
 		}
 
+		/// <summary>
+		/// Compute metrics
+		/// </summary>
+		/// <param name="metricsToCompute">Metrics</param>
+		/// <param name="fileName">File name</param>
+		/// <returns>a set of measures</returns>
 		public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, string fileName)
 		{
 			string tempFileName = GetTempFileFor(fileName);
@@ -143,11 +171,20 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 			return _tempDir + "\\" + fi.Name + ".metrics.xml";
 		}
 
+		/// <summary>
+		/// Sets the logger 
+		/// </summary>
+		/// <param name="logger">The logger</param>
 		public void SetLogger(ILogger logger)
 		{
 			_logger = logger;
 		}
 
+		/// <summary>
+		/// Adds metadata
+		/// </summary>
+		/// <param name="name">Metadata name</param>
+		/// <param name="value">Metadata value</param>
 		public void AddMetadata(string name, string value)
 		{
 			if (name == "TempDir")

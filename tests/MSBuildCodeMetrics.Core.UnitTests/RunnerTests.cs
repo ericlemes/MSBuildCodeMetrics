@@ -50,10 +50,10 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		{
 			_runner.ComputeMetrics(_parameters);
 			Assert.AreEqual(3, _runner.GetMeasuresByProvider("Provider1").Count());
-			Assert.AreEqual(2, _runner.GetMeasuresByMetric("Provider1", "Metric1").Count());
-			Assert.AreEqual("Item1", _runner.GetMeasuresByMetric("Provider2", "Metric3")[0].MeasureName);
-			Assert.AreEqual(1, _runner.GetMeasuresByMetric("Provider2", "Metric3")[0].Value);
-			Assert.AreEqual(10, _runner.GetMeasuresByMetric("Provider3", "Metric5")[0].Value);
+			Assert.AreEqual(2, _runner.GetDetailedReport("Provider1", "Metric1").Count());
+			Assert.AreEqual("Item1", _runner.GetDetailedReport("Provider2", "Metric3").ToList<RunnerMeasure>()[0].MeasureName);
+			Assert.AreEqual(1, _runner.GetDetailedReport("Provider2", "Metric3").ToList<RunnerMeasure>()[0].Value);
+			Assert.AreEqual(10, _runner.GetDetailedReport("Provider3", "Metric5").ToList<RunnerMeasure>()[0].Value);
 		}
 	}
 }

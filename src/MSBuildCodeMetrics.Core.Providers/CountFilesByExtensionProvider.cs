@@ -6,13 +6,23 @@ using System.IO;
 
 namespace MSBuildCodeMetrics.Core.Providers
 {
+	/// <summary>
+	/// Implements a metric that computes how many files existing for each extension.
+	/// </summary>
 	public class CountFilesByExtensionProvider : IMultiFileCodeMetricsProvider
 	{
+		/// <summary>
+		/// Name of the provider (CountFilesByExtension)
+		/// </summary>
 		public string Name
 		{
 			get { return "CountFilesByExtension"; }
 		}
 
+		/// <summary>
+		/// Returns metrics computed by this provider: CountFilesByExtension
+		/// </summary>
+		/// <returns>A set of metrics</returns>
 		public IEnumerable<string> GetMetrics()
 		{
 			List<string> l = new List<string>();
@@ -20,6 +30,12 @@ namespace MSBuildCodeMetrics.Core.Providers
 			return l;
 		}
 
+		/// <summary>
+		/// Compute metrics 
+		/// </summary>
+		/// <param name="metricsToCompute">list of metrics to compute</param>
+		/// <param name="files">files to parse</param>
+		/// <returns>a set of measures</returns>
 		public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
 		{
 			Dictionary<string, int> counter = CountFilesByExtension(files);
