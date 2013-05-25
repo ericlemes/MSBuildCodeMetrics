@@ -29,13 +29,17 @@
 	</Target>
 	
 	<Target Name="build" DependsOnTargets="assemblyinfo">
-		<ItemGroup>
-			<Binaries Include="$(MSBuildProjectDirectory)\..\src\**\bin\$(Configuration)\*.dll;$(MSBuildProjectDirectory)\..\src\**\bin\$(Configuration)\*.pdb" />					
-		</ItemGroup>
 		<MSBuild Projects="$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln" Properties="Configuration=$(Configuration)" />
+		<CallTarget Targets="copybinaries" />
+	</Target>	
+	
+	<Target Name="copybinaries">
+		<ItemGroup>
+			<Binaries Include="$(MSBuildProjectDirectory)\..\src\**\bin\$(Configuration)\*.dll;$(MSBuildProjectDirectory)\..\src\**\bin\$(Configuration)\*.pdb" />		
+		</ItemGroup>	
 		<MakeDir Directories="$(MSBuildProjectDirectory)\bin" />
 		<Copy SourceFiles="@(Binaries)" DestinationFolder="$(BinariesOutputDir)" />
-	</Target>	
+	</Target>
 	
 	<Target Name="tests" DependsOnTargets="build">				
 		<Exec Command="$(MSTestPath) /testcontainer:%(Tests.FullPath)" WorkingDirectory="$(MSBuildProjectDirectory)\..\"  /> 		
