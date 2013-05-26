@@ -415,20 +415,20 @@
     <HelpKINode Title="TaskMetric.MetricName Property " Url="html/72776f70-d7db-deb6-9eef-ef21ce0e0a91.htm" />
   </HelpKINode>
   <HelpKINode Title="MetricReport class">
-    <HelpKINode Title="MetricReport Class" Url="html/78edac8e-f0ae-a1c7-795e-b545f20e199d.htm" />
     <HelpKINode Title="MetricReport Class" Url="html/c13c7be1-ac04-d5fb-21f2-441495a6caa7.htm" />
+    <HelpKINode Title="MetricReport Class" Url="html/78edac8e-f0ae-a1c7-795e-b545f20e199d.htm" />
     <HelpKINode Title="MetricReport Members" Url="html/fc16efe7-ce0b-f894-f0ed-28fd02a11edd.htm" />
     <HelpKINode Title="MetricReport Members" Url="html/4678fe46-3de7-71fc-ab90-37ae4df8e5b8.htm" />
-    <HelpKINode Title="about MetricReport class" Url="html/c13c7be1-ac04-d5fb-21f2-441495a6caa7.htm" />
     <HelpKINode Title="about MetricReport class" Url="html/78edac8e-f0ae-a1c7-795e-b545f20e199d.htm" />
-    <HelpKINode Title="all members" Url="html/4678fe46-3de7-71fc-ab90-37ae4df8e5b8.htm" />
+    <HelpKINode Title="about MetricReport class" Url="html/c13c7be1-ac04-d5fb-21f2-441495a6caa7.htm" />
     <HelpKINode Title="all members" Url="html/fc16efe7-ce0b-f894-f0ed-28fd02a11edd.htm" />
+    <HelpKINode Title="all members" Url="html/4678fe46-3de7-71fc-ab90-37ae4df8e5b8.htm" />
     <HelpKINode Title="constructor" Url="html/f27cc70b-57de-e263-651d-9fa2d0a89e44.htm" />
     <HelpKINode Title="constructor" Url="html/2049b72f-e23b-1f68-3a1d-c42395ec52c4.htm" />
     <HelpKINode Title="methods" Url="html/12a22070-b466-bfe4-a366-eefa16b4fc63.htm" />
     <HelpKINode Title="methods" Url="html/af1758b9-5ebe-ef19-1196-9cd40caf44dd.htm" />
-    <HelpKINode Title="properties" Url="html/ba49382c-2e91-6647-43f4-d5ac74a0bf8d.htm" />
     <HelpKINode Title="properties" Url="html/5ad283c6-38fe-239f-a7f0-44b6c4c22f1b.htm" />
+    <HelpKINode Title="properties" Url="html/ba49382c-2e91-6647-43f4-d5ac74a0bf8d.htm" />
   </HelpKINode>
   <HelpKINode Title="MetricReport.AddMeasure method" Url="html/b2a02688-abed-cba6-e47f-34c21002143d.htm" />
   <HelpKINode Title="MetricReport.AddRange method" Url="html/83540ba5-8a08-dba7-0d4b-07cb161b552a.htm" />
@@ -437,8 +437,8 @@
   <HelpKINode Title="MetricReport.Measures property" Url="html/8bebc519-063a-b806-205d-786bc80e5fe2.htm" />
   <HelpKINode Title="MetricReport.MetricName property" Url="html/77249c11-f82d-3782-dfeb-f14a0bc1f146.htm" />
   <HelpKINode Title="MetricReport.MetricReport constructor">
-    <HelpKINode Title="MetricReport Constructor " Url="html/2049b72f-e23b-1f68-3a1d-c42395ec52c4.htm" />
     <HelpKINode Title="MetricReport Constructor " Url="html/f27cc70b-57de-e263-651d-9fa2d0a89e44.htm" />
+    <HelpKINode Title="MetricReport Constructor " Url="html/2049b72f-e23b-1f68-3a1d-c42395ec52c4.htm" />
   </HelpKINode>
   <HelpKINode Title="MetricReport.Name property" Url="html/317bf0be-e315-9f1e-f014-e577ac321f9f.htm" />
   <HelpKINode Title="MetricReport.ProviderName property" Url="html/6f9bd9fe-cc64-a1ca-9b75-ddf6a227a6c7.htm" />
