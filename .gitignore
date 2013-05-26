@@ -34,3 +34,4 @@
 /build/Pack
 /doc/Help
 /doc/*.shfbproj_Eric
+/src/SharedAssemblyInfo.cs
