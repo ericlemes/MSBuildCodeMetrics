@@ -1,0 +1,2 @@
+This file is auto-generated.
+Run build.bat in /build directory before opening the solution
