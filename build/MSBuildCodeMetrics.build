@@ -33,16 +33,13 @@
 		<CreateProperty Value="0.0.0.0">
 			<Output TaskParameter="Value" PropertyName="Version" Condition="$(Branch) == 'master'" />
 		</CreateProperty>
-		<CreateProperty Value="$(Branch).*">
-			<Output TaskParameter="Value" PropertyName="Version" Condition="($(Branch) != 'master') And ($(Branch.Length) == 3)" />
-		</CreateProperty>
 		<CreateProperty Value="$(Branch)">
-			<Output TaskParameter="Value" PropertyName="Version" Condition="($(Branch) != 'master') And ($(Branch.Length) > 3)" />
-		</CreateProperty>		
+			<Output TaskParameter="Value" PropertyName="Version" Condition="($(Branch) != 'master')" />
+		</CreateProperty>
 	
 		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\..\src\SharedAssemblyInfo.cs"
-			AssemblyProduct="MSBuildCodeMetrics - $(Branch).$(CommitHash)" AssemblyCopyright="Copyright &#169; 2013 Eric Lemes de Godoy Cintra" AssemblyTrademark=""
-			AssemblyVersion="$(Version)" AssemblyConfiguration="$(Configuration)" AssemblyDescription="Unnoficial Release" />
+			AssemblyProduct="MSBuildCodeMetrics - $(Branch) - $(CommitHash)" AssemblyCopyright="Copyright &#169; 2013 Eric Lemes de Godoy Cintra" AssemblyTrademark=""
+			AssemblyVersion="$(Version)" AssemblyConfiguration="$(Configuration)" AssemblyDescription="MSBuildCodeMetrics - $(Branch) - $(CommitHash)" />
 	</Target>
 	
 	<Target Name="build" DependsOnTargets="assemblyinfo">
