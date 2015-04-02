@@ -19,7 +19,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
 		public void RunTest()
 		{
 			string metricsExePath =  
-				Environment.GetEnvironmentVariable("VS100COMNTOOLS") + @"..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe";
+				Environment.GetEnvironmentVariable("VS120COMNTOOLS") + @"..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe";
 			string currentPath = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
 
 			List<string> l = new List<string>();

@@ -11,6 +11,7 @@
 /src/MSBuildCodeMetrics.VisualStudioMetrics/bin
 /src/obj
 /src/*.suo
+/src/*.user
 /src/MSBuildCodeMetrics.Core/*.user
 /src/MSBuildCodeMetrics.Tasks/*.user
 /src/MSBuildCodeMetrics.VisualStudioMetrics/*.user
