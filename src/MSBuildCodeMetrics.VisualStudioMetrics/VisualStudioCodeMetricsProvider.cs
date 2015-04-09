@@ -85,8 +85,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 			FileInfo fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
 
 			Process p = CreateProcessInstanceForConsoleApp(fileName, tempFileName, fi);
-			if (!p.Start())
-				throw new Exception("Error starting process: " + p.StartInfo.FileName + p.StartInfo.Arguments);
+		    p.Start();
 			p.WaitForExit();
 
 			while (!p.StandardOutput.EndOfStream)
@@ -104,7 +103,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 			if (String.IsNullOrEmpty(_metricsExePath))
 			{
 				_logger.LogMessage("MetricsExePath not specified as metadata");
-				_metricsExePath = Environment.GetEnvironmentVariable("VS100COMNTOOLS") + @"..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe";
+				_metricsExePath = Environment.GetEnvironmentVariable("VS120COMNTOOLS") + @"..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe";
 				_logger.LogMessage("Trying default: " + _metricsExePath);
 			}
 			else

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace MSBuildCodeMetrics.Core.Providers
@@ -38,17 +36,17 @@ namespace MSBuildCodeMetrics.Core.Providers
 		/// <returns>a set of measures</returns>
 		public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
 		{
-			Dictionary<string, int> counter = CountFilesByExtension(files);
-			List<ProviderMeasure> result = GenerateMeasures(counter);
+			var counter = CountFilesByExtension(files);
+			var result = GenerateMeasures(counter);
 			return result;
 		}
 
 		private static List<ProviderMeasure> GenerateMeasures(Dictionary<string, int> counter)
 		{
-			List<ProviderMeasure> result = new List<ProviderMeasure>();
-			foreach (KeyValuePair<string, int> p in counter)
+			var result = new List<ProviderMeasure>();            
+			foreach (var p in counter)
 				result.Add(new ProviderMeasure("CountFilesByExtension", p.Key, p.Value));
-			return result.OrderByDescending(m => m.Value).ToList<ProviderMeasure>();
+			return result.OrderByDescending(m => m.Value).ToList();
 		}
 
 		private Dictionary<string, int> CountFilesByExtension(IEnumerable<string> files)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace MSBuildCodeMetrics.Core.Providers
@@ -75,7 +73,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 			}
 		}
 
-		private FileLOCCount CountFile(string fileName)
+		private FileLocCount CountFile(string fileName)
 		{
 			int fileLineCount = 0;
 			int fileCommentLineCount = 0;
@@ -89,7 +87,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 			{
 				while (sr.Peek() != -1)
 				{
-					string line = sr.ReadLine().Trim();
+					var line = sr.ReadLine().Trim();
 					fileLineCount++;
 
 					if (line.Length == 0)
@@ -121,7 +119,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 				sr.Close();
 			}
 
-			return new FileLOCCount(fileCommentLineCount, fileEmptyLineCount, fileLineCount);
+			return new FileLocCount(fileCommentLineCount, fileEmptyLineCount, fileLineCount);
 		}
 
 		/// <summary>
@@ -135,15 +133,15 @@ namespace MSBuildCodeMetrics.Core.Providers
 			if (_extensions.Count <= 0)
 				throw new Exception("Extensions must be informed as metadata");
 
-			Dictionary<string, FileLOCCount> counter = new Dictionary<string, FileLOCCount>();
+			Dictionary<string, FileLocCount> counter = new Dictionary<string, FileLocCount>();
 			CountAllFiles(files, counter);
 			return GenerateMeasures(counter);
 		}
 
-		private List<ProviderMeasure> GenerateMeasures(Dictionary<string, FileLOCCount> counter)
+		private List<ProviderMeasure> GenerateMeasures(Dictionary<string, FileLocCount> counter)
 		{
 			List<ProviderMeasure> result = new List<ProviderMeasure>();
-			foreach (KeyValuePair<string, FileLOCCount> p in counter)
+			foreach (KeyValuePair<string, FileLocCount> p in counter)
 			{
 				result.Add(new ProviderMeasure("TotalLOC", p.Key, p.Value.TotalLineCount));
 				result.Add(new ProviderMeasure("CodeLOC", p.Key, p.Value.CodeLineCount));
@@ -153,7 +151,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 			return result;
 		}
 
-		private void CountAllFiles(IEnumerable<string> files, Dictionary<string, FileLOCCount> counter)
+		private void CountAllFiles(IEnumerable<string> files, Dictionary<string, FileLocCount> counter)
 		{
 			foreach (string fileName in files)
 			{
@@ -162,7 +160,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 					continue;
 
 				if (!counter.ContainsKey(_extensions[fi.Extension.ToLower()]))
-					counter.Add(_extensions[fi.Extension.ToLower()], new FileLOCCount(0, 0, 0));
+					counter.Add(_extensions[fi.Extension.ToLower()], new FileLocCount(0, 0, 0));
 
 				counter[_extensions[fi.Extension.ToLower()]].Sum(CountFile(fileName));
 			}

@@ -1,49 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MSBuildCodeMetrics.Core.Providers
+﻿namespace MSBuildCodeMetrics.Core.Providers
 {
-	internal class FileLOCCount
+	internal class FileLocCount
 	{
-		private int _commentLineCount;
-		public int CommentLineCount
-		{
-			get { return _commentLineCount; }
-			set { _commentLineCount = value; }
-		}
+	    public int CommentLineCount { get; set; }
 
-		private int _emptyLineCount;
-		public int EmptyLineCount
-		{
-			get { return _emptyLineCount; }
-			set { _emptyLineCount = value; }
-		}
+	    public int EmptyLineCount { get; set; }
 
-		private int _totalLineCount;
+	    private int _totalLineCount;
 		public int TotalLineCount
 		{
-			get { return _totalLineCount; }
-			set { _totalLineCount = 0; }
+			get { return _totalLineCount; }			
 		}
 
 		public int CodeLineCount
 		{
-			get { return _totalLineCount - _emptyLineCount - _commentLineCount; }
+			get { return _totalLineCount - EmptyLineCount - CommentLineCount; }
 		}
 
-		public FileLOCCount(int commentLineCount, int emptyLineCount, int codeLineCount)
+		public FileLocCount(int commentLineCount, int emptyLineCount, int codeLineCount)
 		{
-			_commentLineCount = commentLineCount;
-			_emptyLineCount = emptyLineCount;
+			CommentLineCount = commentLineCount;
+			EmptyLineCount = emptyLineCount;
 			_totalLineCount = codeLineCount;
 		}
 
-		public void Sum(FileLOCCount locCount)
+		public void Sum(FileLocCount locCount)
 		{
-			_commentLineCount += locCount.CommentLineCount;
-			_emptyLineCount += locCount.EmptyLineCount;
+			CommentLineCount += locCount.CommentLineCount;
+			EmptyLineCount += locCount.EmptyLineCount;
 			_totalLineCount += locCount.TotalLineCount;
 		}
 	}

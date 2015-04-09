@@ -89,8 +89,6 @@ namespace MSBuildCodeMetrics.Core.Providers
 			XmlTextReader rd = new XmlTextReader(st);
 			using (rd)
 			{
-				if (!rd.IsStartElement())
-					return "";
 				rd.ReadStartElement("Project");
 				rd.ReadToNextSibling("PropertyGroup");
 				rd.ReadStartElement("PropertyGroup");

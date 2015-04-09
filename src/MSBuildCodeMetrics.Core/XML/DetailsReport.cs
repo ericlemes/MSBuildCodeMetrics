@@ -25,8 +25,7 @@ namespace MSBuildCodeMetrics.Core.XML
 		/// </summary>
 		public List<MetricReport> Metrics
 		{
-			get { return _metrics; }
-			set { _metrics = value; }
+			get { return _metrics; }			
 		}
 
 		/// <summary>

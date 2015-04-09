@@ -7,12 +7,14 @@ using Microsoft.Build.Framework;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
 using MSBuildCodeMetrics.Core.UnitTests;
 using System.IO;
+using Moq;
+using MSBuildCodeMetrics.Core;
 using MSBuildCodeMetrics.Core.XML;
 
 namespace MSBuildCodeMetrics.Tasks.UnitTests
 {
 	[TestClass]
-	public class CodeMetricsTaskTests
+	public class GivenACodeMetricsTask
 	{
 		private CodeMetrics _task;
 		private TaskItemMock[] _metrics;
@@ -39,8 +41,15 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 				AddMetadata("Metrics", "LinesOfCode");
 		}
 
+	    [TestMethod]
+	    public void WhenConstructingShouldNotThrow()
+	    {
+	        var fileStreamFactoryMock = new Mock<IFileStreamFactory>();
+	        var task = new CodeMetrics(fileStreamFactoryMock.Object);
+	    }
+
 		[TestMethod]
-		public void ExecuteTest()
+		public void WhenRunningTaskShouldComputeMetrics()
 		{
 			ITaskItem[] providers = new TaskItemMock[1];
 			providers[0] = new TaskItemMock("MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests").				
@@ -76,7 +85,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]		
-		public void TestEmptyMetrics()
+		public void WhenRunningWithoutMetricsShouldReturnFalseAndSetError()
 		{
 			_task.Metrics = new TaskItemMock[0];
 			_task.Providers = _providers;			
@@ -86,7 +95,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestEmptyProviders()
+		public void WhenRunningWithoutProvidersShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[0];
@@ -95,7 +104,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestInvalidTypeProviders()
+		public void WhenRunningWithInvalidProviderShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[1];
@@ -105,7 +114,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestInvalidTypeProviders2()
+		public void WhenRunningWithClassThatIsNotAProviderShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[1];
@@ -115,7 +124,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestProviderWithNoName()
+		public void WhenRunningWithProviderThatDoesNotImplementsNameShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = _metrics;			
 			_task.Providers = new TaskItemMock[1];
@@ -125,7 +134,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestEmptyInputFiles()
+		public void WhenRunningWithoutFilesShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = _metrics;			
 			_task.Providers = _providers;
@@ -138,7 +147,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestMetricWithNullProviderName()
+		public void WhenRunningWithoutProviderNameShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("InvalidMetric").
@@ -150,8 +159,35 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			Assert.AreEqual("ProviderName must be informed in Metrics property", _buildEngine.ErrorMessage);
 		}
 
+
+        [TestMethod]
+        public void WhenRunningWithNoProivdersShouldReturnFalseAndLogError()
+        {
+            _task.Metrics = new TaskItemMock[1];
+            _task.Metrics[0] = new TaskItemMock("InvalidMetric").
+                AddMetadata("ProviderName", "Provider").
+                AddMetadata("Ranges", "2;3").
+                AddMetadata("Files", "foo");
+            _task.Providers = new ITaskItem[0];
+            Assert.AreEqual(false, _task.Execute());
+            Assert.AreEqual("At least one Provider must me informed in Providers property", _buildEngine.ErrorMessage);
+        }
+
+        [TestMethod]
+        public void WhenRunningWithoutMetricNameShouldReturnFalseAndLogError()
+        {
+            _task.Metrics = new TaskItemMock[1];
+            _task.Metrics[0] = new TaskItemMock(null).
+                AddMetadata("ProviderName", "CodeMetricsProviderMock").
+                AddMetadata("Ranges", "2;3").
+                AddMetadata("Files", "foo");
+            _task.Providers = _providers;
+            Assert.AreEqual(false, _task.Execute());
+            Assert.AreEqual("Metric name in property Metrics can't be null (ProviderName: CodeMetricsProviderMock", _buildEngine.ErrorMessage);
+        }
+
 		[TestMethod]
-		public void TestMetricWithInvalidProviderName()
+		public void WhenRunningWithInvalidProviderNameShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("InvalidMetric").
@@ -164,7 +200,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestMetricWithNullMetric()
+		public void WhenRunningWithoutMetricsShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock(null).
@@ -177,7 +213,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestMetricWithInvalidMetric()
+		public void WhenRunningWithInvalidMetricShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("InvalidMetric").
@@ -190,7 +226,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 		}
 
 		[TestMethod]
-		public void TestMetricWithNoRanges()
+		public void WhenRunningWithoutRangesShouldReturnFalseAndLogError()
 		{
 			_task.Metrics = new TaskItemMock[1];
 			_task.Metrics[0] = new TaskItemMock("LinesOfCode").
@@ -200,6 +236,70 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			Assert.AreEqual(false, _task.Execute());
 			Assert.AreEqual("Ranges can't be null if you need a summary report. ProviderName: CodeMetricsProviderMock, MetricName: LinesOfCode", _buildEngine.ErrorMessage);
 		}
+
+	    [TestMethod]
+	    public void WhenSettingShowConsoleOutputShouldStoreProperly()
+	    {
+	        _task.ShowConsoleOutput = false;
+	        Assert.AreEqual(false, _task.ShowConsoleOutput);
+	    }
+
+	    [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+	    public void WhenSettingRangeWithInvalidValueShouldReturnFalseAndSetError()
+	    {
+	        var buildEngineMock = new Mock<IBuildEngine>();
+	        var task = new CodeMetrics()
+	        {
+	            BuildEngine = buildEngineMock.Object,
+	            Metrics = new ITaskItem[]
+	            {
+	                _metrics[0] = new TaskItemMock("LinesOfCode").
+	                    AddMetadata("ProviderName", "CodeMetricsProviderMock").
+	                    AddMetadata("Ranges", "abc;abc").
+	                    AddMetadata("Files", "foo")
+	            }
+	        };
+	        var result = task.Execute();
+	    }
+
+        [TestMethod]     
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void WhenRunningWithoutMetricsShouldReturnFalseAndSetErrorMessage()
+        {
+            var buildEngineMock = new Mock<IBuildEngine>();
+            var task = new CodeMetrics()
+            {
+                BuildEngine = buildEngineMock.Object                
+            };
+            task.Execute();            
+        }
+
+        [TestMethod]        
+        public void WhenRunningWithMetricsWithEmptyRangesShouldReturnFalseAndSetErrorMessage()
+        {
+            var buildEngineMock = new Mock<IBuildEngine>();
+            var errorMessage = String.Empty;
+            buildEngineMock.Setup(be => be.LogErrorEvent(It.IsAny<BuildErrorEventArgs>())).
+                Callback<BuildErrorEventArgs>(
+                    e =>
+                    {
+                        errorMessage = e.Message;
+                    });
+            var task = new CodeMetrics()
+            {
+                BuildEngine = buildEngineMock.Object,
+                Metrics = new ITaskItem[]
+                {
+                    new TaskItemMock("Metric").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock").
+                        AddMetadata("Ranges", null).
+                        AddMetadata("Files", "foo")
+                }								
+            };
+            Assert.IsFalse(task.Execute());
+            Assert.IsTrue(errorMessage.StartsWith("Ranges can't be null if you need a summary report."));
+        }
 
 	}
 }

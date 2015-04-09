@@ -9,6 +9,15 @@ namespace MSBuildCodeMetrics.Core.Providers.UnitTests
 	[TestClass]
 	public class CountFilesByExtensionCodeMetricsProviderTests
 	{
+	    [TestMethod]
+	    public void WhenConstructingShouldNotThrowAndInitializeProperly()
+	    {
+	        var p = new CountFilesByExtensionProvider();
+            Assert.AreEqual("CountFilesByExtension", p.Name);
+            Assert.AreEqual(1, p.GetMetrics().Count());
+            Assert.AreEqual("CountFilesByExtension", p.GetMetrics().First());
+	    }
+
 		[TestMethod]
 		public void TestCountFilesByExtension()
 		{

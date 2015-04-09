@@ -28,6 +28,7 @@ namespace MSBuildCodeMetrics.Core
 		//comment
 			base.Add(new ReportParam(providerName, metricName, null));
 			return this;
+			'VB-Like comment
 		}
 	}
 }
