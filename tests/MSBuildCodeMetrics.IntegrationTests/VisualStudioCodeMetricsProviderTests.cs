@@ -27,7 +27,9 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
 			l.Add("LinesOfCode");
 
 			VisualStudioCodeMetricsProvider provider = new VisualStudioCodeMetricsProvider(metricsExePath, currentPath);
-			provider.SetLogger(new LoggerMock());
+		    var logger = new LoggerMock();
+			provider.Logger = logger;
+            provider.ProcessExecutor = new ProcessExecutor(logger);
 			List<ProviderMeasure> measures = provider.ComputeMetrics(l, @"MSBuildCodeMetrics.Core.dll").ToList<ProviderMeasure>();
 
 			List<ProviderMeasure> registerProviderMeasures = measures.Where(

@@ -115,9 +115,10 @@ namespace MSBuildCodeMetrics.Tasks
 			{
 				TaskMetricList ml = ParseMetrics();				
 
-				MSBuildCodeMetrics.Core.ILogger logger = new MSBuildLogger(Log);
+				var logger = new MSBuildLogger(Log);
+			    var processExecutor = new ProcessExecutor(logger);
 				CodeMetricsRunner runner = new CodeMetricsRunner(logger);
-				RegisterProviders(runner, logger);
+				RegisterProviders(runner, logger, processExecutor);
 				ValidateMetricsList(runner, ml);
 
 				runner.ComputeMetrics(ml.ToComputeMetricsParameterList());
@@ -146,7 +147,7 @@ namespace MSBuildCodeMetrics.Tasks
 			}
 		}
 
-		private void RegisterProviders(CodeMetricsRunner runner, MSBuildCodeMetrics.Core.ILogger logger)
+		private void RegisterProviders(CodeMetricsRunner runner, MSBuildCodeMetrics.Core.ILogger logger, IProcessExecutor processExecutor)
 		{
 			if (Providers.Length <= 0)
 				throw new MSBuildCodeMetricsTaskException("At least one Provider must me informed in Providers property");							
@@ -159,7 +160,9 @@ namespace MSBuildCodeMetrics.Tasks
 
 				runner.RegisterProvider(provider);
 				if (provider is ILoggableCodeMetricsProvider)
-					((ILoggableCodeMetricsProvider)provider).SetLogger(logger);
+					((ILoggableCodeMetricsProvider)provider).Logger = logger;
+                if (provider is IProcessExecutorCodeMetricsProvider)
+                    ((IProcessExecutorCodeMetricsProvider)provider).ProcessExecutor = processExecutor;
 			}
 		}
 

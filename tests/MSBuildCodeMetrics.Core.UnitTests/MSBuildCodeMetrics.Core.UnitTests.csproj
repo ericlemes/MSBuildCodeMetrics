@@ -57,10 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeserializationTests.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\XmlDiffExtensions.cs" />
     <Compile Include="GivenACodeMetricsRunner.cs" />
     <Compile Include="Mock\BuildEngineMock.cs" />
     <Compile Include="Mock\CodeMetricsProviderBaseMock.cs" />
+    <Compile Include="Mock\CodeMetricsProviderProcessExecutorMock.cs" />
     <Compile Include="Mock\CodeMetricsProviderSingleFileMock.cs" />
     <Compile Include="Mock\CodeMetricsProviderMultiFileMock.cs" />
     <Compile Include="Mock\LoggerMock.cs" />

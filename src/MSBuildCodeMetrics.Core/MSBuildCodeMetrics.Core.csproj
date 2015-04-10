@@ -58,10 +58,13 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="IMetadataHandler.cs" />
     <Compile Include="IMultiFileCodeMetricsProvider.cs" />
+    <Compile Include="IProcessExecutor.cs" />
+    <Compile Include="IProcessExecutorCodeMetricsProvider.cs" />
     <Compile Include="ISingleFileCodeMetricsProvider.cs" />
     <Compile Include="IFileStreamFactory.cs" />
     <Compile Include="MetricList.cs" />
     <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="ProcessExecutor.cs" />
     <Compile Include="ProviderMeasure.cs" />
     <Compile Include="RangeList.cs" />
     <Compile Include="Metric.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace MSBuildCodeMetrics.Core.Providers
 {
-	internal class FileLocCount
+	internal class FileLOCCount
 	{
 	    public int CommentLineCount { get; set; }
 
@@ -17,14 +17,14 @@
 			get { return _totalLineCount - EmptyLineCount - CommentLineCount; }
 		}
 
-		public FileLocCount(int commentLineCount, int emptyLineCount, int codeLineCount)
+		public FileLOCCount(int commentLineCount, int emptyLineCount, int codeLineCount)
 		{
 			CommentLineCount = commentLineCount;
 			EmptyLineCount = emptyLineCount;
 			_totalLineCount = codeLineCount;
 		}
 
-		public void Sum(FileLocCount locCount)
+		public void Sum(FileLOCCount locCount)
 		{
 			CommentLineCount += locCount.CommentLineCount;
 			EmptyLineCount += locCount.EmptyLineCount;

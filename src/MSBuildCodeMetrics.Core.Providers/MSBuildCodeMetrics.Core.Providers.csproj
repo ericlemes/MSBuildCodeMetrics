@@ -50,7 +50,7 @@
     <Compile Include="CountFilesByExtensionProvider.cs" />
     <Compile Include="CountLOCProvider.cs" />
     <Compile Include="CountProjectsByProjectTypeProvider.cs" />
-    <Compile Include="FileLocCount.cs" />
+    <Compile Include="FileLOCCount.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -25,15 +25,16 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.UnitTests
         [DeploymentItem(@"MSBuildCodeMetrics.Core.dll")]
         public void WhenCallingComputeMetricsAndTempDirDoesnotExistsShouldCreateTempDir()
         {
-            var loggerMock = new Mock<ILogger>();
+            var loggerMock = new Mock<ILogger>();            
 
             string tempDir = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\NewDir";
 
             if (Directory.Exists(tempDir))
                 throw new Exception("This directory should not exists");
 
-            var p = new VisualStudioCodeMetricsProvider(null, tempDir);
-            p.SetLogger(loggerMock.Object);
+            var p = new VisualStudioCodeMetricsProvider(null, tempDir);            
+            p.Logger = loggerMock.Object;
+            p.ProcessExecutor = new ProcessExecutor(loggerMock.Object);
             p.ComputeMetrics(new List<string> { "CyclomaticComplexity" }, @"MSBuildCodeMetrics.Core.dll");
 
             Assert.IsTrue(Directory.Exists(tempDir));
@@ -46,7 +47,8 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.UnitTests
             var loggerMock = new Mock<ILogger>();
 
             var p = new VisualStudioCodeMetricsProvider("C:\\InvalidExecutable.exe", "C:\\Temp");
-            p.SetLogger(loggerMock.Object);
+            p.Logger = loggerMock.Object;
+            p.ProcessExecutor = new ProcessExecutor(loggerMock.Object);
             p.ComputeMetrics(new List<string> {"CyclomaticComplexity"}, "C:\\outputfile.xml");
         }
 
@@ -58,7 +60,8 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.UnitTests
             var currentDir = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
 
             var p = new VisualStudioCodeMetricsProvider(null, currentDir);
-            p.SetLogger(loggerMock.Object);
+            p.Logger = loggerMock.Object;
+            p.ProcessExecutor = new ProcessExecutor(loggerMock.Object);
             p.ComputeMetrics(new List<string> { "CyclomaticComplexity" }, @"MSBuildCodeMetrics.Core.dll");
             
             loggerMock.Verify(l => l.LogMessage(It.Is<string>(s => s.StartsWith("Trying default: "))), Times.Once());
@@ -75,7 +78,8 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.UnitTests
             var currentDir = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
 
             var p = new VisualStudioCodeMetricsProvider(null, currentDir);
-            p.SetLogger(loggerMock.Object);
+            p.Logger = loggerMock.Object;
+            p.ProcessExecutor = new ProcessExecutor(loggerMock.Object);
             p.ComputeMetrics(new List<string> { "CyclomaticComplexity" }, "wrongfile");
 
             Assert.IsNotNull(errorMessage);

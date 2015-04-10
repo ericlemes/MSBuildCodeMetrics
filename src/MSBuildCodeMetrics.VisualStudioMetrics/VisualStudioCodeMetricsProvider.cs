@@ -17,14 +17,15 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 	/// </summary>
 	/// <remarks>
 	/// This provider expects TempDir (temporary dir to run Metrics.exe) and MetricsExePath (the Metrics.exe full path).
-	/// If MetricsExePath isn't provided, the default location is %S100COMNTOOLS")\..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe
+	/// If MetricsExePath isn't provided, the default location is %VS120COMNTOOLS")\..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe
 	/// </remarks>
-	public class VisualStudioCodeMetricsProvider : ISingleFileCodeMetricsProvider, ILoggableCodeMetricsProvider, IMetadataHandler
+	public class VisualStudioCodeMetricsProvider : ISingleFileCodeMetricsProvider, ILoggableCodeMetricsProvider, IMetadataHandler, IProcessExecutorCodeMetricsProvider
 	{
 		private List<ModuleReport> _reports = new List<ModuleReport>();
 		private string _metricsExePath;
 		private string _tempDir;
 		private ILogger _logger;
+        private IProcessExecutor _processExecutor;
 
 		/// <summary>
 		/// Name
@@ -33,6 +34,11 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 		{
 			get { return "VisualStudioMetrics"; }
 		}
+
+        public IProcessExecutor ProcessExecutor
+        {
+            set { this._processExecutor = value; }
+        }
 
 		/// <summary>
 		/// Default constructor
@@ -76,55 +82,27 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 		public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, string fileName)
 		{
 			string tempFileName = GetTempFileFor(fileName);
-			RunExternalExecutable(fileName, tempFileName);
+
+            FindDefaultMetricsExeIfNotSpecified();
+
+            string arguments = " /file:" + "\"" + fileName + "\" /out:\"" + tempFileName + "\" /gac ";
+		    _processExecutor.ExecuteProcess(_metricsExePath, arguments);
+			
 			return GetMeasuresForFile(metricsToCompute, tempFileName);
 		}
 
-		private void RunExternalExecutable(string fileName, string tempFileName)
-		{
-			FileInfo fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
+	    private void FindDefaultMetricsExeIfNotSpecified()
+	    {
+	        if (String.IsNullOrEmpty(_metricsExePath))
+	        {
+	            _logger.LogMessage("MetricsExePath not specified as metadata");
+	            _metricsExePath = Environment.GetEnvironmentVariable("VS120COMNTOOLS") +
+	                              @"..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe";
+	            _logger.LogMessage("Trying default: " + _metricsExePath);
+	        }
+	    }
 
-			Process p = CreateProcessInstanceForConsoleApp(fileName, tempFileName, fi);
-		    p.Start();
-			p.WaitForExit();
-
-			while (!p.StandardOutput.EndOfStream)
-				_logger.LogMessage(p.StandardOutput.ReadLine());
-			while (!p.StandardError.EndOfStream)
-				_logger.LogError(p.StandardError.ReadLine());				
-
-			if (p.ExitCode != 0)
-				throw new Exception("Error running process: " + p.StartInfo.FileName + p.StartInfo.Arguments + ". Exit code " + p.ExitCode.ToString() +
-					Environment.NewLine);
-		}
-
-		private Process CreateProcessInstanceForConsoleApp(string fileName, string tempFileName, FileInfo fi)
-		{
-			if (String.IsNullOrEmpty(_metricsExePath))
-			{
-				_logger.LogMessage("MetricsExePath not specified as metadata");
-				_metricsExePath = Environment.GetEnvironmentVariable("VS120COMNTOOLS") + @"..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe";
-				_logger.LogMessage("Trying default: " + _metricsExePath);
-			}
-			else
-				_logger.LogMessage("MetricsExePath: " + _metricsExePath);
-
-			if (!File.Exists(_metricsExePath))
-				_logger.LogError("File not found: " + _metricsExePath);
-
-			Process p = new Process();
-			p.StartInfo.FileName = "\"" + _metricsExePath + "\"";
-			p.StartInfo.Arguments = " /file:" + "\"" + fileName + "\" /out:\"" + tempFileName + "\" /gac ";
-			p.StartInfo.RedirectStandardError = true;
-			p.StartInfo.RedirectStandardOutput = true;
-			p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			p.StartInfo.CreateNoWindow = true;
-			p.StartInfo.UseShellExecute = false;
-			p.StartInfo.WorkingDirectory = fi.DirectoryName;
-			return p;
-		}
-
-		private IEnumerable<ProviderMeasure> GetMeasuresForFile(IEnumerable<string> metricsToCompute, string tempFileName)
+	    private IEnumerable<ProviderMeasure> GetMeasuresForFile(IEnumerable<string> metricsToCompute, string tempFileName)
 		{
 			FileStream fs = new FileStream(tempFileName, FileMode.Open, FileAccess.Read);
 			ModuleReport mr = null;
@@ -174,9 +152,9 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 		/// Sets the logger 
 		/// </summary>
 		/// <param name="logger">The logger</param>
-		public void SetLogger(ILogger logger)
+		public ILogger Logger
 		{
-			_logger = logger;
+            set { _logger = value; }
 		}
 
 		/// <summary>
@@ -191,5 +169,5 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 			else if (name == "MetricsExePath")
 				_metricsExePath = value;
 		}
-	}
+    }
 }

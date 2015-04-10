@@ -10,10 +10,10 @@ namespace MSBuildCodeMetrics.Core
 	/// </summary>
 	public interface ILoggableCodeMetricsProvider
 	{
-		/// <summary>
-		/// This method is called from CodeMetricsRunner to send the logger to the providers.
-		/// </summary>
-		/// <param name="logger">The logger</param>
-		void SetLogger(ILogger logger);
+	    /// <summary>
+	    /// This method is called from CodeMetricsRunner to send the logger to the providers.
+	    /// </summary>
+	    /// <param name="logger">The logger</param>
+	    ILogger Logger { set; }	
 	}
 }

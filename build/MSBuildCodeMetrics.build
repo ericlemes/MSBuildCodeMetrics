@@ -7,6 +7,7 @@
 		<OpenCoverMSBuildTasksPath>..\src\packages\OpenCover.4.5.1604\MSBuild</OpenCoverMSBuildTasksPath>
 		<OpenCoverMSBuildTasksLib>$(OpenCoverMSBuildTasksPath)\OpenCover.MSBuild.dll</OpenCoverMSBuildTasksLib>				
 		<Configuration>Release</Configuration>
+		<InspectCodePath>C:\Program Files (x86)\ReSharperCommandLineTools01Update1\inspectcode.exe</InspectCodePath>
 	</PropertyGroup>
 	
 	<ItemGroup>	   
@@ -120,7 +121,38 @@
 		</CreateItem>
 		<Zip ZipFileName="$(MSBuildProjectDirectory)\Pack\MSBuildCodeMetrics-$(Branch).$(CommitHash).zip" WorkingDirectory="$(MSBuildProjectDirectory)\Pack\Zip" Files="@(FilesToZip)"  />		
 	</Target>
-
+	
+	<Target Name="demo-jetbrains" DependsOnTargets="build">		
+		<ItemGroup>
+			<Providers Include="MSBuildCodeMetrics.JetBrains.InspectCodeProvider, MSBuildCodeMetrics.JetBrains">
+				<TempDir>$(MSBuildProjectDirectory)\TempDir</TempDir>
+				<InspectCodePath>$(InspectCodePath)</InspectCodePath>
+				<DotSettingsFile>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln.DotSettings</DotSettingsFile>
+			</Providers>											
+			<Metrics Include="AllViolations">
+				<ProviderName>InspectCode</ProviderName>
+				<Ranges>50;10;1</Ranges>			
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+			</Metrics>				
+			<Metrics Include="Warnings">
+				<ProviderName>InspectCode</ProviderName>
+				<Ranges>50;10;1</Ranges>			
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+			</Metrics>							
+			<Metrics Include="Suggestions">
+				<ProviderName>InspectCode</ProviderName>
+				<Ranges>50;10;1</Ranges>			
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+			</Metrics>					
+			<Metrics Include="Errors">
+				<ProviderName>InspectCode</ProviderName>
+				<Ranges>50;10;1</Ranges>			
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+			</Metrics>							
+		</ItemGroup>
+		<MakeDir Directories="$(MSBuildProjectDirectory)\TempDir" />
+		<CodeMetrics Providers="@(Providers)" Metrics="@(Metrics)" ShowDetailsReport="true" FileOutput="true" OutputFileName="metrics.xml"  />
+	</Target>	
 
 </Project>
 

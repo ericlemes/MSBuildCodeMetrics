@@ -6,7 +6,7 @@ using System.Text;
 namespace MSBuildCodeMetrics.Core
 {
 	/// <summary>
-	/// This interface must be implemented for providers that need to compute metric for each file perspective.
+	/// This interface must be implemented for providers that need to compute metric file by file (not on a set of files)
 	/// </summary>
 	public interface ISingleFileCodeMetricsProvider : ICodeMetricsProvider
 	{

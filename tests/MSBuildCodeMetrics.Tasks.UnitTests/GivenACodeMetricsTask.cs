@@ -301,5 +301,31 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
             Assert.IsTrue(errorMessage.StartsWith("Ranges can't be null if you need a summary report."));
         }
 
+	    [TestMethod]
+	    public void WhenRunningWithProcessExecutorCodeMetricsShouldSetProcessExecutor()
+	    {
+            var buildEngineMock = new Mock<IBuildEngine>();	        
+
+            var task = new CodeMetrics()
+            {
+                BuildEngine = buildEngineMock.Object,
+                Providers = new ITaskItem[]
+                {
+                    new TaskItemMock("MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderProcessExecutorMock, MSBuildCodeMetrics.Core.UnitTests").
+                    AddMetadata("ProviderName", "CodeMetricsProviderProcessExecutorMock")                    
+                },
+                Metrics = new ITaskItem[]
+                {
+                    new TaskItemMock("Metric").
+                        AddMetadata("ProviderName", "DummyProvider").
+                        AddMetadata("Ranges", "1").
+                        AddMetadata("Files", "foo")
+                }
+            };
+            Assert.IsNull(CodeMetricsProviderProcessExecutorMock.LastProcessExecutorSet);
+	        task.Execute();
+            Assert.IsNotNull(CodeMetricsProviderProcessExecutorMock.LastProcessExecutorSet);            
+	    }
+
 	}
 }

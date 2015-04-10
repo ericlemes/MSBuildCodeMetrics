@@ -6,7 +6,7 @@ using System.Text;
 namespace MSBuildCodeMetrics.Core
 {
 	/// <summary>
-	/// This interface should be implemented for providers that needs to compute metrics for a set o files.
+	/// This interface should be implemented for providers that needs to compute metrics for a set of files.
 	/// </summary>
 	public interface IMultiFileCodeMetricsProvider : ICodeMetricsProvider
 	{
