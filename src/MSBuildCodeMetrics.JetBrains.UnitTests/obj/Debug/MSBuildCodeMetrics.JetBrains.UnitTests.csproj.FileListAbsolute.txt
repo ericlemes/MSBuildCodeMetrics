@@ -9,6 +9,7 @@ C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\bin\Deb
 C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\bin\Debug\MSBuildCodeMetrics.Core.pdb
 C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\bin\Debug\MSBuildCodeMetrics.Core.xml
 C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\bin\Debug\MSBuildCodeMetrics.JetBrains.pdb
+C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\bin\Debug\MSBuildCodeMetrics.JetBrains.xml
 C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\obj\Debug\MSBuildCodeMetrics.JetBrains.UnitTests.csprojResolveAssemblyReference.cache
 C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\obj\Debug\MSBuildCodeMetrics.JetBrains.UnitTests.Resources.resources
 C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains.UnitTests\obj\Debug\MSBuildCodeMetrics.JetBrains.UnitTests.csproj.GenerateResource.Cache

@@ -23,11 +23,18 @@ namespace MSBuildCodeMetrics.JetBrains
         private string _tempDir;
         private IFileStreamFactory _fileStreamFactory;
 
+        /// <summary>
+        /// Gets the name of this provider
+        /// </summary>
         public string Name
         {
             get { return "InspectCode"; }
         }
 
+        /// <summary>
+        /// Get available metrics for this provider
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<string> GetMetrics()
         {
             yield return "AllViolations";
@@ -37,16 +44,27 @@ namespace MSBuildCodeMetrics.JetBrains
             yield break;            
         }
 
+        /// <summary>
+        /// Used by core to inject logger to provider
+        /// </summary>
         public ILogger Logger
         {
             set { }
         }
 
+        /// <summary>
+        /// Used by core to inject process executor to provider
+        /// </summary>
         public IProcessExecutor ProcessExecutor
         {
             set { _processExecutor = value; }
         }
 
+        /// <summary>
+        /// Invoked from core on providers to set properties sent from MSBuild engine.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         public void AddMetadata(string name, string value)
         {
             if (name == "InspectCodePath")
@@ -57,16 +75,29 @@ namespace MSBuildCodeMetrics.JetBrains
                 _tempDir = value;
         }
 
+        /// <summary>
+        /// Constructor for production code.
+        /// </summary>
         public InspectCodeProvider()
         {
             _fileStreamFactory = new FileStreamFactory();            
         }
 
+        /// <summary>
+        /// Constructor used in tests for mocking IFileStreamFactory
+        /// </summary>
+        /// <param name="fileStreamFactory"></param>
         public InspectCodeProvider(IFileStreamFactory fileStreamFactory)
         {
             _fileStreamFactory = fileStreamFactory;
         }
 
+        /// <summary>
+        /// Computes de metrics. Executes the InspectCode executable and parses xml response.
+        /// </summary>
+        /// <param name="metricsToCompute"></param>
+        /// <param name="files"></param>
+        /// <returns></returns>
         public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
         {
             if (String.IsNullOrEmpty(_inspectCodePath))

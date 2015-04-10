@@ -12,8 +12,7 @@ namespace MSBuildCodeMetrics.Core
 	{
 	    /// <summary>
 	    /// This method is called from CodeMetricsRunner to send the logger to the providers.
-	    /// </summary>
-	    /// <param name="logger">The logger</param>
+	    /// </summary>	    
 	    ILogger Logger { set; }	
 	}
 }

@@ -204,8 +204,7 @@
         <member name="P:MSBuildCodeMetrics.Core.ILoggableCodeMetricsProvider.Logger">
             <summary>
             This method is called from CodeMetricsRunner to send the logger to the providers.
-            </summary>
-            <param name="logger">The logger</param>
+            </summary>	    
         </member>
         <member name="T:MSBuildCodeMetrics.Core.ILogger">
             <summary>
@@ -248,6 +247,28 @@
             <param name="metricsToCompute">Each item in the list is a metric to compute.</param>
             <param name="files">The list of files that will have its metrics computed.</param>
             <returns>a set of measures</returns>
+        </member>
+        <member name="T:MSBuildCodeMetrics.Core.IProcessExecutor">
+            <summary>
+            Interface for ProcessExecutor (utility class to execute external processes).
+            </summary>
+        </member>
+        <member name="M:MSBuildCodeMetrics.Core.IProcessExecutor.ExecuteProcess(System.String,System.String)">
+            <summary>
+            Executes an external process, assuming current assembly dir, the working dir.
+            </summary>
+            <param name="executable"></param>
+            <param name="arguments"></param>
+        </member>
+        <member name="T:MSBuildCodeMetrics.Core.IProcessExecutorCodeMetricsProvider">
+            <summary>
+            Interface to be implemented by providers that wants IProcessExecutor to be injected.
+            </summary>
+        </member>
+        <member name="P:MSBuildCodeMetrics.Core.IProcessExecutorCodeMetricsProvider.ProcessExecutor">
+            <summary>
+            Setter for process executor
+            </summary>
         </member>
         <member name="T:MSBuildCodeMetrics.Core.ISingleFileCodeMetricsProvider">
             <summary>
@@ -295,6 +316,17 @@
             This namespace is the core MSBuildCodeMetrics classes. All other assemblies depends on this one. Most of the classes
             are abstract and don't provide any concrete implementation for the metrics. 
             </summary>
+        </member>
+        <member name="T:MSBuildCodeMetrics.Core.ProcessExecutor">
+            <summary>
+            Utility class to execute external processes
+            </summary>
+        </member>
+        <member name="M:MSBuildCodeMetrics.Core.ProcessExecutor.#ctor(MSBuildCodeMetrics.Core.ILogger)">
+            <summary>
+            Creates new Process Executor instance
+            </summary>
+            <param name="logger"></param>
         </member>
         <member name="M:MSBuildCodeMetrics.Core.ProcessExecutor.ExecuteProcess(System.String,System.String)">
             <summary>

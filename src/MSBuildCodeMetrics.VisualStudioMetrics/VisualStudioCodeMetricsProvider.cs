@@ -35,6 +35,9 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 			get { return "VisualStudioMetrics"; }
 		}
 
+        /// <summary>
+        /// Setter for process executor
+        /// </summary>
         public IProcessExecutor ProcessExecutor
         {
             set { this._processExecutor = value; }
@@ -150,8 +153,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 
 		/// <summary>
 		/// Sets the logger 
-		/// </summary>
-		/// <param name="logger">The logger</param>
+		/// </summary>		
 		public ILogger Logger
 		{
             set { _logger = value; }

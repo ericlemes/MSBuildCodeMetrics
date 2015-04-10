@@ -5,10 +5,17 @@ using System.Reflection;
 
 namespace MSBuildCodeMetrics.Core
 {
+    /// <summary>
+    /// Utility class to execute external processes
+    /// </summary>
     public class ProcessExecutor : IProcessExecutor
     {
         private ILogger _logger;
 
+        /// <summary>
+        /// Creates new Process Executor instance
+        /// </summary>
+        /// <param name="logger"></param>
         public ProcessExecutor(ILogger logger)
         {
             this._logger = logger;
