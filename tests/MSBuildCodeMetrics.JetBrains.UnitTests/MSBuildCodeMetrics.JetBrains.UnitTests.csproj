@@ -70,11 +70,11 @@
       <Project>{929db1d6-c8ba-4acb-a9ea-0fc14a0a006d}</Project>
       <Name>MSBuildCodeMetrics.Core.UnitTests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MSBuildCodeMetrics.Core\MSBuildCodeMetrics.Core.csproj">
+    <ProjectReference Include="..\..\src\MSBuildCodeMetrics.Core\MSBuildCodeMetrics.Core.csproj">
       <Project>{89c59437-da68-4df7-a76d-261107bdcbb2}</Project>
       <Name>MSBuildCodeMetrics.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MSBuildCodeMetrics.JetBrains\MSBuildCodeMetrics.JetBrains.csproj">
+    <ProjectReference Include="..\..\src\MSBuildCodeMetrics.JetBrains\MSBuildCodeMetrics.JetBrains.csproj">
       <Project>{63c06bb2-664c-4e24-9118-88d67318961b}</Project>
       <Name>MSBuildCodeMetrics.JetBrains</Name>
     </ProjectReference>

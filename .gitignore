@@ -15,8 +15,8 @@
 /src/MSBuildCodeMetrics.Core/*.user
 /src/MSBuildCodeMetrics.Tasks/*.user
 /src/MSBuildCodeMetrics.VisualStudioMetrics/*.user
-/src/MSBuildCodeMetrics.JetBrains.UnitTests/bin
-/src/MSBuildCodeMetrics.JetBrains.UnitTests/obj
+/tests/MSBuildCodeMetrics.JetBrains.UnitTests/bin
+/tests/MSBuildCodeMetrics.JetBrains.UnitTests/obj
 /src/MSBuildCodeMetrics.JetBrains/bin
 /src/MSBuildCodeMetrics.JetBrains/obj
 /src/TestResults

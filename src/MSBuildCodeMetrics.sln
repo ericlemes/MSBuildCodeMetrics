@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildCodeMetrics.Core.Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildCodeMetrics.JetBrains", "MSBuildCodeMetrics.JetBrains\MSBuildCodeMetrics.JetBrains.csproj", "{63C06BB2-664C-4E24-9118-88D67318961B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildCodeMetrics.JetBrains.UnitTests", "MSBuildCodeMetrics.JetBrains.UnitTests\MSBuildCodeMetrics.JetBrains.UnitTests.csproj", "{EF63C032-C8D4-4205-9B9E-B7F974407745}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildCodeMetrics.JetBrains.UnitTests", "..\tests\MSBuildCodeMetrics.JetBrains.UnitTests\MSBuildCodeMetrics.JetBrains.UnitTests.csproj", "{EF63C032-C8D4-4205-9B9E-B7F974407745}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
