@@ -1,7 +1,0 @@
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\bin\Release\MSBuildCodeMetrics.JetBrains.dll
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\bin\Release\MSBuildCodeMetrics.JetBrains.pdb
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\bin\Release\MSBuildCodeMetrics.Core.dll
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\bin\Release\MSBuildCodeMetrics.Core.pdb
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\obj\Release\MSBuildCodeMetrics.JetBrains.csprojResolveAssemblyReference.cache
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\obj\Release\MSBuildCodeMetrics.JetBrains.dll
-C:\SandBox\MSBuildCodeMetrics\src\MSBuildCodeMetrics.JetBrains\obj\Release\MSBuildCodeMetrics.JetBrains.pdb

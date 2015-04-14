@@ -31,14 +31,11 @@ namespace MSBuildCodeMetrics.Core
         {
             FileInfo fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
 
-            Process p = CreateProcessInstanceForConsoleApp(executable, arguments, fi);
+            Process p = CreateProcessInstanceForConsoleApp(executable, arguments, fi);            
             p.Start();
+            p.BeginOutputReadLine();
+            p.BeginErrorReadLine();
             p.WaitForExit();
-
-            /*while (!p.StandardOutput.EndOfStream)
-                _logger.LogMessage(p.StandardOutput.ReadLine());
-            while (!p.StandardError.EndOfStream)
-                _logger.LogError(p.StandardError.ReadLine());*/
 
             if (p.ExitCode != 0)
                 throw new Exception("Error running process: " + p.StartInfo.FileName + p.StartInfo.Arguments + ". Exit code " + p.ExitCode.ToString() +
@@ -55,16 +52,18 @@ namespace MSBuildCodeMetrics.Core
             Process p = new Process();
             p.ErrorDataReceived += (o, e) =>
             {
-              _logger.LogError(e.Data);  
+                if (!String.IsNullOrEmpty(e.Data))
+                    _logger.LogError(e.Data);  
             };
             p.OutputDataReceived += (o, e) =>
             {
-                _logger.LogMessage(e.Data);
+                if (!String.IsNullOrEmpty(e.Data))
+                    _logger.LogMessage(e.Data);
             };
             p.StartInfo.FileName = "\"" + executable + "\"";
             p.StartInfo.Arguments = arguments;
-            p.StartInfo.RedirectStandardError = false;
-            p.StartInfo.RedirectStandardOutput = false;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.UseShellExecute = false;

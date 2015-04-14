@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<MSTestPath>"$(VS100COMNTOOLS)..\IDE\MSTest.exe"</MSTestPath>
+		<MSTestPath>"$(VS120COMNTOOLS)..\IDE\MSTest.exe"</MSTestPath>
 		<BinariesOutputDir>$(MSBuildProjectDirectory)\bin</BinariesOutputDir>		
-		<MetricsPath>$(VS100COMNTOOLS)..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe</MetricsPath>
+		<MetricsPath>$(VS120COMNTOOLS)..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe</MetricsPath>
 		<OpenCoverMSBuildTasksPath>..\src\packages\OpenCover.4.5.1604\MSBuild</OpenCoverMSBuildTasksPath>
 		<OpenCoverMSBuildTasksLib>$(OpenCoverMSBuildTasksPath)\OpenCover.MSBuild.dll</OpenCoverMSBuildTasksLib>				
 		<Configuration>Release</Configuration>
@@ -11,11 +11,8 @@
 	</PropertyGroup>
 	
 	<ItemGroup>	   
-		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Core.UnitTests\bin\$(Configuration)\MSBuildCodeMetrics.Core.UnitTests.dll" />
-		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Core.Providers.UnitTests\bin\$(Configuration)\MSBuildCodeMetrics.Core.Providers.dll" />
-		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.Tasks.UnitTests\bin\$(Configuration)\MSBuildCodeMetrics.Tasks.UnitTests.dll" />
-		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.VisualStudioMetrics.UnitTests\bin\$(Configuration)\MSBuildCodeMetrics.VisualStudioMetrics.dll" />
-		<Tests Include="$(MSBuildProjectDirectory)\..\tests\MSBuildCodeMetrics.IntegrationTests\bin\$(Configuration)\MSBuildCodeMetrics.IntegrationTests.dll" />
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\**\bin\$(Configuration)\*.UnitTests.dll" />
+		<Tests Include="$(MSBuildProjectDirectory)\..\tests\**\bin\$(Configuration)\*.IntegrationTests.dll" />
 	</ItemGroup>
 		
 	<UsingTask TaskName="CodeMetrics" AssemblyFile="$(BinariesOutputDir)\MSBuildCodeMetrics.Tasks.dll" />
