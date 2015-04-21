@@ -15,7 +15,7 @@ namespace MSBuildCodeMetrics.Core
         /// <summary>
         /// Creates new Process Executor instance
         /// </summary>
-        /// <param name="logger"></param>
+        /// <param name="logger">Logger</param>
         public ProcessExecutor(ILogger logger)
         {
             this._logger = logger;

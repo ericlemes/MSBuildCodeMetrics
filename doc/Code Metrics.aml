@@ -45,6 +45,30 @@
         <para>There are interesting metrics here, like LOC by method and Cyclomatic Complexity</para>
       </content>
       </section>
+      <section address="JetBrains Metrics">
+      <title>JetBrains Metrics</title>
+      <content>        
+        <para>These providers encapsulates the metrics produced by JetBrains dotCover and InspectCode tools. DotCover helps you to measure the code coverage of your unit tests and InspectCode to measure the violations on code standards and other analysis provided by ReSharper. See the links:</para>
+        <list class="bullet">
+        	<listItem>
+        	  <para>
+        	    <externalLink>
+        	      <linkText>https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode</linkText>
+        	      <linkUri>https://confluence.jetbrains.com/display/NETCOM/Introducing+InspectCode</linkUri>
+        	    </externalLink>
+        	  </para>
+        	</listItem>
+        	<listItem>
+        	  <para>
+        	    <externalLink>
+        	      <linkText>https://www.jetbrains.com/dotcover/webhelp27/dotCover__Introducing_Console_Runner.html</linkText>
+        	      <linkUri>https://www.jetbrains.com/dotcover/webhelp27/dotCover__Introducing_Console_Runner.html</linkUri>
+        	    </externalLink>
+        	  </para>
+        	</listItem>
+        </list>        
+      </content>
+      </section>      
     </introduction>    
   </developerConceptualDocument>
 </topic>
