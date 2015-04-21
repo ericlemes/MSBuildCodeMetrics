@@ -41,12 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DotCoverProvider.cs" />
     <Compile Include="InspectCodeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XML\Assembly.cs" />
+    <Compile Include="XML\DotCoverReport.cs" />
     <Compile Include="XML\InspectCodeReport.cs" />
     <Compile Include="XML\Issue.cs" />
+    <Compile Include="XML\Namespace.cs" />
     <Compile Include="XML\Project.cs" />
     <Compile Include="XML\IssueType.cs" />
+    <Compile Include="XML\Type.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MSBuildCodeMetrics.Core\MSBuildCodeMetrics.Core.csproj">

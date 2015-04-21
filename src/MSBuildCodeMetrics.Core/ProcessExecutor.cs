@@ -32,6 +32,7 @@ namespace MSBuildCodeMetrics.Core
             FileInfo fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
 
             Process p = CreateProcessInstanceForConsoleApp(executable, arguments, fi);            
+            _logger.LogMessage("Starting process " + executable + " " + arguments);
             p.Start();
             p.BeginOutputReadLine();
             p.BeginErrorReadLine();

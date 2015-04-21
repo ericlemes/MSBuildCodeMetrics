@@ -41,6 +41,7 @@ namespace MSBuildCodeMetrics.JetBrains.UnitTests
             Assert.AreEqual("Suggestions", metrics.Current);
             metrics.MoveNext();
             Assert.AreEqual("Errors", metrics.Current);
+            Assert.IsFalse(metrics.MoveNext());
         }
 
         [TestMethod]

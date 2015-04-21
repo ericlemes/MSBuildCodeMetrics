@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root CoveredStatements="626" TotalStatements="849" CoveragePercent="74" ReportType="Xml" DotCoverVersion="3.1">
+  <Assembly Name="MSBuildCodeMetrics.Core" CoveredStatements="412" TotalStatements="466" CoveragePercent="88">
+    <Namespace Name="MSBuildCodeMetrics.Core" CoveredStatements="273" TotalStatements="323" CoveragePercent="85">
+      <Type Name="CodeMetricsRunner" CoveredStatements="73" TotalStatements="173" CoveragePercent="100" />      
+    </Namespace>
+  </Assembly>
+</Root>

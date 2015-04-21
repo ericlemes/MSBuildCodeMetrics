@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root CoveredStatements="626" TotalStatements="849" CoveragePercent="74" ReportType="Xml" DotCoverVersion="3.1">
+  <Assembly Name="MSBuildCodeMetrics.Core" CoveredStatements="412" TotalStatements="466" CoveragePercent="88">
+    <Namespace Name="MSBuildCodeMetrics.Core" CoveredStatements="273" TotalStatements="323" CoveragePercent="85">
+      <Type Name="CodeMetricsRunner" CoveredStatements="173" TotalStatements="173" CoveragePercent="100">
+        <Constructor Name="CodeMetricsRunner(ILogger)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Method Name="AppendBetweenUpperAndLowerRange(string,string,List&lt;SummaryReportRange&gt;,int,int):void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <AnonymousMethod Name="(RunnerMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="AppendDetailsReport(MSBuildCodeMetricsReport,string,string,IEnumerable&lt;RunnerMeasure&gt;):void" CoveredStatements="10" TotalStatements="10" CoveragePercent="100" />
+        <Method Name="AppendGreaterThanRange(string,string,List&lt;SummaryReportRange&gt;,int):void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <AnonymousMethod Name="(RunnerMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="AppendLowerOrEqualRange(string,string,List&lt;SummaryReportRange&gt;,int):void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <AnonymousMethod Name="(RunnerMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="AppendSummaryReport(MSBuildCodeMetricsReport,string,string,IList&lt;SummaryReportRange&gt;):void" CoveredStatements="10" TotalStatements="10" CoveragePercent="100" />
+        <Method Name="ComputeMetrics(IEnumerable&lt;ComputeMetricsParameter&gt;):void" CoveredStatements="56" TotalStatements="56" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="51" TotalStatements="51" CoveragePercent="100" />
+          <AnonymousMethod Name="(ComputeMetricsParameter):string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(ComputeMetricsParameter):string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(ComputeMetricsParameter):IEnumerable&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(ComputeMetricsParameter):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(ComputeMetricsParameter):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="GenerateReport(List&lt;Metric&gt;,bool,bool):MSBuildCodeMetricsReport" CoveredStatements="20" TotalStatements="20" CoveragePercent="100" />
+        <Method Name="GetDetailedReport(string,string):IEnumerable&lt;RunnerMeasure&gt;" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(RunnerMeasure):int" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(RunnerMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="GetMeasuresByProvider(string):IEnumerable&lt;RunnerMeasure&gt;" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(RunnerMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="GetProvider(string):ICodeMetricsProvider" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(ICodeMetricsProvider):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="GetReportWithMoreThanTwoRanges(string,string,IList&lt;int&gt;):IList&lt;SummaryReportRange&gt;" CoveredStatements="16" TotalStatements="16" CoveragePercent="100" />
+        <Method Name="GetReportWithTwoRanges(string,string,IList&lt;int&gt;):List&lt;SummaryReportRange&gt;" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="GetSummaryReport(string,string,IEnumerable&lt;int&gt;):IList&lt;SummaryReportRange&gt;" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="10" TotalStatements="10" CoveragePercent="100" />
+          <AnonymousMethod Name="(int):int" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="IsMetricRegistered(string,string):bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="RegisterProvider(ICodeMetricsProvider):void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="ComputeMetricsParameter" CoveredStatements="15" TotalStatements="15" CoveragePercent="100">
+        <Constructor Name="ComputeMetricsParameter(string,string,IEnumerable&lt;string&gt;)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Property Name="Files:IEnumerable&lt;string&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="MetricName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="ProviderName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="ComputeMetricsParameterList" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+        <Method Name="Add(string,string,IEnumerable&lt;string&gt;):ComputeMetricsParameterList" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Create():ComputeMetricsParameterList" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="FileStreamFactory" CoveredStatements="0" TotalStatements="9" CoveragePercent="0">
+        <Method Name="CloseStream(Stream):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="CreateStream(string):Stream" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="OpenFile(string):Stream" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="ListExtensions" CoveredStatements="0" TotalStatements="4" CoveragePercent="0">
+        <Method Name="AddItem&lt;T&gt;(List&lt;T&gt;,T):List&lt;T&gt;" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+      </Type>
+      <Type Name="Metric" CoveredStatements="15" TotalStatements="15" CoveragePercent="100">
+        <Constructor Name="Metric(string,string,IEnumerable&lt;int&gt;)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Property Name="MetricName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="ProviderName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Range:IEnumerable&lt;int&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="MetricList" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+        <Method Name="Add(string,string,IEnumerable&lt;int&gt;):MetricList" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Add(string,string):MetricList" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Create():MetricList" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="NamespaceDoc" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="ProcessExecutor" CoveredStatements="0" TotalStatements="37" CoveragePercent="0">
+        <Constructor Name="ProcessExecutor(ILogger)" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Method Name="CreateProcessInstanceForConsoleApp(string,string,FileInfo):Process" CoveredStatements="0" TotalStatements="23" CoveragePercent="0">
+          <OwnCoverage CoveredStatements="0" TotalStatements="17" CoveragePercent="0" />
+          <AnonymousMethod Name="(object,DataReceivedEventArgs):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+          <AnonymousMethod Name="(object,DataReceivedEventArgs):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Method>
+        <Method Name="ExecuteProcess(string,string):void" CoveredStatements="0" TotalStatements="10" CoveragePercent="0" />
+      </Type>
+      <Type Name="ProviderMeasure" CoveredStatements="15" TotalStatements="15" CoveragePercent="100">
+        <Constructor Name="ProviderMeasure(string,string,int)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Property Name="MeasureName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="MetricName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Value:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="RangeList" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+        <Method Name="Add(int):RangeList" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Create():RangeList" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="RunnerMeasure" CoveredStatements="19" TotalStatements="19" CoveragePercent="100">
+        <Constructor Name="RunnerMeasure(string,ProviderMeasure)" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Property Name="MeasureName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="MetricName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="ProviderName:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Value:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="SummaryReportRange" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+        <Constructor Name="SummaryReportRange(IRangeType,int)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="Count:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Range:IRangeType" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+    </Namespace>
+    <Namespace Name="MSBuildCodeMetrics.Core.Ranges" CoveredStatements="34" TotalStatements="34" CoveragePercent="100">
+      <Type Name="BetweenUpperAndLowerRangeType" CoveredStatements="14" TotalStatements="14" CoveragePercent="100">
+        <Constructor Name="BetweenUpperAndLowerRangeType(int,int)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="LowerValue:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Name:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="UpperValue:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="GreaterThanRangeType" CoveredStatements="10" TotalStatements="10" CoveragePercent="100">
+        <Constructor Name="GreaterThanRangeType(int)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Property Name="Name:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Value:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="LowerOrEqualRangeType" CoveredStatements="10" TotalStatements="10" CoveragePercent="100">
+        <Constructor Name="LowerOrEqualRangeType(int)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Property Name="Name:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Value:int" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="NamespaceDoc" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+    </Namespace>
+    <Namespace Name="MSBuildCodeMetrics.Core.XML" CoveredStatements="105" TotalStatements="109" CoveragePercent="96">
+      <Type Name="DetailsReport" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+        <Constructor Name="DetailsReport()" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Constructor Name="DetailsReport(MSBuildCodeMetricsReport)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="Metrics:List&lt;MetricReport&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Report:MSBuildCodeMetricsReport" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Method Name="AddMetric(string,string):MetricReport" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="MeasureReport" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Constructor Name="MeasureReport()" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Constructor Name="MeasureReport(string,int)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="MeasureName:string" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="Value:int" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+      </Type>
+      <Type Name="MetricReport" CoveredStatements="26" TotalStatements="26" CoveragePercent="100">
+        <Constructor Name="MetricReport()" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Constructor Name="MetricReport(string,string)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="Measures:List&lt;MeasureReport&gt;" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="MetricName:string" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="ProviderName:string" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="Ranges:List&lt;SummaryRangeReport&gt;" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Method Name="AddMeasure(string,int):MetricReport" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="AddRange(string,int):MetricReport" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="CreateMeasures():MetricReport" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="CreateRanges():MetricReport" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+      </Type>
+      <Type Name="MSBuildCodeMetricsReport" CoveredStatements="23" TotalStatements="27" CoveragePercent="85">
+        <Property Name="Details:DetailsReport" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="Summary:SummaryReport" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Method Name="Create():MSBuildCodeMetricsReport" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="CreateDetails():DetailsReport" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="CreateSummary():SummaryReport" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Deserialize(Stream):MSBuildCodeMetricsReport" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Serialize(Stream):void" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Method Name="SerializeToMemoryStream(bool):MemoryStream" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+      </Type>
+      <Type Name="NamespaceDoc" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="SummaryRangeReport" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Constructor Name="SummaryRangeReport()" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Constructor Name="SummaryRangeReport(string,int)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="Count:int" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="Name:string" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+      </Type>
+      <Type Name="SummaryReport" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+        <Constructor Name="SummaryReport()" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Constructor Name="SummaryReport(MSBuildCodeMetricsReport)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="Metrics:List&lt;MetricReport&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Report:MSBuildCodeMetricsReport" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Method Name="AddMetric(string,string):MetricReport" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+  </Assembly>
+  <Assembly Name="MSBuildCodeMetrics.Core.UnitTests" CoveredStatements="214" TotalStatements="383" CoveragePercent="56">
+    <Namespace Name="Microsoft.XmlDiffPatch" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+      <Type Name="XmlDiffExtensions" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name="Compare(XmlDiff,Stream,Stream):bool" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="MSBuildCodeMetrics.Core.UnitTests" CoveredStatements="148" TotalStatements="180" CoveragePercent="82">
+      <Type Name="DeserializationTests" CoveredStatements="25" TotalStatements="25" CoveragePercent="100">
+        <Method Name="Initialize():void" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Method Name="TestDetailsDeserialization():void" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Method Name="TestSummaryDeserialization():void" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" />
+      </Type>
+      <Type Name="FileStreamFactoryMock" CoveredStatements="0" TotalStatements="24" CoveragePercent="0">
+        <Constructor Name="FileStreamFactoryMock()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        <Property Name="OutputStream:Stream" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Method Name="AddFileMock(string,string):void" CoveredStatements="0" TotalStatements="8" CoveragePercent="0" />
+        <Method Name="CloseStream(Stream):void" CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+        <Method Name="CreateStream(string):Stream" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Method Name="GetStreamForTempFile(string):Stream" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="OpenFile(string):Stream" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="GivenABetweenUpperAndLowerRangeType" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name="WhenConstructingShouldInitializeProperly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="GivenACodeMetricsRunner" CoveredStatements="31" TotalStatements="36" CoveragePercent="86">
+        <Method Name="WhenComputingMetricsWithoutFilesShouldThrow():void" CoveredStatements="5" TotalStatements="6" CoveragePercent="83" />
+        <Method Name="WhenComputingMetricsWithUnregeisteredProviderShouldThrow():void" CoveredStatements="5" TotalStatements="6" CoveragePercent="83" />
+        <Method Name="WhenGeneratingReportWithEmptyRangeListShouldThrow():void" CoveredStatements="5" TotalStatements="6" CoveragePercent="83" />
+        <Method Name="WhenGeneratingReportWithNullRangeListShouldThrow():void" CoveredStatements="5" TotalStatements="6" CoveragePercent="83" />
+        <Method Name="WhenGeneratingReportWithoutMetricListShouldThrow():void" CoveredStatements="4" TotalStatements="5" CoveragePercent="80" />
+        <Method Name="WhenGeneratingReportWithTwoRangesShouldGenerateReportWithTwoRanges():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+      </Type>
+      <Type Name="GivenAGreaterThanRangeType" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+        <Method Name="WhenConstructingShouldInitializeProperly():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+      </Type>
+      <Type Name="GivenALowerOrEqualRangeType" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+        <Method Name="WhenConstructingShouldInitializeProperly():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+      </Type>
+      <Type Name="ReportTests" CoveredStatements="40" TotalStatements="43" CoveragePercent="93">
+        <Method Name="DetailedReportTest():void" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" />
+        <Method Name="Initialize():void" CoveredStatements="11" TotalStatements="11" CoveragePercent="100" />
+        <Method Name="TestReportWithBothReports():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="TestReportWithEmptyMetricList():void" CoveredStatements="2" TotalStatements="3" CoveragePercent="67" />
+        <Method Name="TestReportWithNoReport():void" CoveredStatements="2" TotalStatements="3" CoveragePercent="67" />
+        <Method Name="TestReportWithNullMetricList():void" CoveredStatements="2" TotalStatements="3" CoveragePercent="67" />
+        <Method Name="TestSummaryReport():void" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" />
+      </Type>
+      <Type Name="RunnerTests" CoveredStatements="22" TotalStatements="22" CoveragePercent="100">
+        <Constructor Name="RunnerTests()" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
+        <Method Name="Initialize():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="TestComputeMetrics():void" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Method Name="TestRegisterProvider():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="SerializationTests" CoveredStatements="17" TotalStatements="17" CoveragePercent="100">
+        <Method Name="Initialize():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="TestSerialization():void" CoveredStatements="10" TotalStatements="10" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="MSBuildCodeMetrics.Core.UnitTests.Extensions" CoveredStatements="0" TotalStatements="8" CoveragePercent="0">
+      <Type Name="StringExtensions" CoveredStatements="0" TotalStatements="8" CoveragePercent="0">
+        <Method Name="ToMemoryStream(string):MemoryStream" CoveredStatements="0" TotalStatements="8" CoveragePercent="0" />
+      </Type>
+    </Namespace>
+    <Namespace Name="MSBuildCodeMetrics.Core.UnitTests.Mock" CoveredStatements="49" TotalStatements="169" CoveragePercent="29">
+      <Type Name="BuildEngineMock" CoveredStatements="0" TotalStatements="26" CoveragePercent="0">
+        <Property Name="ColumnNumberOfTaskNode:int" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Property Name="ContinueOnError:bool" CoveredStatements="0" TotalStatements="2" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+        </Property>
+        <Property Name="ErrorMessage:string" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Property Name="LineNumberOfTaskNode:int" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Property Name="ProjectFileOfTaskNode:string" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Method Name="BuildProjectFile(string,string[],IDictionary,IDictionary):bool" CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+        <Method Name="LogCustomEvent(CustomBuildEventArgs):void" CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+        <Method Name="LogErrorEvent(BuildErrorEventArgs):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="LogMessageEvent(BuildMessageEventArgs):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="LogWarningEvent(BuildWarningEventArgs):void" CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+      </Type>
+      <Type Name="CodeMetricsProviderBaseMock" CoveredStatements="11" TotalStatements="43" CoveragePercent="26">
+        <Constructor Name="CodeMetricsProviderBaseMock()" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
+        <Property Name="Measures:List&lt;ProviderMeasure&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="Name:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Method Name="AddMeasure(string,string,int):CodeMetricsProviderBaseMock" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Method Name="AddMetadata(string,string):void" CoveredStatements="0" TotalStatements="8" CoveragePercent="0" />
+        <Method Name="AddMetric(string):CodeMetricsProviderBaseMock" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Method Name="GetMetrics():IEnumerable&lt;string&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ParseData(string):void" CoveredStatements="0" TotalStatements="16" CoveragePercent="0" />
+      </Type>
+      <Type Name="CodeMetricsProviderMultiFileMock" CoveredStatements="19" TotalStatements="19" CoveragePercent="100">
+        <Constructor Name="CodeMetricsProviderMultiFileMock(string)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="AddMeasure(string,string,int):CodeMetricsProviderMultiFileMock" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="AddMetric(string):CodeMetricsProviderMultiFileMock" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="ComputeMetrics(IEnumerable&lt;string&gt;,IEnumerable&lt;string&gt;):IEnumerable&lt;ProviderMeasure&gt;" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(ProviderMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="Create(string):CodeMetricsProviderMultiFileMock" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="CodeMetricsProviderProcessExecutorMock" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Property Name="LastProcessExecutorSet:IProcessExecutor" CoveredStatements="0" TotalStatements="0" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+        </Property>
+        <Property Name="ProcessExecutor:IProcessExecutor" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+      </Type>
+      <Type Name="CodeMetricsProviderSingleFileMock" CoveredStatements="19" TotalStatements="22" CoveragePercent="86">
+        <Constructor Name="CodeMetricsProviderSingleFileMock()" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Constructor Name="CodeMetricsProviderSingleFileMock(string)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="AddMeasure(string,string,int):CodeMetricsProviderSingleFileMock" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="AddMetric(string):CodeMetricsProviderSingleFileMock" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="ComputeMetrics(IEnumerable&lt;string&gt;,string):IEnumerable&lt;ProviderMeasure&gt;" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(ProviderMeasure):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="Create(string):CodeMetricsProviderSingleFileMock" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="LoggerMock" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Method Name="LogError(string):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="LogMessage(string):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="TaskItemMock" CoveredStatements="0" TotalStatements="47" CoveragePercent="0">
+        <Constructor Name="TaskItemMock(string)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" />
+        <Property Name="ItemSpec:string" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Property Name="MetadataCount:int" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Property Name="MetadataNames:ICollection" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Method Name="AddMetadata(string,string):TaskItemMock" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Method Name="CloneCustomMetadata():IDictionary" CoveredStatements="0" TotalStatements="11" CoveragePercent="0" />
+        <Method Name="CopyMetadataTo(ITaskItem):void" CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+        <Method Name="GetMetadata(string):string" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" />
+        <Method Name="RemoveMetadata(string):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="SetMetadata(string,string):void" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" />
+      </Type>
+    </Namespace>
+    <Namespace Name="MSBuildCodeMetrics.Core.UnitTests.Resources" CoveredStatements="11" TotalStatements="20" CoveragePercent="55">
+      <Type Name="TestResources" CoveredStatements="11" TotalStatements="20" CoveragePercent="55">
+        <Constructor Name="TestResources()" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Property Name="Culture:CultureInfo" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Property>
+        <Property Name="ExpectedOutputReportXML:string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Property>
+        <Property Name="ResourceManager:ResourceManager" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        </Property>
+      </Type>
+    </Namespace>
+  </Assembly>
+</Root>

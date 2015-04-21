@@ -56,6 +56,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GivenADotCoverProvider.cs" />
+    <Compile Include="GivenADotCoverReport.cs" />
     <Compile Include="GivenAnInspectCodeProvider.cs" />
     <Compile Include="GivenAnInspectCodeReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +89,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TestFiles\MSBuildCodeMetrics.Metrics.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestFiles\MSBuildCodeMetrics.core.coverage.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestFiles\PartialCoverage1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestFiles\PartialCoverage2.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

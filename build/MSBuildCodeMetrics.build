@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<MSTestPath>"$(VS120COMNTOOLS)..\IDE\MSTest.exe"</MSTestPath>
+		<MSTestPathWithoutQuotes>$(VS120COMNTOOLS)..\IDE\MSTest.exe</MSTestPathWithoutQuotes>
+		<MSTestPath>"$(MSTestPathWithoutQuotes)"</MSTestPath>
 		<BinariesOutputDir>$(MSBuildProjectDirectory)\bin</BinariesOutputDir>		
 		<MetricsPath>$(VS120COMNTOOLS)..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe</MetricsPath>
 		<OpenCoverMSBuildTasksPath>..\src\packages\OpenCover.4.5.1604\MSBuild</OpenCoverMSBuildTasksPath>
 		<OpenCoverMSBuildTasksLib>$(OpenCoverMSBuildTasksPath)\OpenCover.MSBuild.dll</OpenCoverMSBuildTasksLib>				
 		<Configuration>Release</Configuration>
 		<InspectCodePath>C:\Program Files (x86)\ReSharperCommandLineTools01Update1\inspectcode.exe</InspectCodePath>
+		<DotCoverPath>C:\Program Files (x86)\JetBrains.dotCover.CommandLineTools.3.1.20150408.155159\dotCover.exe</DotCoverPath>
 	</PropertyGroup>
 	
 	<ItemGroup>	   
@@ -71,6 +73,8 @@
 			<SourceFiles Include="..\src\**\*.cs;..\src\**\*.csproj" />
 			<ProjectFiles Include="..\src\**\*.csproj" />
 			<BinariesInOutputDir Include="$(BinariesOutputDir)\*.dll" />
+			<BinariesInOutputDir Remove="$(BinariesOutputDir)\Moq.dll" />
+			<BinariesInOutputDir Remove="$(BinariesOutputDir)\XmlDiffPatch.dll" />
 			<Metrics Include="LinesOfCode">
 				<ProviderName>VisualStudioMetrics</ProviderName>
 				<Ranges>50;10;1</Ranges>			
@@ -126,6 +130,13 @@
 				<InspectCodePath>$(InspectCodePath)</InspectCodePath>
 				<DotSettingsFile>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln.DotSettings</DotSettingsFile>
 			</Providers>											
+			<Providers Include="MSBuildCodeMetrics.JetBrains.DotCoverProvider, MSBuildCodeMetrics.JetBrains">
+				<DotCoverPath>$(DotCoverPath)</DotCoverPath>
+				<DotCoverTargetExecutableParam>$(MSTestPathWithoutQuotes)</DotCoverTargetExecutableParam>
+				<DotCoverTargetArgumentParam>/testcontainer:{0}</DotCoverTargetArgumentParam>
+				<TempDir>$(MSBuildProjectDirectory)\TempDir</TempDir>
+				<Filters>-:assembly=*.UnitTests;-:assembly=*.IntegrationTests</Filters>
+			</Providers>														
 			<Metrics Include="AllViolations">
 				<ProviderName>InspectCode</ProviderName>
 				<Ranges>50;10;1</Ranges>			
@@ -145,6 +156,26 @@
 				<ProviderName>InspectCode</ProviderName>
 				<Ranges>50;10;1</Ranges>			
 				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+			</Metrics>							
+			<Metrics Include="CodeCoverage">
+				<ProviderName>DotCover</ProviderName>
+				<Ranges>100;50;0</Ranges>			
+				<Files>@(Tests)</Files>
+			</Metrics>						
+			<Metrics Include="CoveredStatements">
+				<ProviderName>DotCover</ProviderName>
+				<Ranges>0</Ranges>			
+				<Files>@(Tests)</Files>
+			</Metrics>									
+			<Metrics Include="UncoveredStatements">
+				<ProviderName>DotCover</ProviderName>
+				<Ranges>0</Ranges>			
+				<Files>@(Tests)</Files>
+			</Metrics>							
+			<Metrics Include="TotalStatements">
+				<ProviderName>DotCover</ProviderName>
+				<Ranges>0</Ranges>			
+				<Files>@(Tests)</Files>
 			</Metrics>							
 		</ItemGroup>
 		<MakeDir Directories="$(MSBuildProjectDirectory)\TempDir" />
