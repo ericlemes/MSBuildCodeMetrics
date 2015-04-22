@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using MSBuildCodeMetrics.JetBrains.XML;
 
@@ -13,7 +14,7 @@ namespace MSBuildCodeMetrics.JetBrains
     /// Expects metadatas:
     /// - InspectCodePath: FullPathToInspectCode    
     /// - DotSettingsFile: Path to DotSettingsFile
-    /// - TempDir: Directory to output .metrics.xml files
+    /// - TempDir: Directory to output .metrics.xml files    
     /// </summary>
     public class InspectCodeProvider : IMultiFileCodeMetricsProvider, ILoggableCodeMetricsProvider, IProcessExecutorCodeMetricsProvider, IMetadataHandler
     {
@@ -32,7 +33,12 @@ namespace MSBuildCodeMetrics.JetBrains
         }
 
         /// <summary>
-        /// Get available metrics for this provider
+        /// Get available metrics for this provider. Returns AllViolations (all warnings, errors and suggestions, assembly by assembly),
+        /// Warnings (all warnings, assembly by assembly), Suggestions (all suggestions, assembly by assembly), Errors (all errors, 
+        /// assembly by assembly, AllViolationsAllFiles (all warnings, errors and suggestions, aggregated for all solutions inspected),
+        /// WarningsAllFiles (all warnings, aggregated by all solutions inspected), AllSuggestions (all suggestions, aggregated by all
+        /// solutions inspected) and AllErrors (all errors, aggregated by all solutions inspected). The purpose of the AllFiles metrics
+        /// is to break the build when a given number of violations is reached.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<string> GetMetrics()
@@ -41,6 +47,10 @@ namespace MSBuildCodeMetrics.JetBrains
             yield return "Warnings";
             yield return "Suggestions";
             yield return "Errors";
+            yield return "AllViolationsAllFiles";
+            yield return "WarningsAllFiles";
+            yield return "SuggestionsAllFiles";
+            yield return "ErrorsAllFiles";
             yield break;            
         }
 
@@ -119,9 +129,23 @@ namespace MSBuildCodeMetrics.JetBrains
 
                 var fileStream = _fileStreamFactory.OpenFile(outputFile);
                 measures.AddRange(ParseMetricsReport(fileStream));
-            }                        
+            }
+
+            ConsolidateMetricsForAllFiles(measures);
 
             return measures;
+        }
+
+        private void ConsolidateMetricsForAllFiles(List<ProviderMeasure> measures)
+        {
+            var warningsAllFiles = measures.Where(m => m.MetricName == "Warnings").Sum(m => m.Value);
+            var errorsAllFiles = measures.Where(m => m.MetricName == "Errors").Sum(m => m.Value);
+            var suggestionsAllFiles = measures.Where(m => m.MetricName == "Suggestions").Sum(m => m.Value);
+
+            measures.Add(new ProviderMeasure("WarningsAllFiles", "AllFiles", warningsAllFiles));
+            measures.Add(new ProviderMeasure("ErrorsAllFiles", "AllFiles", errorsAllFiles));
+            measures.Add(new ProviderMeasure("SuggestionsAllFiles", "AllFiles", suggestionsAllFiles));
+            measures.Add(new ProviderMeasure("AllViolationsAllFiles", "AllFiles", warningsAllFiles + errorsAllFiles + suggestionsAllFiles));
         }
 
         private IEnumerable<ProviderMeasure> ParseMetricsReport(Stream fileStream)

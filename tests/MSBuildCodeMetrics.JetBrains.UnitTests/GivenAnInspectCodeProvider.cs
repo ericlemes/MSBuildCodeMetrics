@@ -41,6 +41,14 @@ namespace MSBuildCodeMetrics.JetBrains.UnitTests
             Assert.AreEqual("Suggestions", metrics.Current);
             metrics.MoveNext();
             Assert.AreEqual("Errors", metrics.Current);
+            metrics.MoveNext();
+            Assert.AreEqual("AllViolationsAllFiles", metrics.Current);
+            metrics.MoveNext();
+            Assert.AreEqual("WarningsAllFiles", metrics.Current);
+            metrics.MoveNext();
+            Assert.AreEqual("SuggestionsAllFiles", metrics.Current);
+            metrics.MoveNext();
+            Assert.AreEqual("ErrorsAllFiles", metrics.Current);
             Assert.IsFalse(metrics.MoveNext());
         }
 
@@ -258,7 +266,11 @@ namespace MSBuildCodeMetrics.JetBrains.UnitTests
                 "AllViolations",
                 "Warnings",
                 "Suggestions",
-                "Errors"
+                "Errors",
+                "AllViolationsAllFiles",
+                "WarningsAllFiles",
+                "SuggestionsAllFiles",
+                "ErrorsAllFiles",
             };
 
             var measures = p.ComputeMetrics(metricsToCompute, new List<string> { "SomeSolution.sln" });
@@ -266,7 +278,12 @@ namespace MSBuildCodeMetrics.JetBrains.UnitTests
             Assert.AreEqual(24, measures.Where(m => m.MetricName == "AllViolations" && m.MeasureName == "MSBuildCodeMetrics.Core.Providers").Sum(m => m.Value));
             Assert.AreEqual(12, measures.Where(m => m.MetricName == "Suggestions" && m.MeasureName == "MSBuildCodeMetrics.Core.Providers").Sum(m => m.Value));
             Assert.AreEqual(9, measures.Where(m => m.MetricName == "Warnings" && m.MeasureName == "MSBuildCodeMetrics.Core.Providers").Sum(m => m.Value));
-            Assert.AreEqual(3, measures.Where(m => m.MetricName == "Errors" && m.MeasureName == "MSBuildCodeMetrics.Core.Providers").Sum(m => m.Value));            
+            Assert.AreEqual(3, measures.Where(m => m.MetricName == "Errors" && m.MeasureName == "MSBuildCodeMetrics.Core.Providers").Sum(m => m.Value));
+            Assert.AreEqual(11, measures.Where(m => m.MetricName == "AllViolations").Count());
+            Assert.AreEqual(594, measures.Where(m => m.MetricName == "AllViolationsAllFiles" && m.MeasureName == "AllFiles").First().Value);
+            Assert.AreEqual(176, measures.Where(m => m.MetricName == "SuggestionsAllFiles" && m.MeasureName == "AllFiles").First().Value);
+            Assert.AreEqual(396, measures.Where(m => m.MetricName == "WarningsAllFiles" && m.MeasureName == "AllFiles").First().Value);
+            Assert.AreEqual(22, measures.Where(m => m.MetricName == "ErrorsAllFiles" && m.MeasureName == "AllFiles").First().Value);            
         }        
     }
 }
