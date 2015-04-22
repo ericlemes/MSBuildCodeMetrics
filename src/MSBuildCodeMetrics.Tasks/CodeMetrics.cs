@@ -122,7 +122,8 @@ namespace MSBuildCodeMetrics.Tasks
 				ValidateMetricsList(runner, ml);
 
 				runner.ComputeMetrics(ml.ToComputeMetricsParameterList());
-				GenerateReport(runner, ml);
+				var report = GenerateReport(runner, ml);
+			    RunBuildFailChecks(report, ml);
 				return true;
 			}
 			catch (MSBuildCodeMetricsTaskException e)
@@ -131,6 +132,16 @@ namespace MSBuildCodeMetrics.Tasks
 				return false;
 			}			
 		}
+
+        private void RunBuildFailChecks(MSBuildCodeMetricsReport report, TaskMetricList ml)
+        {
+            ml.ForEach(m =>
+            {
+                if (!String.IsNullOrEmpty(m.HigherRangeFailMessage))
+                    if (report.Summary.Metrics.Where(metric => metric.MetricName == m.MetricName).First().Ranges[0].Count > 0)
+                        throw new MSBuildCodeMetricsTaskException(m.HigherRangeFailMessage);
+            });
+        }
 
 		private void ValidateMetricsList(CodeMetricsRunner runner,  TaskMetricList ml)
 		{
@@ -211,7 +222,9 @@ namespace MSBuildCodeMetrics.Tasks
 				if (String.IsNullOrEmpty(files))
 					throw new MSBuildCodeMetricsTaskException("Files must be informed in Metrics property. ProviderName: " + providerName + ", Metric: " + metricName);
 				List<string> fileList = files.Split(';').ToList<string>();
-				ml.Add(providerName, metricName, ranges, fileList);
+			    var metric = new TaskMetric(providerName, metricName, ranges, fileList);
+			    metric.HigherRangeFailMessage = i.GetMetadata("HigherRangeFailMessage");
+				ml.Add(metric);
 			}
 			return ml;
 		}
@@ -241,13 +254,14 @@ namespace MSBuildCodeMetrics.Tasks
 			}
 		}
 
-		private void GenerateReport(CodeMetricsRunner runner, TaskMetricList ml)
+        private MSBuildCodeMetricsReport GenerateReport(CodeMetricsRunner runner, TaskMetricList ml)
 		{	
 			MSBuildCodeMetricsReport report = runner.GenerateReport(ml.ToMetricList(), ShowSummaryReport, ShowDetailsReport);
 			if (FileOutput)							
 				GenerateFileOutput(report);
 			if (ShowConsoleOutput)
 				GenerateConsoleOutput(report);
+            return report;
 		}
 
 		private void GenerateConsoleOutput(MSBuildCodeMetricsReport report)

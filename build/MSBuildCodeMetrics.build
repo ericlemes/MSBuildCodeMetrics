@@ -155,8 +155,20 @@
 			<Metrics Include="Errors">
 				<ProviderName>InspectCode</ProviderName>
 				<Ranges>50;10;1</Ranges>			
-				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>				
 			</Metrics>							
+			<Metrics Include="WarningsAllFiles">
+				<ProviderName>InspectCode</ProviderName>
+				<Ranges>50</Ranges>			
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+				<HigherRangeFailMessage>More than 50 code style warnings</HigherRangeFailMessage>
+			</Metrics>										
+			<Metrics Include="ErrorsAllFiles">
+				<ProviderName>InspectCode</ProviderName>
+				<Ranges>0</Ranges>			
+				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
+				<HigherRangeFailMessage>There is at least one error in code style.</HigherRangeFailMessage>
+			</Metrics>													
 			<Metrics Include="CodeCoverage">
 				<ProviderName>DotCover</ProviderName>
 				<Ranges>100;50;0</Ranges>			

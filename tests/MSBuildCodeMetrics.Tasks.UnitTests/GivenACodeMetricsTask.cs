@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Build.Framework;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
@@ -62,7 +59,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 			metrics[0] = new TaskItemMock("LinesOfCode").
 				AddMetadata("ProviderName", "CodeMetricsProviderMock").
 				AddMetadata("Ranges", "2;3").
-				AddMetadata("Files", "C:\foo.txt");			
+				AddMetadata("Files", "C:\\foo.txt");			
 
 			FileStreamFactoryMock streamFactory = new FileStreamFactoryMock();			
 
@@ -326,6 +323,45 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 	        task.Execute();
             Assert.IsNotNull(CodeMetricsProviderProcessExecutorMock.LastProcessExecutorSet);            
 	    }
+
+	    [TestMethod]
+	    public void WhenRunningWithHigherRangeFailMessageAndHasValueOnHigherBandShouldFail()
+	    {
+            var buildEngineMock = new Mock<IBuildEngine>();
+            var errorMessage = String.Empty;
+            buildEngineMock.Setup(be => be.LogErrorEvent(It.IsAny<BuildErrorEventArgs>())).
+                Callback<BuildErrorEventArgs>(
+                    e =>
+                    {
+                        errorMessage = e.Message;
+                    });
+
+            var task = new CodeMetrics()
+            {
+                BuildEngine = buildEngineMock.Object,
+                Providers = new ITaskItem[]
+                {
+                    new TaskItemMock("MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests").
+                        AddMetadata("Data", "<Metric Name=\"LinesOfCode\"><Measure " +                            
+                                    "Name=\"Method1\" Value=\"1\" /><Measure Name=\"Method2\" Value=\"2\" /><Measure " + 
+                                    "Name=\"Method3\" Value=\"5\" /></Metric>").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock")
+                },
+                Metrics = new ITaskItem[]
+                {
+                    new TaskItemMock("LinesOfCode").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock").
+                        AddMetadata("Ranges", "4").
+                        AddMetadata("Files", "foo").
+                        AddMetadata("HigherRangeFailMessage", "There are methods with more than 4 lines of code")
+                }
+            };
+
+	        Assert.AreEqual(false, task.Execute());
+            Assert.AreEqual("There are methods with more than 4 lines of code", errorMessage);
+	    }
+
+        
 
 	}
 }

@@ -46,6 +46,12 @@ namespace MSBuildCodeMetrics.Tasks
 			get { return _files; }
 		}
 
+        /// <summary>
+        /// Error message to be used in build failure if some condition in the higher band happens.
+        /// Useful to break the build if some metric is unacceptable.
+        /// </summary>
+        public string HigherRangeFailMessage { get; set; }
+
 		/// <summary>
 		/// Creates a new task metric
 		/// </summary>
