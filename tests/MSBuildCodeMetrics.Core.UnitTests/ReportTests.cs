@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
 using MSBuildCodeMetrics.Core.XML;
 
@@ -51,8 +48,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 			_runner.RegisterProvider(runnerMock);
 			_runner.RegisterProvider(runnerMock2);
 
-			_inputFiles = new List<string>();
-			_inputFiles.Add("foo");
+		    _inputFiles = new List<string> {"foo"};
 
 			_parameters = ComputeMetricsParameterList.Create().
 				Add("Provider1", "CyclomaticComplexity", _inputFiles).
@@ -108,7 +104,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void TestReportWithNullMetricList()
 		{
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
+			_runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity").
 				Add("Provider1", "LinesOfCode"), true, false);						
 		}
@@ -117,14 +113,14 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void TestReportWithEmptyMetricList()
 		{			
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create(), true, false);						
+			_runner.GenerateReport(MetricList.Create(), true, false);						
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void TestReportWithNoReport()
 		{
-			MSBuildCodeMetricsReport report = _runner.GenerateReport(MetricList.Create().
+			_runner.GenerateReport(MetricList.Create().
 				Add("Provider1", "CyclomaticComplexity", RangeList.Create().Add(5).Add(10)).
 				Add("Provider1", "LinesOfCode", RangeList.Create().Add(20).Add(50)), false, false);			
 		}

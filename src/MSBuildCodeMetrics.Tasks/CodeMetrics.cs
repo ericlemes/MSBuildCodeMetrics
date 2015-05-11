@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Framework;
 using System.IO;
-using System.Xml.Serialization;
 using MSBuildCodeMetrics.Core;
-using System.Reflection;
 using MSBuildCodeMetrics.Core.XML;
+using ILogger = MSBuildCodeMetrics.Core.ILogger;
 
 namespace MSBuildCodeMetrics.Tasks
 {
@@ -17,8 +15,8 @@ namespace MSBuildCodeMetrics.Tasks
 	/// </summary>
 	public class CodeMetrics : Task
 	{		
-		private IFileStreamFactory _streamFactory;
-		private Dictionary<string, ICodeMetricsProvider> _providers = new Dictionary<string, ICodeMetricsProvider>();
+		private readonly IFileStreamFactory _streamFactory;
+		private readonly Dictionary<string, ICodeMetricsProvider> _providers = new Dictionary<string, ICodeMetricsProvider>();
 
 		/// <summary>
 		/// The code metrics providers that will be used in metrics computation.
@@ -78,7 +76,7 @@ namespace MSBuildCodeMetrics.Tasks
 			set { _showConsoleOutput = value; }
 		}
 
-		private bool _fileOutput = false;
+		private bool _fileOutput;
 		/// <summary>
 		/// True if the output should be generated to a file.
 		/// </summary>
@@ -138,8 +136,14 @@ namespace MSBuildCodeMetrics.Tasks
             ml.ForEach(m =>
             {
                 if (!String.IsNullOrEmpty(m.HigherRangeFailMessage))
-                    if (report.Summary.Metrics.Where(metric => metric.MetricName == m.MetricName).First().Ranges[0].Count > 0)
+                    if (report.Summary.Metrics.First(metric => metric.MetricName == m.MetricName).Ranges[0].Count > 0)
                         throw new MSBuildCodeMetricsTaskException(m.HigherRangeFailMessage);
+                if (!String.IsNullOrEmpty(m.LowerRangeFailMessage))
+                {
+                    var ranges = report.Summary.Metrics.First(metric => metric.MetricName == m.MetricName).Ranges;
+                    if (ranges[ranges.Count - 1].Count > 0)
+                        throw new MSBuildCodeMetricsTaskException(m.LowerRangeFailMessage);
+                }
             });
         }
 
@@ -158,7 +162,7 @@ namespace MSBuildCodeMetrics.Tasks
 			}
 		}
 
-		private void RegisterProviders(CodeMetricsRunner runner, MSBuildCodeMetrics.Core.ILogger logger, IProcessExecutor processExecutor)
+		private void RegisterProviders(CodeMetricsRunner runner, ILogger logger, IProcessExecutor processExecutor)
 		{
 			if (Providers.Length <= 0)
 				throw new MSBuildCodeMetricsTaskException("At least one Provider must me informed in Providers property");							
@@ -221,9 +225,10 @@ namespace MSBuildCodeMetrics.Tasks
 				string files = i.GetMetadata("Files");
 				if (String.IsNullOrEmpty(files))
 					throw new MSBuildCodeMetricsTaskException("Files must be informed in Metrics property. ProviderName: " + providerName + ", Metric: " + metricName);
-				List<string> fileList = files.Split(';').ToList<string>();
+				List<string> fileList = files.Split(';').ToList();
 			    var metric = new TaskMetric(providerName, metricName, ranges, fileList);
 			    metric.HigherRangeFailMessage = i.GetMetadata("HigherRangeFailMessage");
+			    metric.LowerRangeFailMessage = i.GetMetadata("LowerRangeFailMessage");
 				ml.Add(metric);
 			}
 			return ml;
@@ -231,7 +236,7 @@ namespace MSBuildCodeMetrics.Tasks
 
 		private void ParseRanges(ITaskItem i, List<int> ranges)
 		{
-			bool hasRangesMetadata = (i.MetadataNames.Cast<string>().Where(metadataName => metadataName == "Ranges").Count() > 0);
+			bool hasRangesMetadata = (i.MetadataNames.Cast<string>().Any(metadataName => metadataName == "Ranges"));
 			if (!hasRangesMetadata)
 				return;
 

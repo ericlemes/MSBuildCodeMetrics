@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.XmlDiffPatch;
-using System.IO;
+﻿using System.IO;
 using System.Xml;
+using Microsoft.XmlDiffPatch;
 
-namespace Microsoft.XmlDiffPatch
+namespace MSBuildCodeMetrics.Core.UnitTests.Extensions
 {
 	public static class XmlDiffExtensions
 	{

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
-using MSBuildCodeMetrics.Core.XML;
 
 namespace MSBuildCodeMetrics.Core.UnitTests
 {
 	[TestClass]
 	public class RunnerTests
 	{
-		private CodeMetricsRunner _runner = new CodeMetricsRunner(new LoggerMock());
-		private List<string> _fileList = new List<string>();
+		private readonly CodeMetricsRunner _runner = new CodeMetricsRunner(new LoggerMock());
+		private readonly List<string> _fileList = new List<string>();
 		private IList<ComputeMetricsParameter> _parameters;
 
 		[TestInitialize]
@@ -51,9 +48,9 @@ namespace MSBuildCodeMetrics.Core.UnitTests
 			_runner.ComputeMetrics(_parameters);
 			Assert.AreEqual(3, _runner.GetMeasuresByProvider("Provider1").Count());
 			Assert.AreEqual(2, _runner.GetDetailedReport("Provider1", "Metric1").Count());
-			Assert.AreEqual("Item1", _runner.GetDetailedReport("Provider2", "Metric3").ToList<RunnerMeasure>()[0].MeasureName);
-			Assert.AreEqual(1, _runner.GetDetailedReport("Provider2", "Metric3").ToList<RunnerMeasure>()[0].Value);
-			Assert.AreEqual(10, _runner.GetDetailedReport("Provider3", "Metric5").ToList<RunnerMeasure>()[0].Value);
+			Assert.AreEqual("Item1", _runner.GetDetailedReport("Provider2", "Metric3").ToList()[0].MeasureName);
+			Assert.AreEqual(1, _runner.GetDetailedReport("Provider2", "Metric3").ToList()[0].Value);
+			Assert.AreEqual(10, _runner.GetDetailedReport("Provider3", "Metric5").ToList()[0].Value);
 		}
 	}
 }

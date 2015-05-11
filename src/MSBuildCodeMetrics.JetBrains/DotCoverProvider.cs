@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using MSBuildCodeMetrics.Core;
 using MSBuildCodeMetrics.JetBrains.XML;
 
@@ -24,7 +22,7 @@ namespace MSBuildCodeMetrics.JetBrains
         private string _dotCoverTargetExecutable;
         private string _dotCoverTargetArgument;
         private string _tempDir;
-        private IFileStreamFactory _fileStreamFactory;        
+        private readonly IFileStreamFactory _fileStreamFactory;        
         private string _filters;
 
         /// <summary>
@@ -39,13 +37,12 @@ namespace MSBuildCodeMetrics.JetBrains
         /// Returns the metrics that this provider can compute.
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<string> GetMetrics()
+        public IEnumerable<string> GetMetrics()
         {
             yield return "CodeCoverage";
             yield return "CoveredStatements";
             yield return "UncoveredStatements";
-            yield return "TotalStatements";
-            yield break;            
+            yield return "TotalStatements";            
         }
 
         /// <summary>

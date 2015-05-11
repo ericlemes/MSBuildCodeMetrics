@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MSBuildCodeMetrics.Core.XML;
-using MSBuildCodeMetrics.Core.UnitTests;
 using MSBuildCodeMetrics.Tasks;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
 using Microsoft.Build.Framework;
 using System.IO;
 using System.Reflection;
 
-namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
+namespace MSBuildCodeMetrics.IntegrationTests
 {
 	[TestClass]
 	public class CodeMetricsVisualStudioMetricsTaskTest
@@ -60,7 +57,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
 			Assert.AreEqual("CyclomaticComplexity", report.Details.Metrics[0].MetricName);
 			var measures = report.Details.Metrics[0].Measures.Where(me => me.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner.RegisterProvider(ICodeMetricsProvider) : void");
 			Assert.AreEqual(1, measures.Count());
-			Assert.AreEqual(1, measures.ToList<MeasureReport>()[0].Value);
+			Assert.AreEqual(1, measures.ToList()[0].Value);
 		}
 	}
 }

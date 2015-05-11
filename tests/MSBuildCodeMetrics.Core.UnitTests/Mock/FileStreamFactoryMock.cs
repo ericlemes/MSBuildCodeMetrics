@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
-using MSBuildCodeMetrics.Tasks;
 
-namespace MSBuildCodeMetrics.Core.UnitTests
+namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 {
 	public class FileStreamFactoryMock : IFileStreamFactory
 	{
-		private Dictionary<string, Stream> _fileMocks = new Dictionary<string, Stream>();
+		private readonly Dictionary<string, Stream> _fileMocks = new Dictionary<string, Stream>();
 		private Stream _outputStream;
 		public Stream OutputStream
 		{

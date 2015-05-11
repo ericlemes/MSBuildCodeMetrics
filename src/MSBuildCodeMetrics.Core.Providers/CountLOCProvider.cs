@@ -16,8 +16,8 @@ namespace MSBuildCodeMetrics.Core.Providers
 		private const string CommentSingleQuote = "'";
 		private const string CommentSlashStar = "/*";
 		private const string CommentStarSlash = "*/";
-		private Dictionary<string, string> _extensions = new Dictionary<string, string>();
-		private IFileStreamFactory _fileStreamFactory;
+		private readonly Dictionary<string, string> _extensions = new Dictionary<string, string>();
+		private readonly IFileStreamFactory _fileStreamFactory;
 
 		/// <summary>
 		/// Provider name (LOC)

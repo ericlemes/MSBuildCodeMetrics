@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Xml.Serialization;
 using Microsoft.XmlDiffPatch;
-using System.Xml;
 using MSBuildCodeMetrics.Core.XML;
+using MSBuildCodeMetrics.Core.UnitTests.Extensions;
 
 namespace MSBuildCodeMetrics.Core.UnitTests
 {

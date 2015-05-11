@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MSBuildCodeMetrics.Core.XML
 {
@@ -10,7 +7,7 @@ namespace MSBuildCodeMetrics.Core.XML
 	/// </summary>
 	public class SummaryReport
 	{
-		private List<MetricReport> _metrics = new List<MetricReport>();
+		private readonly List<MetricReport> _metrics = new List<MetricReport>();
 		/// <summary>
 		/// The metrics of the report.
 		/// </summary>
@@ -19,7 +16,7 @@ namespace MSBuildCodeMetrics.Core.XML
 			get { return _metrics; }		
 		}
 
-		private MSBuildCodeMetricsReport _report;
+		private readonly MSBuildCodeMetricsReport _report;
 		/// <summary>
 		/// The parent report
 		/// </summary>

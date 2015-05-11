@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MSBuildCodeMetrics.Core.Ranges
+﻿namespace MSBuildCodeMetrics.Core.Ranges
 {
 	/// <summary>
 	/// This class represents the inner range of summary reports.
@@ -18,7 +13,7 @@ namespace MSBuildCodeMetrics.Core.Ranges
 			get { return "<= " + _upperValue.ToString() + " and > " + _lowerValue.ToString(); }
 		}
 
-		private int _upperValue;
+		private readonly int _upperValue;
 		/// <summary>
 		/// The upper value of the range
 		/// </summary>
@@ -27,7 +22,7 @@ namespace MSBuildCodeMetrics.Core.Ranges
 			get { return _upperValue; }
 		}		
 
-		private int _lowerValue;
+		private readonly int _lowerValue;
 		/// <summary>
 		/// The lower value of the range
 		/// </summary>

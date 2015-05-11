@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MSBuildCodeMetrics.Core.XML;
 using MSBuildCodeMetrics.Core.Ranges;
 
@@ -12,10 +11,10 @@ namespace MSBuildCodeMetrics.Core
 	/// </summary>
 	public class CodeMetricsRunner
 	{
-		private List<ICodeMetricsProvider> _providers = new List<ICodeMetricsProvider>();
-		private Dictionary<string, ICodeMetricsProvider> _providerRegistry = new Dictionary<string, ICodeMetricsProvider>();
-		private Dictionary<ICodeMetricsProvider, List<string>> _metrics = new Dictionary<ICodeMetricsProvider, List<string>>();
-		private List<RunnerMeasure> _measures = new List<RunnerMeasure>();
+		private readonly List<ICodeMetricsProvider> _providers = new List<ICodeMetricsProvider>();
+        private readonly Dictionary<string, ICodeMetricsProvider> _providerRegistry = new Dictionary<string, ICodeMetricsProvider>();
+        private readonly Dictionary<ICodeMetricsProvider, List<string>> _metrics = new Dictionary<ICodeMetricsProvider, List<string>>();
+        private readonly List<RunnerMeasure> _measures = new List<RunnerMeasure>();
 		private ILogger _logger;
 
 		/// <summary>
@@ -34,7 +33,7 @@ namespace MSBuildCodeMetrics.Core
 		public void RegisterProvider(ICodeMetricsProvider provider)
 		{
 			_providers.Add(provider);
-			_metrics.Add(provider, provider.GetMetrics().ToList<string>());
+			_metrics.Add(provider, provider.GetMetrics().ToList());
 			_providerRegistry.Add(provider.Name, provider);
 		}
 
@@ -45,7 +44,7 @@ namespace MSBuildCodeMetrics.Core
 		/// <returns>The provider</returns>
 		public ICodeMetricsProvider GetProvider(string name)
 		{
-			return _providers.Where(p => p.Name == name).FirstOrDefault();
+            return _providers.FirstOrDefault(p => p.Name == name);
 		}
 
 		/// <summary>
@@ -64,9 +63,9 @@ namespace MSBuildCodeMetrics.Core
 		/// </summary>
 		/// <param name="parameters">Input parameter for metrics calculation</param>
 		public void ComputeMetrics(IEnumerable<ComputeMetricsParameter> parameters)
-		{
+		{            
 			foreach (ComputeMetricsParameter p in parameters)
-				if (p.Files.Count() <= 0)
+				if (!p.Files.Any())
 					throw new ArgumentOutOfRangeException("InputFiles shouldn't be empty.");
 
 			var providers =
@@ -177,12 +176,12 @@ namespace MSBuildCodeMetrics.Core
 		{
 			if (rangeList == null)
 				throw new ArgumentNullException("rangeList");
-			if (rangeList.ToList<int>().Count <= 0)
+			if (rangeList.ToList().Count <= 0)
 				throw new ArgumentOutOfRangeException("rangeList", "Can't be empty");
 
 			List<int> orderedRangeList = rangeList.Distinct().OrderByDescending(i => i).ToList();
 
-			if (rangeList.ToList<int>().Count == 1)
+			if (rangeList.ToList().Count == 1)
 				return GetReportWithTwoRanges(providerName, metricName, orderedRangeList);
 			else
 				return GetReportWithMoreThanTwoRanges(providerName, metricName, orderedRangeList);

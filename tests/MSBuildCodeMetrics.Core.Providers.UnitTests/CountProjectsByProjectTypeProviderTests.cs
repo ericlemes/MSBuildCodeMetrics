@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MSBuildCodeMetrics.Core.UnitTests;
 using MSBuildCodeMetrics.Core.Providers.UnitTests.Resources;
+using MSBuildCodeMetrics.Core.UnitTests.Mock;
 
 namespace MSBuildCodeMetrics.Core.Providers.UnitTests
 {

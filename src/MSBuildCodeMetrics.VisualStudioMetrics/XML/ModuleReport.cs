@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
@@ -83,7 +80,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
 		public List<MemberReport> GetAllMembers()
 		{
 			List<MemberReport> allMembers = new List<MemberReport>();
-			foreach (NamespaceReport nr in this.Namespaces)
+			foreach (NamespaceReport nr in Namespaces)
 			{
 				foreach (TypeReport tr in nr.Types)
 				{

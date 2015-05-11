@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MSBuildCodeMetrics.Core
+﻿namespace MSBuildCodeMetrics.Core
 {
 	/// <summary>
 	/// This interface should be implemented for providers that needs metadata. 

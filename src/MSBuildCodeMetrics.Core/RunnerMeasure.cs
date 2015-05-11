@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MSBuildCodeMetrics.Core
+﻿namespace MSBuildCodeMetrics.Core
 {
 	/// <summary>
 	/// This class represent one measure from the Runner perspective. It also includes the provider for each metric.
 	/// </summary>
 	public class RunnerMeasure
 	{
-		private string _providerName;
+		private readonly string _providerName;
 		/// <summary>
 		/// The provider that generated this measure
 		/// </summary>
@@ -19,7 +14,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _providerName; }
 		}
 
-		private string _metricName;
+		private readonly string _metricName;
 		/// <summary>
 		/// Name of the metric
 		/// </summary>
@@ -28,7 +23,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _metricName; }
 		}
 
-		private string _measureName;
+		private readonly string _measureName;
 		/// <summary>
 		/// Name of the measure or item.
 		/// </summary>
@@ -37,7 +32,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _measureName; }
 		}
 
-		private int _value;
+		private readonly int _value;
 		/// <summary>
 		/// The value of the measure or item
 		/// </summary>

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Build.Framework;
 
 namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 {
 	public class TaskItemMock : ITaskItem
-	{
-		private string _itemSpec;
-		private Dictionary<string, string> _metadatas = new Dictionary<string, string>();
+	{		
+		private readonly Dictionary<string, string> _metadatas = new Dictionary<string, string>();
 
 		public System.Collections.IDictionary CloneCustomMetadata()
 		{
@@ -33,11 +30,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 			return _metadatas[metadataName];
 		}
 
-		public string ItemSpec
-		{
-			get {return _itemSpec;}
-			set {_itemSpec = value;}			
-		}
+		public string ItemSpec { get; set; }		
 
 		public int MetadataCount
 		{
@@ -70,7 +63,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 
 		public TaskItemMock(string itemSpec)
 		{
-			_itemSpec = itemSpec;
+			ItemSpec = itemSpec;
 		}
 	}
 }

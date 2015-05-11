@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MSBuildCodeMetrics.Core.Ranges
+﻿namespace MSBuildCodeMetrics.Core.Ranges
 {
 	/// <summary>
 	/// This class is used to represent the greater range in the summary report.
 	/// </summary>
 	public class GreaterThanRangeType : IRangeType
 	{
-		private int _value;
+		private readonly int _value;
 		/// <summary>
 		/// The value
 		/// </summary>

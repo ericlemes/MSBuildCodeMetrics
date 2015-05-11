@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Build.Framework;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
-using MSBuildCodeMetrics.Core.UnitTests;
 using System.IO;
 using Moq;
 using MSBuildCodeMetrics.Core;
@@ -42,7 +41,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 	    public void WhenConstructingShouldNotThrow()
 	    {
 	        var fileStreamFactoryMock = new Mock<IFileStreamFactory>();
-	        var task = new CodeMetrics(fileStreamFactoryMock.Object);
+	        new CodeMetrics(fileStreamFactoryMock.Object);
 	    }
 
 		[TestMethod]
@@ -257,7 +256,7 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
 	                    AddMetadata("Files", "foo")
 	            }
 	        };
-	        var result = task.Execute();
+	        task.Execute();
 	    }
 
         [TestMethod]     
@@ -361,7 +360,78 @@ namespace MSBuildCodeMetrics.Tasks.UnitTests
             Assert.AreEqual("There are methods with more than 4 lines of code", errorMessage);
 	    }
 
-        
+        [TestMethod]
+        public void WhenRunningWithLowerRangeFailMessageAndDoesnotHaveValueOnLowerBandShouldNotFail()
+        {
+            var buildEngineMock = new Mock<IBuildEngine>();
+            var errorMessage = String.Empty;
+            buildEngineMock.Setup(be => be.LogErrorEvent(It.IsAny<BuildErrorEventArgs>())).
+                Callback<BuildErrorEventArgs>(
+                    e =>
+                    {
+                        errorMessage = e.Message;
+                    });
+
+            var task = new CodeMetrics()
+            {
+                BuildEngine = buildEngineMock.Object,
+                Providers = new ITaskItem[]
+                {
+                    new TaskItemMock("MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests").
+                        AddMetadata("Data", "<Metric Name=\"CodeCoverage\"><Measure " +                            
+                                    "Name=\"Assembly1\" Value=\"100\" /><Measure Name=\"Assembly2\" Value=\"100\" /><Measure " + 
+                                    "Name=\"Assembly3\" Value=\"100\" /></Metric>").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock")
+                },
+                Metrics = new ITaskItem[]
+                {
+                    new TaskItemMock("CodeCoverage").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock").
+                        AddMetadata("Ranges", "90").
+                        AddMetadata("Files", "foo").
+                        AddMetadata("LowerRangeFailMessage", "There are assemblies with less than 90% of coverage")
+                }
+            };
+
+            Assert.AreEqual(true, task.Execute());            
+        }        
+
+        [TestMethod]
+        public void WhenRunningWithLowerRangeFailMessageAndHasValueOnLowerBandShouldFail()
+        {
+            var buildEngineMock = new Mock<IBuildEngine>();
+            var errorMessage = String.Empty;
+            buildEngineMock.Setup(be => be.LogErrorEvent(It.IsAny<BuildErrorEventArgs>())).
+                Callback<BuildErrorEventArgs>(
+                    e =>
+                    {
+                        errorMessage = e.Message;
+                    });
+
+            var task = new CodeMetrics()
+            {
+                BuildEngine = buildEngineMock.Object,
+                Providers = new ITaskItem[]
+                {
+                    new TaskItemMock("MSBuildCodeMetrics.Core.UnitTests.Mock.CodeMetricsProviderSingleFileMock, MSBuildCodeMetrics.Core.UnitTests").
+                        AddMetadata("Data", "<Metric Name=\"CodeCoverage\"><Measure " +                            
+                                    "Name=\"Assembly1\" Value=\"75\" /><Measure Name=\"Assembly2\" Value=\"100\" /><Measure " + 
+                                    "Name=\"Assembly3\" Value=\"100\" /></Metric>").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock")
+                },
+                Metrics = new ITaskItem[]
+                {
+                    new TaskItemMock("CodeCoverage").
+                        AddMetadata("ProviderName", "CodeMetricsProviderMock").
+                        AddMetadata("Ranges", "90").
+                        AddMetadata("Files", "foo").
+                        AddMetadata("LowerRangeFailMessage", "There are assemblies with less than 90% of coverage")
+                }
+            };
+
+            Assert.AreEqual(false, task.Execute());
+            Assert.AreEqual("There are assemblies with less than 90% of coverage", errorMessage);
+        }        
 
 	}
 }

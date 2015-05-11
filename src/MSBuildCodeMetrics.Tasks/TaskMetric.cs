@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MSBuildCodeMetrics.Tasks
 {
@@ -10,7 +7,7 @@ namespace MSBuildCodeMetrics.Tasks
 	/// </summary>
 	public class TaskMetric
 	{
-		private string _providerName;
+		private readonly string _providerName;
 		/// <summary>
 		/// Provider name
 		/// </summary>
@@ -19,7 +16,7 @@ namespace MSBuildCodeMetrics.Tasks
 			get { return _providerName; }
 		}
 
-		private string _metricName;
+		private readonly string _metricName;
 		/// <summary>
 		/// Metric name
 		/// </summary>
@@ -28,7 +25,7 @@ namespace MSBuildCodeMetrics.Tasks
 			get { return _metricName; }
 		}
 
-		private IEnumerable<int> _ranges;
+		private readonly IEnumerable<int> _ranges;
 		/// <summary>
 		/// Ranges
 		/// </summary>
@@ -37,7 +34,7 @@ namespace MSBuildCodeMetrics.Tasks
 			get { return _ranges; }
 		}
 
-		private IEnumerable<string> _files;
+		private readonly IEnumerable<string> _files;
 		/// <summary>
 		/// The files that will be processed in this metric
 		/// </summary>
@@ -51,6 +48,13 @@ namespace MSBuildCodeMetrics.Tasks
         /// Useful to break the build if some metric is unacceptable.
         /// </summary>
         public string HigherRangeFailMessage { get; set; }
+
+        /// <summary>
+        /// Error message to be used in build failure if some condidtion in the lower band happens
+        /// Useful to break the build if some metric is unacepptable for metrics which lower numbers are not good.
+        /// For example, code coverage.
+        /// </summary>
+        public string LowerRangeFailMessage { get; set; }
 
 		/// <summary>
 		/// Creates a new task metric
@@ -66,6 +70,6 @@ namespace MSBuildCodeMetrics.Tasks
 			_ranges = ranges;
 			_files = files;
 		}
-	}
+    }
 
 }

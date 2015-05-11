@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
 {	
@@ -68,11 +67,11 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.XML
 		/// <param name="l">A list of MetricReports that wil be parsed to this members properties</param>
 		public MetricsReport(List<MetricReport> l)
 		{
-			MaintainabilityIndex = ReturnValueOrZeroIfNull(l.Where(m => m.Name == "MaintainabilityIndex").FirstOrDefault());
-			CyclomaticComplexity = ReturnValueOrZeroIfNull(l.Where(m => m.Name == "CyclomaticComplexity").FirstOrDefault());
-			ClassCoupling = ReturnValueOrZeroIfNull(l.Where(m => m.Name == "ClassCoupling").FirstOrDefault());
-			DepthOfInheritance = ReturnValueOrZeroIfNull(l.Where(m => m.Name == "DepthOfInheritance").FirstOrDefault());
-			LinesOfCode = ReturnValueOrZeroIfNull(l.Where(m => m.Name == "LinesOfCode").FirstOrDefault());
+            MaintainabilityIndex = ReturnValueOrZeroIfNull(l.FirstOrDefault(m => m.Name == "MaintainabilityIndex"));
+            CyclomaticComplexity = ReturnValueOrZeroIfNull(l.FirstOrDefault(m => m.Name == "CyclomaticComplexity"));
+            ClassCoupling = ReturnValueOrZeroIfNull(l.FirstOrDefault(m => m.Name == "ClassCoupling"));
+			DepthOfInheritance = ReturnValueOrZeroIfNull(l.FirstOrDefault(m => m.Name == "DepthOfInheritance"));
+            LinesOfCode = ReturnValueOrZeroIfNull(l.FirstOrDefault(m => m.Name == "LinesOfCode"));
 		}
 	}
 }

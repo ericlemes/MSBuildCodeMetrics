@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml;
 using MSBuildCodeMetrics.JetBrains.XML;
 
 namespace MSBuildCodeMetrics.JetBrains
@@ -22,7 +21,7 @@ namespace MSBuildCodeMetrics.JetBrains
         private string _inspectCodePath;        
         private string _dotSettingsFile;
         private string _tempDir;
-        private IFileStreamFactory _fileStreamFactory;
+        private readonly IFileStreamFactory _fileStreamFactory;
 
         /// <summary>
         /// Gets the name of this provider
@@ -50,8 +49,7 @@ namespace MSBuildCodeMetrics.JetBrains
             yield return "AllViolationsAllFiles";
             yield return "WarningsAllFiles";
             yield return "SuggestionsAllFiles";
-            yield return "ErrorsAllFiles";
-            yield break;            
+            yield return "ErrorsAllFiles";                 
         }
 
         /// <summary>

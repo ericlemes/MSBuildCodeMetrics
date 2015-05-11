@@ -10,7 +10,7 @@ namespace MSBuildCodeMetrics.Core
     /// </summary>
     public class ProcessExecutor : IProcessExecutor
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Creates new Process Executor instance
@@ -18,7 +18,7 @@ namespace MSBuildCodeMetrics.Core
         /// <param name="logger">Logger</param>
         public ProcessExecutor(ILogger logger)
         {
-            this._logger = logger;
+            _logger = logger;
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace MSBuildCodeMetrics.Core
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.StartInfo.CreateNoWindow = true;
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.WorkingDirectory = fi.DirectoryName;
+            p.StartInfo.UseShellExecute = false;            
+            p.StartInfo.WorkingDirectory = fi.DirectoryName ?? "";
             return p;
         }
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace MSBuildCodeMetrics.Core.XML
 {
@@ -46,8 +42,8 @@ namespace MSBuildCodeMetrics.Core.XML
 		/// <param name="count">Count</param>
 		public SummaryRangeReport(string rangeName, int count)
 		{
-			this.Name = rangeName;
-			this.Count = count;
+			Name = rangeName;
+			Count = count;
 		}
 	}
 }

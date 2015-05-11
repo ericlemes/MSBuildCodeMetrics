@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MSBuildCodeMetrics.Core
 {
@@ -10,7 +7,7 @@ namespace MSBuildCodeMetrics.Core
 	/// </summary>
 	public class Metric
 	{
-		private string _providerName;
+		private readonly string _providerName;
 		/// <summary>
 		/// The name of the provider
 		/// </summary>
@@ -19,7 +16,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _providerName; }
 		}
 
-		private string _metricName;
+		private readonly string _metricName;
 		/// <summary>
 		/// The metric name
 		/// </summary>
@@ -28,7 +25,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _metricName; }
 		}
 
-		private IEnumerable<int> _range;
+		private readonly IEnumerable<int> _range;
 		/// <summary>
 		/// The ranges. Example: if 10 and 5 is specified, the following ranges will be computed: x &gt; 10, 10 &gt;= x &gt; 5, x &lt; 5
 		/// </summary>

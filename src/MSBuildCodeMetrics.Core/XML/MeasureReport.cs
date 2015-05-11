@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace MSBuildCodeMetrics.Core.XML
 {
@@ -46,8 +42,8 @@ namespace MSBuildCodeMetrics.Core.XML
 		/// <param name="value">Value</param>
 		public MeasureReport(string measureName, int value)
 		{
-			this.MeasureName = measureName;
-			this.Value = value;
+			MeasureName = measureName;
+			Value = value;
 		}
 	}
 }

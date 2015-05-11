@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using MSBuildCodeMetrics.Core.UnitTests.Mock;
 using System.Reflection;
-using MSBuildCodeMetrics.VisualStudioMetrics;
 using MSBuildCodeMetrics.Core;
+using MSBuildCodeMetrics.VisualStudioMetrics;
 
-namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
+namespace MSBuildCodeMetrics.IntegrationTests
 {
 	[TestClass]
 	public class VisualStudioCodeMetricsProviderTests
@@ -26,15 +25,15 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics.IntegrationTests
 			l.Add("CyclomaticComplexity");
 			l.Add("LinesOfCode");
 
-			VisualStudioCodeMetricsProvider provider = new VisualStudioCodeMetricsProvider(metricsExePath, currentPath);
+			var provider = new VisualStudioCodeMetricsProvider(metricsExePath, currentPath);
 		    var logger = new LoggerMock();
 			provider.Logger = logger;
             provider.ProcessExecutor = new ProcessExecutor(logger);
-			List<ProviderMeasure> measures = provider.ComputeMetrics(l, @"MSBuildCodeMetrics.Core.dll").ToList<ProviderMeasure>();
+			List<ProviderMeasure> measures = provider.ComputeMetrics(l, @"MSBuildCodeMetrics.Core.dll").ToList();
 
 			List<ProviderMeasure> registerProviderMeasures = measures.Where(
 				m => m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner.RegisterProvider(ICodeMetricsProvider) : void").
-				ToList<ProviderMeasure>();
+				ToList();
 			Assert.AreEqual(2, registerProviderMeasures.Count);
 		}
 	}

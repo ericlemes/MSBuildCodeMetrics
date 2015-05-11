@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MSBuildCodeMetrics.Core.Ranges
+﻿namespace MSBuildCodeMetrics.Core.Ranges
 {
 	/// <summary>
 	/// This class represents the lower range of the summary report.
 	/// </summary>
 	public class LowerOrEqualRangeType : IRangeType
 	{
-		private int _value;
+		private readonly int _value;
 		/// <summary>
 		/// The value
 		/// </summary>

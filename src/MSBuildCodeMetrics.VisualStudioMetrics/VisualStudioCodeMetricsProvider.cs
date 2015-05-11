@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Reflection;
 using MSBuildCodeMetrics.VisualStudioMetrics.XML;
-using System.Diagnostics;
 using MSBuildCodeMetrics.Core;
 
 namespace MSBuildCodeMetrics.VisualStudioMetrics 
@@ -20,8 +15,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 	/// If MetricsExePath isn't provided, the default location is %VS120COMNTOOLS")\..\..\Team Tools\Static Analysis Tools\FxCop\Metrics.exe
 	/// </remarks>
 	public class VisualStudioCodeMetricsProvider : ISingleFileCodeMetricsProvider, ILoggableCodeMetricsProvider, IMetadataHandler, IProcessExecutorCodeMetricsProvider
-	{
-		private List<ModuleReport> _reports = new List<ModuleReport>();
+	{		
 		private string _metricsExePath;
 		private string _tempDir;
 		private ILogger _logger;
@@ -40,7 +34,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
         /// </summary>
         public IProcessExecutor ProcessExecutor
         {
-            set { this._processExecutor = value; }
+            set { _processExecutor = value; }
         }
 
 		/// <summary>
@@ -67,13 +61,11 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 		/// <returns>a set of metrics</returns>
 		public IEnumerable<string> GetMetrics()
 		{
-			List<string> l = new List<string>();
-			l.Add("MaintainabilityIndex");
-			l.Add("ClassCoupling");
-			l.Add("DepthOfInheritance");
-			l.Add("LinesOfCode");
-			l.Add("CyclomaticComplexity");
-			return l;
+			yield return "MaintainabilityIndex";
+            yield return "ClassCoupling";
+            yield return "DepthOfInheritance";
+            yield return "LinesOfCode";
+            yield return "CyclomaticComplexity";		    
 		}
 
 		/// <summary>
@@ -108,7 +100,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 	    private IEnumerable<ProviderMeasure> GetMeasuresForFile(IEnumerable<string> metricsToCompute, string tempFileName)
 		{
 			FileStream fs = new FileStream(tempFileName, FileMode.Open, FileAccess.Read);
-			ModuleReport mr = null;
+			ModuleReport mr;
 			using (fs)			
 				mr = CodeMetricsReport.Deserialize(fs);
 
@@ -120,7 +112,7 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 
 		private static List<ProviderMeasure> GetMeasures(IEnumerable<string> metricsToCompute, List<MemberReport> allMembers)
 		{
-			Dictionary<string, string> d = metricsToCompute.ToDictionary<string, string>(s => s);
+			Dictionary<string, string> d = metricsToCompute.ToDictionary(s => s);
 
 			List<ProviderMeasure> result = new List<ProviderMeasure>();
 			foreach (MemberReport member in allMembers)
@@ -134,15 +126,14 @@ namespace MSBuildCodeMetrics.VisualStudioMetrics
 						member.Type.Name + "." + member.Name, Convert.ToInt32(metric.Value)));
 				}
 			}
-			return result.OrderByDescending(m => m.Value).ToList<ProviderMeasure>();
+			return result.OrderByDescending(m => m.Value).ToList();
 		}
 
 		private string GetTempFileFor(string fileName)
 		{
 			if (String.IsNullOrEmpty(_tempDir))
 				throw new ArgumentNullException("TempDir", "VisualStudioMetricsProvider must receive a TempDir parameter as metadata");
-
-			DirectoryInfo di = new DirectoryInfo(_tempDir);
+			
 			if (!Directory.Exists(_tempDir))
 				Directory.CreateDirectory(_tempDir);
 

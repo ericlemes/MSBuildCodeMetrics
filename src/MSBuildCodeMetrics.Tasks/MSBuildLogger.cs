@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MSBuildCodeMetrics.Core;
+﻿using MSBuildCodeMetrics.Core;
 using Microsoft.Build.Utilities;
 
 namespace MSBuildCodeMetrics.Tasks
@@ -12,7 +8,7 @@ namespace MSBuildCodeMetrics.Tasks
 	/// </summary>
 	public class MSBuildLogger : ILogger
 	{
-		private TaskLoggingHelper _log;
+		private readonly TaskLoggingHelper _log;
 
 		/// <summary>
 		/// Creates a new MSBuildLogger

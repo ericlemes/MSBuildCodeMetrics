@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using MSBuildCodeMetrics.Core;
+﻿using System.IO;
 
 namespace MSBuildCodeMetrics.Core
 {
@@ -26,7 +21,7 @@ namespace MSBuildCodeMetrics.Core
 		/// Closes the specified stream
 		/// </summary>
 		/// <param name="outputReportStream">The stream</param>
-		public void CloseStream(System.IO.Stream outputReportStream)
+		public void CloseStream(Stream outputReportStream)
 		{
 			outputReportStream.Close();
 		}

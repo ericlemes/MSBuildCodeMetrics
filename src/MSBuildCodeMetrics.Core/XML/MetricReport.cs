@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using MSBuildCodeMetrics.Core.Ranges;
 
 namespace MSBuildCodeMetrics.Core.XML
 {
@@ -65,8 +61,8 @@ namespace MSBuildCodeMetrics.Core.XML
 		/// <param name="metricName">Metric name</param>
 		public MetricReport(string providerName, string metricName)
 		{
-			this.ProviderName = providerName;
-			this.MetricName = metricName;
+			ProviderName = providerName;
+			MetricName = metricName;
 		}
 
 		/// <summary>
@@ -75,7 +71,7 @@ namespace MSBuildCodeMetrics.Core.XML
 		/// <returns>the report</returns>
 		public MetricReport CreateRanges()
 		{
-			this.Ranges = new List<SummaryRangeReport>();
+			Ranges = new List<SummaryRangeReport>();
 			return this;
 		}
 		
@@ -88,7 +84,7 @@ namespace MSBuildCodeMetrics.Core.XML
 		public MetricReport AddRange(string rangeName, int count)
 		{
 			SummaryRangeReport sr = new SummaryRangeReport(rangeName, count);
-			this.Ranges.Add(sr);
+			Ranges.Add(sr);
 			return this;
 		}
 
@@ -98,7 +94,7 @@ namespace MSBuildCodeMetrics.Core.XML
 		/// <returns>the report</returns>
 		public MetricReport CreateMeasures()
 		{
-			this.Measures = new List<MeasureReport>();
+			Measures = new List<MeasureReport>();
 			return this;
 		}
 
@@ -111,7 +107,7 @@ namespace MSBuildCodeMetrics.Core.XML
 		public MetricReport AddMeasure(string measureName, int value)
 		{
 			MeasureReport m = new MeasureReport(measureName, value);
-			this.Measures.Add(m);
+			Measures.Add(m);
 			return this;
 		}	
 	}

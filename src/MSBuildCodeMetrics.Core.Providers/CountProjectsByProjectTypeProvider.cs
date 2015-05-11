@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 
@@ -12,7 +9,7 @@ namespace MSBuildCodeMetrics.Core.Providers
 	/// </summary>
 	public class CountProjectsByProjectTypeProvider : IMultiFileCodeMetricsProvider
 	{
-		private IFileStreamFactory _fileStreamFactory;
+		private readonly IFileStreamFactory _fileStreamFactory;
 
 		/// <summary>
 		/// Name of the provider (CountProjectsByProjectTypeProvider)

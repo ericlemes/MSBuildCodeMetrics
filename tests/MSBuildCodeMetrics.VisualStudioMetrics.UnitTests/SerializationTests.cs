@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using MSBuildCodeMetrics.VisualStudioMetrics.XML;
-using MSBuildCodeMetrics.VisualStudioMetrics;
 using MSBuildCodeMetrics.VisualStudioMetrics.UnitTests.Resources;
 
-namespace MSBuildCodeMetrics.Core.VisualStudioMetrics.Tests
+namespace MSBuildCodeMetrics.VisualStudioMetrics.UnitTests
 {
 	[TestClass]
 	public class SerializationTests

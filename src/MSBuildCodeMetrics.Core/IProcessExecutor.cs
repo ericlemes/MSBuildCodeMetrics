@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MSBuildCodeMetrics.Core
+﻿namespace MSBuildCodeMetrics.Core
 {
     /// <summary>
     /// Interface for ProcessExecutor (utility class to execute external processes).

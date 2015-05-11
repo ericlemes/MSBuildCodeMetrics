@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml.Serialization;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MSBuildCodeMetrics.Core.XML;
 using System.IO;
 

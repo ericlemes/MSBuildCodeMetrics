@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MSBuildCodeMetrics.Core
 {
@@ -11,7 +8,7 @@ namespace MSBuildCodeMetrics.Core
 	/// </summary>
 	public class ComputeMetricsParameter
 	{
-		private string _providerName;
+        private readonly string _providerName;
 		/// <summary>
 		/// The provider name
 		/// </summary>
@@ -20,7 +17,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _providerName; }
 		}
 
-		private string _metricName;
+		private readonly string _metricName;
 		/// <summary>
 		/// Metric name
 		/// </summary>
@@ -29,7 +26,7 @@ namespace MSBuildCodeMetrics.Core
 			get { return _metricName; }
 		}
 
-		private IEnumerable<string> _files;
+		private readonly IEnumerable<string> _files;
 		/// <summary>
 		/// List of files to compute metrics from
 		/// </summary>

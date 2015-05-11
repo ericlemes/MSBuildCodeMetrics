@@ -159,9 +159,9 @@
 			</Metrics>							
 			<Metrics Include="WarningsAllFiles">
 				<ProviderName>InspectCode</ProviderName>
-				<Ranges>50</Ranges>			
+				<Ranges>150</Ranges>			
 				<Files>$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln</Files>
-				<HigherRangeFailMessage>More than 50 code style warnings</HigherRangeFailMessage>
+				<HigherRangeFailMessage>More than 150 code style warnings</HigherRangeFailMessage>
 			</Metrics>										
 			<Metrics Include="ErrorsAllFiles">
 				<ProviderName>InspectCode</ProviderName>
@@ -171,8 +171,9 @@
 			</Metrics>													
 			<Metrics Include="CodeCoverage">
 				<ProviderName>DotCover</ProviderName>
-				<Ranges>100;50;0</Ranges>			
-				<Files>@(Tests)</Files>
+				<Ranges>90</Ranges>			
+				<Files>@(Tests)</Files>				
+				<LowerRangeFailMessage>Code coverage can't be below 90%</LowerRangeFailMessage>
 			</Metrics>						
 			<Metrics Include="CoveredStatements">
 				<ProviderName>DotCover</ProviderName>
@@ -188,7 +189,7 @@
 				<ProviderName>DotCover</ProviderName>
 				<Ranges>0</Ranges>			
 				<Files>@(Tests)</Files>
-			</Metrics>							
+			</Metrics>
 		</ItemGroup>
 		<MakeDir Directories="$(MSBuildProjectDirectory)\TempDir" />
 		<CodeMetrics Providers="@(Providers)" Metrics="@(Metrics)" ShowDetailsReport="true" FileOutput="true" OutputFileName="metrics.xml"  />

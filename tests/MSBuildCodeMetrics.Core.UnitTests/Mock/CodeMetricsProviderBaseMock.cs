@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace MSBuildCodeMetrics.Core.UnitTests.Mock
@@ -33,7 +32,7 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 			else if (name == "Data")
 				ParseData(value);
 			else if (name == "Metrics")
-				_metrics = value.Split(';').ToList<string>();
+				_metrics = value.Split(';').ToList();
 		}
 
 		private CodeMetricsProviderBaseMock AddMetric(string metric)
@@ -54,11 +53,11 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 			doc.LoadXml(value);
 			if (doc.DocumentElement.Name == "Metric")
 			{
-				this.AddMetric(doc.DocumentElement.GetAttribute("Name"));
+				AddMetric(doc.DocumentElement.GetAttribute("Name"));
 				foreach (XmlNode n in doc.DocumentElement.ChildNodes)
 				{
 					if (n.Name == "Measure")					
-						this.AddMeasure(doc.DocumentElement.GetAttribute("Name"),
+						AddMeasure(doc.DocumentElement.GetAttribute("Name"),
 							n.Attributes["Name"].Value, Convert.ToInt32(n.Attributes["Value"].Value));					
 				}
 			}			

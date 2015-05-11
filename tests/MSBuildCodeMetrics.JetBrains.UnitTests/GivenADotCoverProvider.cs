@@ -225,13 +225,13 @@ namespace MSBuildCodeMetrics.JetBrains.UnitTests
             };
 
             var measures = p.ComputeMetrics(metricsToCompute, new List<string> { "C:\\PathTo\\TestProject1.dll" });
-            Assert.AreEqual(173, measures.Where(m => m.MetricName == "CoveredStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").First().Value);
-            Assert.AreEqual(173, measures.Where(m => m.MetricName == "TotalStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").First().Value);
-            Assert.AreEqual(0, measures.Where(m => m.MetricName == "UncoveredStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").First().Value);
-            Assert.AreEqual(100, measures.Where(m => m.MetricName == "CodeCoverage" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").First().Value);            
-            Assert.AreEqual(0, measures.Where(m => m.MetricName == "TotalStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.NamespaceDoc").First().Value);
-            Assert.AreEqual(0, measures.Where(m => m.MetricName == "CoveredStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.NamespaceDoc").First().Value);
-            Assert.AreEqual(100, measures.Where(m => m.MetricName == "CodeCoverage" && m.MeasureName == "MSBuildCodeMetrics.Core.NamespaceDoc").First().Value);
+            Assert.AreEqual(173, measures.First(m => m.MetricName == "CoveredStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").Value);
+            Assert.AreEqual(173, measures.First(m => m.MetricName == "TotalStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").Value);
+            Assert.AreEqual(0, measures.First(m => m.MetricName == "UncoveredStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").Value);
+            Assert.AreEqual(100, measures.First(m => m.MetricName == "CodeCoverage" && m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner").Value);            
+            Assert.AreEqual(0, measures.First(m => m.MetricName == "TotalStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.NamespaceDoc").Value);
+            Assert.AreEqual(0, measures.First(m => m.MetricName == "CoveredStatements" && m.MeasureName == "MSBuildCodeMetrics.Core.NamespaceDoc").Value);
+            Assert.AreEqual(100, measures.First(m => m.MetricName == "CodeCoverage" && m.MeasureName == "MSBuildCodeMetrics.Core.NamespaceDoc").Value);
         }
     }
 }
