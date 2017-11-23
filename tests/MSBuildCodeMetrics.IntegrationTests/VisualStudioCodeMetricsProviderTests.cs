@@ -13,7 +13,7 @@ namespace MSBuildCodeMetrics.IntegrationTests
 	[TestClass]
 	public class VisualStudioCodeMetricsProviderTests
 	{
-		[TestMethod]
+/*		[TestMethod]
 		[DeploymentItem(@"MSBuildCodeMetrics.Core.dll")]
 		public void RunTest()
 		{
@@ -35,6 +35,6 @@ namespace MSBuildCodeMetrics.IntegrationTests
 				m => m.MeasureName == "MSBuildCodeMetrics.Core.CodeMetricsRunner.RegisterProvider(ICodeMetricsProvider) : void").
 				ToList();
 			Assert.AreEqual(2, registerProviderMeasures.Count);
-		}
+		}*/
 	}
 }

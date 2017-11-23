@@ -40,3 +40,9 @@
 /doc/Help
 /doc/*.shfbproj_Eric
 /src/SharedAssemblyInfo.cs
+/build/Coverage.xml
+/build/TestResults
+/build/coverage_tmp
+/build/coverage
+/src/.vs
+/src/packages
