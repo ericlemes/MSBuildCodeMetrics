@@ -30,9 +30,9 @@ The same logic is used for other measures. This can help you find how many metho
 
 ### Default Provider (MSBuildCodeMetrics.Core.Providers)
 
-* **Files By Extension: **This isn't a usual code metric, but I built this to help understanding the different stuff contained by a given source code repository. It can help me find different kinds of compilers, IDE's and file types are used by the application
-* **Lines of Code: **This is a interesting measure to know the size of an application. This metric means total LOC by file.
-* **Projects by Project Type: ** This metric is useful to understand how many output projects exists in our repository. The idea is to parse the .csproj and .vbproj files and group the output by project type (Library, WinExe, Exe, etc.)
+* **Files By Extension:** This isn't a usual code metric, but I built this to help understanding the different stuff contained by a given source code repository. It can help me find different kinds of compilers, IDE's and file types are used by the application
+* **Lines of Code:** This is a interesting measure to know the size of an application. This metric means total LOC by file.
+* **Projects by Project Type:** This metric is useful to understand how many output projects exists in our repository. The idea is to parse the .csproj and .vbproj files and group the output by project type (Library, WinExe, Exe, etc.)
 
 ### Visual Studio Provider (MSBuildCodeMetrics.VisualStudioMetrics.VisualStudioCodeMetricsProvider)
 
@@ -42,11 +42,11 @@ You can download the tool (hopefully) from [https://msdn.microsoft.com/en-us/lib
 
 When this was written, the metrics supported are:
 
-* **Maintainability Index: **See VS reference.
-* **Cyclomatic Complexity: **Very popular metric to detect how many paths are inside a method, giving an idea of complexity of the method.
-* **Depth of Inheritance: ** See VS reference.
-* **Class Coupling: ** See VS Reference.
-* **Lines of Code per Method: ** Gets number of lines of code per method. 
+* **Maintainability Index:** See VS reference.
+* **Cyclomatic Complexity:** Very popular metric to detect how many paths are inside a method, giving an idea of complexity of the method.
+* **Depth of Inheritance:** See VS reference.
+* **Class Coupling:** See VS Reference.
+* **Lines of Code per Method:** Gets number of lines of code per method. 
 
 
 ## Extending MSBuildCodeMetrics
