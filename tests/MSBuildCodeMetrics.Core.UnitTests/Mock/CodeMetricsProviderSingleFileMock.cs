@@ -5,8 +5,14 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 {
 	public class CodeMetricsProviderSingleFileMock : CodeMetricsProviderBaseMock, ISingleFileCodeMetricsProvider
 	{
-		
-		public static CodeMetricsProviderSingleFileMock Create(string name)
+
+        private ILogger _logger;
+        public ILogger Logger
+        {
+            set { _logger = value; }
+        }
+
+        public static CodeMetricsProviderSingleFileMock Create(string name)
 		{
 			return new CodeMetricsProviderSingleFileMock(name);
 		}

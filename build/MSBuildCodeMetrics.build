@@ -109,14 +109,9 @@
 		<CodeMetrics Providers="@(Providers)" Metrics="@(Metrics)" ShowDetailsReport="true" FileOutput="true" OutputFileName="metrics.xml"  />
 	</Target>
 	
-	<Target Name="docs">
-		<MSBuild Projects="$(MSBuildProjectDirectory)\..\doc\MSBuildCodeMetrics.shfbproj" Properties="Configuration=$(Configuration);Platform=AnyCPU" />
-	</Target>
-	
-	<Target Name="pack" DependsOnTargets="build;tests;demo;docs" >
+	<Target Name="pack" DependsOnTargets="build;tests" >
 		<ItemGroup>
-			<OutputFiles Include="$(MSBuildProjectDirectory)\..\src\**\bin\$(Configuration)\*.dll" />
-			<OutputFiles Include="$(MSBuildProjectDirectory)\..\doc\Help\MSBuildCodeMetrics.chm" />			
+			<OutputFiles Include="$(MSBuildProjectDirectory)\..\src\**\bin\$(Configuration)\*.dll" />			
 		</ItemGroup>		
 		<MakeDir Directories="$(MSBuildProjectDirectory)\Pack" />
 		<MakeDir Directories="$(MSBuildProjectDirectory)\Pack\Zip" />

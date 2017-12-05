@@ -6,15 +6,6 @@ using MSBuildCodeMetrics.JetBrains.XML;
 
 namespace MSBuildCodeMetrics.JetBrains
 {
-    /// <summary>
-    /// Provider for JetBrains dotCover tool (https://www.jetbrains.com/dotcover/webhelp27/dotCover__Server_Test_Coverage.html).
-    /// Accepts as metadata: 
-    /// - DotCoverPath: Full path to dotCover.exe
-    /// - DotCoverTargetExecutableParam - Argument to be used in /TargetExecutable command line param
-    /// - DotCoverTargetArgumentParam - Argument to be used in /TargetArgument command line params
-    /// - TempDir - Any temporary dir. Used to save coverage and report snapshots
-    /// - Filters - Filters to be used in /Filters argument
-    /// </summary>
     public class DotCoverProvider : IMultiFileCodeMetricsProvider, IMetadataHandler, IProcessExecutorCodeMetricsProvider
     {
         private IProcessExecutor _processExecutor;
@@ -25,18 +16,11 @@ namespace MSBuildCodeMetrics.JetBrains
         private readonly IFileStreamFactory _fileStreamFactory;        
         private string _filters;
 
-        /// <summary>
-        /// Gets the name of this provider (DotCover)
-        /// </summary>
         public string Name
         {
             get { return "DotCover"; }
         }
 
-        /// <summary>
-        /// Returns the metrics that this provider can compute.
-        /// </summary>
-        /// <returns></returns>
         public IEnumerable<string> GetMetrics()
         {
             yield return "CodeCoverage";
@@ -45,28 +29,22 @@ namespace MSBuildCodeMetrics.JetBrains
             yield return "TotalStatements";            
         }
 
-        /// <summary>
-        /// Constructor used for test purposes
-        /// </summary>
-        /// <param name="fileStreamFactory"></param>
+        private ILogger _logger;
+        public ILogger Logger
+        {
+            set { _logger = value; }
+        }
+
         public DotCoverProvider(IFileStreamFactory fileStreamFactory)
         {
             _fileStreamFactory = fileStreamFactory;
         }
 
-        /// <summary>
-        /// Main constructor.
-        /// </summary>
         public DotCoverProvider()
         {
             _fileStreamFactory = new FileStreamFactory();
         }
 
-        /// <summary>
-        /// Called by CodeMetrics task to feed metadata into provider
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
         public void AddMetadata(string name, string value)
         {
             if (name == "DotCoverPath")
@@ -81,12 +59,6 @@ namespace MSBuildCodeMetrics.JetBrains
                 _filters = value;
         }
 
-        /// <summary>
-        /// Computes the metrics for this provider
-        /// </summary>
-        /// <param name="metricsToCompute"></param>
-        /// <param name="files"></param>
-        /// <returns></returns>
         public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
         {
             if (String.IsNullOrEmpty(_dotCoverPath))
@@ -159,9 +131,6 @@ namespace MSBuildCodeMetrics.JetBrains
             return measures;
         }
 
-        /// <summary>
-        /// Used to inject the process executor to the provider
-        /// </summary>
         public IProcessExecutor ProcessExecutor
         {
             set { _processExecutor = value; }

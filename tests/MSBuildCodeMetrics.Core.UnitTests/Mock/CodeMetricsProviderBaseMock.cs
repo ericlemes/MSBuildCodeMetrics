@@ -7,7 +7,13 @@ namespace MSBuildCodeMetrics.Core.UnitTests.Mock
 {
 	public abstract class CodeMetricsProviderBaseMock : ICodeMetricsProvider, IMetadataHandler
 	{
-		protected string _name;
+        private ILogger _logger;
+        public ILogger Logger
+        {
+            set { _logger = value; }
+        }
+
+        protected string _name;
 		public string Name
 		{
 			get { return _name; }

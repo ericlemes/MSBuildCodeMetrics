@@ -8,13 +8,6 @@ using MSBuildCodeMetrics.JetBrains.XML;
 namespace MSBuildCodeMetrics.JetBrains
 {
 
-    /// <summary>
-    /// Provider for JetBrains InspectCode.exe (Resharper Command Line). Get the number of violations from a specified solution.
-    /// Expects metadatas:
-    /// - InspectCodePath: FullPathToInspectCode    
-    /// - DotSettingsFile: Path to DotSettingsFile
-    /// - TempDir: Directory to output .metrics.xml files    
-    /// </summary>
     public class InspectCodeProvider : IMultiFileCodeMetricsProvider, ILoggableCodeMetricsProvider, IProcessExecutorCodeMetricsProvider, IMetadataHandler
     {
         private IProcessExecutor _processExecutor;
@@ -23,23 +16,11 @@ namespace MSBuildCodeMetrics.JetBrains
         private string _tempDir;
         private readonly IFileStreamFactory _fileStreamFactory;
 
-        /// <summary>
-        /// Gets the name of this provider
-        /// </summary>
         public string Name
         {
             get { return "InspectCode"; }
         }
 
-        /// <summary>
-        /// Get available metrics for this provider. Returns AllViolations (all warnings, errors and suggestions, assembly by assembly),
-        /// Warnings (all warnings, assembly by assembly), Suggestions (all suggestions, assembly by assembly), Errors (all errors, 
-        /// assembly by assembly, AllViolationsAllFiles (all warnings, errors and suggestions, aggregated for all solutions inspected),
-        /// WarningsAllFiles (all warnings, aggregated by all solutions inspected), AllSuggestions (all suggestions, aggregated by all
-        /// solutions inspected) and AllErrors (all errors, aggregated by all solutions inspected). The purpose of the AllFiles metrics
-        /// is to break the build when a given number of violations is reached.
-        /// </summary>
-        /// <returns></returns>
         public IEnumerable<string> GetMetrics()
         {
             yield return "AllViolations";
@@ -52,27 +33,16 @@ namespace MSBuildCodeMetrics.JetBrains
             yield return "ErrorsAllFiles";                 
         }
 
-        /// <summary>
-        /// Used by core to inject logger to provider
-        /// </summary>
         public ILogger Logger
         {
             set { }
         }
 
-        /// <summary>
-        /// Used by core to inject process executor to provider
-        /// </summary>
         public IProcessExecutor ProcessExecutor
         {
             set { _processExecutor = value; }
         }
 
-        /// <summary>
-        /// Invoked from core on providers to set properties sent from MSBuild engine.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
         public void AddMetadata(string name, string value)
         {
             if (name == "InspectCodePath")
@@ -83,29 +53,16 @@ namespace MSBuildCodeMetrics.JetBrains
                 _tempDir = value;
         }
 
-        /// <summary>
-        /// Constructor for production code.
-        /// </summary>
         public InspectCodeProvider()
         {
             _fileStreamFactory = new FileStreamFactory();            
         }
 
-        /// <summary>
-        /// Constructor used in tests for mocking IFileStreamFactory
-        /// </summary>
-        /// <param name="fileStreamFactory"></param>
         public InspectCodeProvider(IFileStreamFactory fileStreamFactory)
         {
             _fileStreamFactory = fileStreamFactory;
         }
 
-        /// <summary>
-        /// Computes de metrics. Executes the InspectCode executable and parses xml response.
-        /// </summary>
-        /// <param name="metricsToCompute"></param>
-        /// <param name="files"></param>
-        /// <returns></returns>
         public IEnumerable<ProviderMeasure> ComputeMetrics(IEnumerable<string> metricsToCompute, IEnumerable<string> files)
         {
             if (String.IsNullOrEmpty(_inspectCodePath))

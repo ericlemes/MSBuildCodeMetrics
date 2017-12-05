@@ -22,7 +22,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\MSBuildCodeMetrics.Core.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -34,7 +35,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\MSBuildCodeMetrics.Core.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -64,7 +66,6 @@
     <Compile Include="ISingleFileCodeMetricsProvider.cs" />
     <Compile Include="IFileStreamFactory.cs" />
     <Compile Include="MetricList.cs" />
-    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="ProcessExecutor.cs" />
     <Compile Include="ProviderMeasure.cs" />
     <Compile Include="RangeList.cs" />

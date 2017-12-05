@@ -10,17 +10,11 @@ using ILogger = MSBuildCodeMetrics.Core.ILogger;
 
 namespace MSBuildCodeMetrics.Tasks
 {
-	/// <summary>
-	/// The MSBuild Task for CodeMetrics
-	/// </summary>
 	public class CodeMetrics : Task
 	{		
 		private readonly IFileStreamFactory _streamFactory;
 		private readonly Dictionary<string, ICodeMetricsProvider> _providers = new Dictionary<string, ICodeMetricsProvider>();
 
-		/// <summary>
-		/// The code metrics providers that will be used in metrics computation.
-		/// </summary>
 		[Required]		
 		public ITaskItem[] Providers 
 		{ 
@@ -28,18 +22,12 @@ namespace MSBuildCodeMetrics.Tasks
 			set; 
 		}
 		
-		/// <summary>
-		/// The file name of the output report
-		/// </summary>
 		public string OutputFileName
 		{
 			get;
 			set;
 		}
 
-		/// <summary>
-		/// The metrics that will be computed by the task
-		/// </summary>
 		[Required]
 		public ITaskItem[] Metrics
 		{
@@ -48,18 +36,12 @@ namespace MSBuildCodeMetrics.Tasks
 		}
 
 		private bool _showSummaryReport = true;
-		/// <summary>
-		/// True if the summary report should be generated
-		/// </summary>
 		public bool ShowSummaryReport
 		{
 			get { return _showSummaryReport; }
 			set { _showSummaryReport = value; }
 		}
 
-		/// <summary>
-		/// True if the details report should be generated
-		/// </summary>
 		public bool ShowDetailsReport
 		{
 			get;
@@ -67,9 +49,6 @@ namespace MSBuildCodeMetrics.Tasks
 		}
 
 		private bool _showConsoleOutput = true;
-		/// <summary>
-		/// True if the output should be redirected to console. Good if you like the metrics to be stored with your build logs.
-		/// </summary>
 		public bool ShowConsoleOutput
 		{
 			get { return _showConsoleOutput; }
@@ -77,36 +56,22 @@ namespace MSBuildCodeMetrics.Tasks
 		}
 
 		private bool _fileOutput;
-		/// <summary>
-		/// True if the output should be generated to a file.
-		/// </summary>
 		public bool FileOutput
 		{
 			get { return _fileOutput; }
 			set { _fileOutput = value; }
 		}
 
-		/// <summary>
-		/// Default constructor
-		/// </summary>
 		public CodeMetrics()
 		{
 			_streamFactory = new FileStreamFactory();
 		}
 
-		/// <summary>
-		/// Constructor used to inject dependencies
-		/// </summary>
-		/// <param name="streamFactory">the file stream factory</param>
 		public CodeMetrics(IFileStreamFactory streamFactory)
 		{
 			_streamFactory = streamFactory;
 		}		
 
-		/// <summary>
-		/// Called from MSBuild when the task executes
-		/// </summary>
-		/// <returns>boolean indicating if the execution was sucessful</returns>
 		public override bool Execute()
 		{
 			try

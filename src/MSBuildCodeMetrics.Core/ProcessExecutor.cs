@@ -5,28 +5,15 @@ using System.Reflection;
 
 namespace MSBuildCodeMetrics.Core
 {
-    /// <summary>
-    /// Utility class to execute external processes
-    /// </summary>
     public class ProcessExecutor : IProcessExecutor
     {
         private readonly ILogger _logger;
 
-        /// <summary>
-        /// Creates new Process Executor instance
-        /// </summary>
-        /// <param name="logger">Logger</param>
         public ProcessExecutor(ILogger logger)
         {
             _logger = logger;
         }
 
-        /// <summary>
-        /// Executes an external executable. Assumes current executing assembly path as working dir and throws exception on fail.
-        /// Logs stdout as messages on logger and stderr as errors on logger.
-        /// </summary>
-        /// <param name="executable">Full path of executable</param>
-        /// <param name="arguments">All the arguments as a string</param>
         public void ExecuteProcess(string executable, string arguments)
         {
             FileInfo fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
