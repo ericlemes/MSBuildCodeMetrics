@@ -9,7 +9,7 @@
 		<Configuration>Release</Configuration>
 		<InspectCodePath>C:\Program Files (x86)\ReSharperCommandLineTools01Update1\inspectcode.exe</InspectCodePath>
 		<DotCoverPath>C:\Program Files (x86)\JetBrains.dotCover.CommandLineTools.3.1.20150408.155159\dotCover.exe</DotCoverPath>
-		<ReportGeneratorPath>..\src\packages\ReportGenerator.3.0.2\tools\ReportGenerator.exe</ReportGeneratorPath>
+		<ReportGeneratorPath>..\src\packages\ReportGenerator.3.0.2\tools\ReportGenerator.exe</ReportGeneratorPath>		
 	</PropertyGroup>
 	
 	<ItemGroup>	   
@@ -42,7 +42,9 @@
 			AssemblyVersion="$(Version)" AssemblyConfiguration="$(Configuration)" AssemblyDescription="MSBuildCodeMetrics - $(Branch) - $(CommitHash)" />
 	</Target>
 	
-	<Target Name="build" DependsOnTargets="assemblyinfo">
+	<Target Name="build">
+		<Message Text="Build ID: $(BUILD_BUILDID)" />
+	
 		<MSBuild Projects="$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln" Properties="Configuration=$(Configuration)" />
 		<CallTarget Targets="copybinaries" />
 	</Target>	
