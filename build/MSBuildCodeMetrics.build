@@ -23,23 +23,17 @@
 	<UsingTask TaskName="GitVersion" AssemblyFile="$(MSBuildProjectDirectory)\lib\MSBuild.Community.Tasks.dll"  />
 	<UsingTask TaskName="AssemblyInfo" AssemblyFile="$(MSBuildProjectDirectory)\lib\MSBuild.Community.Tasks.dll"  />	
 	
-	<Target Name="assemblyinfo">
-		<GitBranch>
-			<Output TaskParameter="Branch" PropertyName="Branch" />			
-		</GitBranch>
-		<GitVersion>
-			<Output TaskParameter="CommitHash" PropertyName="CommitHash" />			
-		</GitVersion>
+	<Target Name="assemblyinfo">		
 		<CreateProperty Value="0.0.0.0">
-			<Output TaskParameter="Value" PropertyName="Version" Condition="$(Branch) == 'master'" />
+			<Output TaskParameter="Value" PropertyName="Version" Condition="$(BUILD_BUILDID) == '' " />
 		</CreateProperty>
-		<CreateProperty Value="$(Branch)">
-			<Output TaskParameter="Value" PropertyName="Version" Condition="($(Branch) != 'master')" />
+		<CreateProperty Value="1.0.0.$(BUILD_BUILDID)">
+			<Output TaskParameter="Value" PropertyName="Version" Condition="$(BUILD_BUILDID) != ''" />
 		</CreateProperty>
 	
 		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\..\src\SharedAssemblyInfo.cs"
-			AssemblyProduct="MSBuildCodeMetrics - $(Branch) - $(CommitHash)" AssemblyCopyright="Copyright &#169; 2013 Eric Lemes de Godoy Cintra" AssemblyTrademark=""
-			AssemblyVersion="$(Version)" AssemblyConfiguration="$(Configuration)" AssemblyDescription="MSBuildCodeMetrics - $(Branch) - $(CommitHash)" />
+			AssemblyProduct="MSBuildCodeMetrics - $(Version)" AssemblyCopyright="Copyright &#169; 2013 Eric Lemes de Godoy Cintra" AssemblyTrademark=""
+			AssemblyVersion="$(Version)" AssemblyConfiguration="$(Configuration)" AssemblyDescription="MSBuildCodeMetrics - $(Version)" />
 	</Target>
 	
 	<Target Name="build" DependsOnTargets="assemblyinfo">
@@ -121,7 +115,7 @@
 		<CreateItem Include="$(MSBuildProjectDirectory)\Pack\Zip\**\*.*">
 			<Output TaskParameter="Include" ItemName="FilesToZip" />
 		</CreateItem>
-		<Zip ZipFileName="$(MSBuildProjectDirectory)\Pack\MSBuildCodeMetrics-$(Branch).$(CommitHash).zip" WorkingDirectory="$(MSBuildProjectDirectory)\Pack\Zip" Files="@(FilesToZip)"  />		
+		<Zip ZipFileName="$(MSBuildProjectDirectory)\Pack\MSBuildCodeMetrics-$(Version).zip" WorkingDirectory="$(MSBuildProjectDirectory)\Pack\Zip" Files="@(FilesToZip)"  />		
 	</Target>
 	
 	<Target Name="demo-jetbrains" DependsOnTargets="build">		
