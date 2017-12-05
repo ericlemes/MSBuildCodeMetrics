@@ -42,7 +42,7 @@
 			AssemblyVersion="$(Version)" AssemblyConfiguration="$(Configuration)" AssemblyDescription="MSBuildCodeMetrics - $(Branch) - $(CommitHash)" />
 	</Target>
 	
-	<Target Name="build">
+	<Target Name="build" DependsOnTargets="assemblyinfo">
 		<Message Text="Build ID: $(BUILD_BUILDID)" />
 	
 		<MSBuild Projects="$(MSBuildProjectDirectory)\..\src\MSBuildCodeMetrics.sln" Properties="Configuration=$(Configuration)" />
